@@ -51,7 +51,7 @@ public class Map {
 		bed.addTool(new Tools("key","A golden key", 0));
 		Rooms[0].addFixed(bed);
 		NPcBad Demogorgon = new NPcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50);
-		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 10, 0.3f);
+		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 10, 0.78f);
 		Demogorgon.setWeapon(demo);
 		Tools demoC = new Tools("claw of demogorgon", "a horrid claw",8);
 		Demogorgon.addObj(demoC);
@@ -59,7 +59,7 @@ public class Map {
 		
 		Fixed chest = new Fixed("chest");
 		chest.addMoney(150);
-		chest.addTool(new Weapon("knife","A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.3f));
+		chest.addTool(new Weapon("knife","A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.85f));
 		Rooms[1].addFixed(chest);
 		Rooms[1].addTool(new Tools("salt","It's just some tablesalt", 5));
 		
