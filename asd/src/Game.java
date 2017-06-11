@@ -53,7 +53,7 @@ public class Game {
 		case "help": // tofinish///////////
 			return printHelp(command);
 		case "pick up":
-			return pickTool(command);
+			return pickTool(command);	
 		case "drop":
 			return dropTool(command);
 		case "examine":
@@ -150,7 +150,7 @@ public class Game {
 		if(!command.hasSecondWord()){
 			return "Who do you want to attack?";
 		}
-		NPcBad enemy;
+		NpcBad enemy;
 		if((enemy = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null){
 			if(!enemy.isAlive()){
 				return enemy.getName() + " is already dead";

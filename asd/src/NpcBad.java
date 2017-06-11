@@ -1,9 +1,9 @@
 
-public class NPcBad extends Character {
+public class NpcBad extends Character {
 
 	private String description;
 	
-	public NPcBad(String name, String description, int HP) {
+	public NpcBad(String name, String description, int HP) {
 		super(name, HP);
 		this.description = description;
 

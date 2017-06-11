@@ -25,7 +25,7 @@ public class Map {
 		Rooms[3] = new Room("THE MEADOW",
 				"you are in a misty meadow in the middle of what seems to be a huge rainforest,"
 						+ " north, in the middle of the medow you can barely see a house and all oround you it's only trees, it's dark.</i>");
-		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the ligth "
+		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the ligtht "
 				+ "is still passing through the leaves and the air is humid");
 		
 		return Rooms[3];
@@ -50,7 +50,7 @@ public class Map {
 		Fixed bed = new Fixed("bed");
 		bed.addTool(new Tools("key","A golden key", 0));
 		Rooms[0].addFixed(bed);
-		NPcBad Demogorgon = new NPcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50);
+		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50);
 		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 10, 0.78f);
 		Demogorgon.setWeapon(demo);
 		Tools demoC = new Tools("claw of demogorgon", "a horrid claw",8);
@@ -63,7 +63,7 @@ public class Map {
 		Rooms[1].addFixed(chest);
 		Rooms[1].addTool(new Tools("salt","It's just some tablesalt", 5));
 		
-		Fixed cupboard = new Fixed("");
+		Fixed cupboard = new Fixed("cupboard");
 		cupboard.addMoney(50);
 		cupboard.addTool(new Tools("apple","A green apple, it seems still ripe", 2));
 		Rooms[2].addFixed(cupboard);
