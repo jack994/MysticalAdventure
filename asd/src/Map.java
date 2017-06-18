@@ -50,13 +50,16 @@ public class Map {
 		Fixed bed = new Fixed("bed");
 		bed.addTool(new Tools("key","A golden key", 0));
 		Rooms[0].addFixed(bed);
-		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50);
+		NpcBad Demogorgon = new NpcBad("Demogorgon", "a horrid shadow with a shaape of a dragon", 50, false, "grawallll");
 		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 10, 0.78f);
 		Demogorgon.setWeapon(demo);
 		Tools demoC = new Tools("claw of demogorgon", "a horrid claw",8);
 		Demogorgon.addObj(demoC);
 		Rooms[0].addnpcs(Demogorgon);
 		
+		NpcGood druid = new NpcGood("Druid", "a busy druid with enormous horns", 1000, false, "are you still here?");
+		druid.setFirstSpeech("Aaawww finally you woke up! I was waiting for you");
+		Rooms[1].addnpcs(druid);
 		Fixed chest = new Fixed("chest");
 		chest.addMoney(150);
 		chest.addTool(new Weapon("knife","A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.85f));

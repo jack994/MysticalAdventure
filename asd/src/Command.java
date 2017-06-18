@@ -5,7 +5,8 @@ public class Command {
 	private String secondWord;
 
 	private static final String[] commandWords = 
-		{ "help", "go", "drop", "pick up", "examine", "attack", "equip" };
+		{ "help", "go", "drop", "pick up", "take", "leave", "examine", "attack", "equip",
+			"speak", "talk", "talk to", "speak to"};
 	
 	public Command(String first, String second){
 		firstWord = first;

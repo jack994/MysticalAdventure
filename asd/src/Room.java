@@ -9,7 +9,7 @@ public class Room {
 	private String description;
 	private ArrayList<Item> items;
 	private HashMap<String, Room> directions;
-	private ArrayList<NpcBad> npcs;
+	private ArrayList<NPC> npcs;
 
 	public Room(String Name, String description) {
 		Name = "<b>" + Name + "</b>";
@@ -18,7 +18,7 @@ public class Room {
 		this.description = description;
 		items = new ArrayList<Item>();
 		directions = new HashMap<String, Room>();
-		npcs = new ArrayList<NpcBad>();
+		npcs = new ArrayList<NPC>();
 	}
 
 	public String getName() {
@@ -47,7 +47,7 @@ public class Room {
 		items.add(o);
 	}
 
-	public void addnpcs(NpcBad p) {
+	public void addnpcs(NPC p) {
 		npcs.add(p);
 		p.setCurrentRoom(this);
 	}
@@ -113,9 +113,9 @@ public class Room {
 		return toReturn;
 	}
 	
-	public NpcBad getNPCNamed(String Name){		
+	public NPC getNPCNamed(String Name){		
 		if(!npcs.isEmpty()){
-			for(NpcBad pl : npcs){
+			for(NPC pl : npcs){
 				if(pl.getName().equals(Name)){
 					return pl;
 				}
@@ -124,7 +124,7 @@ public class Room {
 		
 		return null;
 	}
-
+	
 	public String getDirectionsString() {
 		String returnString = "POSSIBLE DIRECTIONS: ";
 		Set<String> keys = directions.keySet();
@@ -148,4 +148,5 @@ public class Room {
 		else
 			return false;
 	}
+
 }

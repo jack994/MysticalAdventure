@@ -20,7 +20,7 @@ public class Game {
 		});
 		map = new Map();
 		StartRoom = map.createRoom();
-		currentPlayer = new Player("");
+		currentPlayer = new Player("Giacomo");
 		currentPlayer.setCurrentRoom(StartRoom);
 	}
 
@@ -47,24 +47,25 @@ public class Game {
 	public String processCommand(Command command) {
 		String firstWord = command.getFirstWord();
 
-		switch (firstWord) {
-		case "go":
+		if(firstWord.equals("go"))
 			return goRoom(command);
-		case "help": // tofinish///////////
+		else if(firstWord.equals("help"))
 			return printHelp(command);
-		case "pick up":
-			return pickTool(command);	
-		case "drop":
+		else if(firstWord.equals("pick up") || firstWord.equals("take"))	
+			return pickTool(command);
+		else if(firstWord.equals("drop") || firstWord.equals("leave"))
 			return dropTool(command);
-		case "examine":
-			return examineObj(command);
-		case "attack":
+		else if(firstWord.equals("attack"))	
 			return attack(command);
-		case "equip":
+		else if(firstWord.equals("equip"))
 			return equip(command);
-		default:
-			return "I can't understand what you mean, write 'help' for the command list";
-		}
+		else if(firstWord.equals("examine"))
+			return examineObj(command);
+		else if(firstWord.equals("speak to") || firstWord.equals("talk to") 
+				|| firstWord.equals("talk") || firstWord.equals("speak"))
+			return speakToChar(command);
+		
+		else return "I can't understand what you mean, write 'help' for the command list";
 
 	}
 
@@ -150,12 +151,15 @@ public class Game {
 		if(!command.hasSecondWord()){
 			return "Who do you want to attack?";
 		}
-		NpcBad enemy;
+		NPC enemy;
 		if((enemy = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null){
 			if(!enemy.isAlive()){
 				return enemy.getName() + " is already dead";
 			}
-			return currentPlayer.attackTarget(enemy);
+			if(enemy.getClass() == NpcBad.class)
+				return currentPlayer.attackTarget(enemy) + "<BR>" + enemy.getName() +
+						" attacks you<BR>" + enemy.attackTarget(currentPlayer);
+			else return "you cannot attack " + command.getSecondWord();
 		}
 		return "There is no " + command.getSecondWord();
 	}
@@ -177,6 +181,21 @@ public class Game {
 		return "There is no " + command.getSecondWord();
 	}
 	
+	public String speakToChar(Command command){
+		if(!command.hasSecondWord()){
+			return "you: blablablabla. <BR>if you want to speak to someone write 'speak to <subject>'";
+		}
+		NPC npc;
+		if((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null){
+			if(npc.getClass() == NpcGood.class){
+				return npc.getSpeech();
+			}
+			else{
+				return npc.getSpeech() + "<BR>" + npc.attackTarget(currentPlayer);
+			}
+		}
+		return "you can't speak to " + command.getSecondWord();
+	}
 	
 	public String printHelp(Command command) {
 		if (command.hasSecondWord()) {
