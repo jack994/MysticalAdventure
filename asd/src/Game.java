@@ -71,11 +71,17 @@ public class Game {
 
 	public String goRoom(Command command) {
 		String toReturn = "";
-
+		
 		if (currentPlayer.getCurrentRoom().hasDirection(command.getSecondWord())) {
 			Room next = currentPlayer.getCurrentRoom().getDirectionRoom(command.getSecondWord());
 			currentPlayer.setCurrentRoom(next);
 			toReturn = currentPlayer.getCurrentRoom().getNameAndDescription();
+			if(!(currentPlayer.getCurrentRoom().getNPCArray()).isEmpty()){
+				toReturn += "<BR><BR>";
+				for(NPC npc : currentPlayer.getCurrentRoom().getNPCArray()){
+					toReturn += npc.interact(currentPlayer) + "<BR><BR>";
+				}
+			}
 		} else {
 			toReturn = "you can't go in that direction!";
 		}
@@ -157,8 +163,7 @@ public class Game {
 				return enemy.getName() + " is already dead";
 			}
 			if(enemy.getClass() == NpcBad.class)
-				return currentPlayer.attackTarget(enemy) + "<BR>" + enemy.getName() +
-						" attacks you<BR>" + enemy.attackTarget(currentPlayer);
+				return currentPlayer.attackTarget(enemy) + "<BR><BR>" + enemy.attackTarget(currentPlayer);
 			else return "you cannot attack " + command.getSecondWord();
 		}
 		return "There is no " + command.getSecondWord();

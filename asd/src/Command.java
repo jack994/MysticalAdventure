@@ -1,8 +1,8 @@
 
 public class Command {
 
-	private String firstWord;
-	private String secondWord;
+	private String firstWord; //first part of the command
+	private String secondWord; //second part of the command
 
 	private static final String[] commandWords = 
 		{ "help", "go", "drop", "pick up", "take", "leave", "examine", "attack", "equip",
@@ -13,9 +13,31 @@ public class Command {
 		secondWord = second;
 	}
 	public Command(){
-		
+		// empty constructor
 	}
 	
+	public String getFirstWord(){
+		return firstWord;
+	}
+	public String getSecondWord(){
+		return secondWord;
+	}
+	
+	public boolean hasFirstWord(){
+		if(firstWord != null && !firstWord.equals(""))
+			return true;
+		return false;
+	}
+	public boolean hasSecondWord(){
+		if(secondWord != null && !secondWord.equals(""))
+			return true;
+		return false;
+	}
+	
+	/**
+	 * makes a list of the commands
+	 * @return a string containing all the availabel commands
+	 */
 	public String listCommands(){
 		String ret = "";
 		for(int i = 0; i < commandWords.length ; i++){
@@ -29,23 +51,11 @@ public class Command {
 		return ret;
 	}
 	
-	public String getFirstWord(){
-		return firstWord;
-	}
-	public String getSecondWord(){
-		return secondWord;
-	}
-	public boolean hasFirstWord(){
-		if(firstWord != null && !firstWord.equals(""))
-			return true;
-		return false;
-	}
-	public boolean hasSecondWord(){
-		if(secondWord != null && !secondWord.equals(""))
-			return true;
-		return false;
-	}
-	
+	/**
+	 * finds the instructions in the String and separeates them.
+	 * @param instruction
+	 * @return
+	 */
 	public String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
 		for(int i = 0; i < commandWords.length; i++){

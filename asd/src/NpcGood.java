@@ -6,4 +6,11 @@ public class NpcGood extends NPC {
 		super(name, description, HP, active, speech);
 	}
 
+	public String interact(Character pl) {
+		if(isActive()){
+			return getSpeech();
+		}
+		return "";
+	}
+
 }

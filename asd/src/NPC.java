@@ -3,7 +3,7 @@ public abstract class NPC extends Character {
 
 	private String description;
 	private String speech;
-	private boolean active;
+	private boolean active; //auto-attacker for NPCBad, auto-talker for NPCGood
 	private String firstSpeech;
 	private boolean firstTimeMet;
 
@@ -14,6 +14,8 @@ public abstract class NPC extends Character {
 		this.speech = speech;
 		setFirstTimeMet(true);
 	}
+	
+	public abstract String interact(Character pl);
 
 	public String die() {
 		isAlive = false;

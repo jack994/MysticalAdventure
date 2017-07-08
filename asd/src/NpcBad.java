@@ -5,5 +5,14 @@ public class NpcBad extends NPC {
 		super(name, description, HP, active, speech);
 	}
 
+	public String interact(Character pl) {
+		if(isActive()){
+			return attackTarget(pl);
+		}
+		else{
+			return getSpeech();
+		}
+	}
+
 }
 

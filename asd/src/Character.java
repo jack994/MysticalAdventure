@@ -9,7 +9,7 @@ public abstract class Character {
 	protected ArrayList<Tools> itemsHeld;
 	protected Room currentRoom;
 	protected int money;
-	protected int HP;
+	protected int HP; // initial life
 	protected int lifeRemaining;
 	protected Weapon weapon;
 
@@ -23,31 +23,82 @@ public abstract class Character {
 		weapon = NN;
 	}
 
+	//-------------abstract methods-------------//
+	
+	public abstract String getItems();
 	public abstract String die();
-
-	public double getMoneyAmount() {
-		return money;
+	
+	
+	//------------------getter methods-----------------//
+	
+	public String getName() {
+		return name;
 	}
 
-	public void addMoney(int money) {
-		this.money += money;
+	public boolean isAlive() {
+		return isAlive;
+	}
+
+	public int getHP() {
+		return HP;
+	}
+	
+	public int getLifeRemaining(){
+		return lifeRemaining;
+	}
+	
+	public double getMoneyAmount() {
+		return money;
 	}
 
 	public Room getCurrentRoom() {
 		return currentRoom;
 	}
-
+	
+	public Weapon getWeapon() {
+		return weapon;
+	}
+	
+	//----------------setter methods-------------------//
+	
+	public void addMoney(int money) {
+		this.money += money;
+	}
+	
 	public void setCurrentRoom(Room room) {
 		currentRoom = room;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	public abstract String getItems();
+	public void setLifeRemaining(int life){
+		this.lifeRemaining = life;
+	}
+	
+	public void setHP(int hP) {
+		HP = hP;
+	}
+	
+	public void setWeapon(Weapon weapon){
+		this.weapon = weapon;
+	}
+	
+	//---------------------------------------------//
 
+	/**
+	 * add object to the ArrayList containing the items the character is carying.
+	 * @param o
+	 */
 	public void addObj(Tools o) {
-
 		itemsHeld.add(o);
 	}
 
+	/**
+	 * @param s: string to be recognised
+	 * @return the object in the arraylist corresponding to the string passed
+	 */
 	public Tools getToolFromString(String s) {
 		for (Tools x : itemsHeld) {
 			if (x.getName().equals(s)) {
@@ -57,6 +108,11 @@ public abstract class Character {
 		return null;
 	}
 
+	/**
+	 * add an object to the ArrayList containing the items carried.
+	 * @param o: String corresponding to the item.
+	 * @return a string describing the action.
+	 */
 	public String addObjCalled(String o) {
 		String b = "";
 		Item t;
@@ -72,6 +128,11 @@ public abstract class Character {
 		}
 	}
 
+	/**
+	 * remove an object from the ArrayList containing the items carried.
+	 * @param o: String corresponding to the item.
+	 * @return a string describing the action.
+	 */
 	public String removeObjCalled(String o) {
 		String b = "";
 		for (int i = 0; i < itemsHeld.size(); i++) {
@@ -88,6 +149,10 @@ public abstract class Character {
 		}
 	}
 	
+	/**
+	 * drop all items carried from the character and add them to the current room.
+	 * @return a string describing the action.
+	 */
 	public String dropAllItems(){
 		String all = "";
 		for(Tools x: itemsHeld){
@@ -100,31 +165,12 @@ public abstract class Character {
 		}
 		return this.getName() + " dropped: " + all; 
 	}
-
 	
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public boolean isAlive() {
-		return isAlive;
-	}
-
-	public int getHP() {
-		return HP;
-	}
-	
-	public int getLifeRemaining(){
-		return lifeRemaining;
-	}
-	public void setLifeRemaining(int life){
-		this.lifeRemaining = life;
-	}
-	
+	/**
+	 * the target is attacked with the equipped weapon, if the target has no remaining life it is set as dead.
+	 * @param target: character to be attacked
+	 * @return a string describing the action.
+	 */
 	public String attackTarget(Character target){
 		Random rand = new Random();
 		int damage;
@@ -136,23 +182,11 @@ public abstract class Character {
 			if(target.getLifeRemaining() <= 0){
 				return target.getName() + " is dead<BR>" + target.die();
 			}
-			return target.getName() + " remaining life: " + target.getLifeRemaining() + "%";
+			return this.getName() + " attacks "+ target.getName() + "<BR>" + target.getName() + " remaining life: " + target.getLifeRemaining() + "%";
 		}
 		else{
-			return this.getName() + "Misses!";
+			return this.getName() + " attacks "+ target.getName() + "<BR>" + this.getName() + " misses!";
 		}
-	}
-
-	public void setHP(int hP) {
-		HP = hP;
-	}
-
-	public Weapon getWeapon() {
-		return weapon;
-	}
-	
-	public void setWeapon(Weapon weapon){
-		this.weapon = weapon;
 	}
 
 }

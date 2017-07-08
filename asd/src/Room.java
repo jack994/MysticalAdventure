@@ -113,6 +113,10 @@ public class Room {
 		return toReturn;
 	}
 	
+	public ArrayList<NPC> getNPCArray() {
+		return npcs;
+	}
+	
 	public NPC getNPCNamed(String Name){		
 		if(!npcs.isEmpty()){
 			for(NPC pl : npcs){
