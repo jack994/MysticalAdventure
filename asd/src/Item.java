@@ -1,3 +1,7 @@
+/**
+ * abstract class used as superclass for the classes Fixed and Tool
+ * @author giacomobenso
+ */
 public abstract class Item {
 	
 	private String name;

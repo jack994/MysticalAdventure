@@ -48,12 +48,12 @@ public class Map {
 		wardrobe.addMoney(100);
 		Rooms[0].addFixed(wardrobe);
 		Fixed bed = new Fixed("bed");
-		bed.addTool(new Tools("key","A golden key", 0));
+		bed.addTool(new Tool("key","A golden key", 0));
 		Rooms[0].addFixed(bed);
 		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50, false, "grawallll");
 		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 10, 0.90f);
 		Demogorgon.setWeapon(demo);
-		Tools demoC = new Tools("claw of demogorgon", "a horrid claw",8);
+		Tool demoC = new Tool("claw of demogorgon", "a horrid claw",8);
 		Demogorgon.addObj(demoC);
 		Rooms[0].addnpcs(Demogorgon);
 		
@@ -62,19 +62,19 @@ public class Map {
 		Rooms[1].addnpcs(druid);
 		Fixed chest = new Fixed("chest");
 		chest.addMoney(150);
-		chest.addTool(new Weapon("knife","A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.95f));
+		chest.addTool(new Weapon("knife","A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.99f));
 		Rooms[1].addFixed(chest);
-		Rooms[1].addTool(new Tools("salt","It's just some tablesalt", 5));
+		Rooms[1].addTool(new Tool("salt","It's just some tablesalt", 5));
 		
 		Fixed cupboard = new Fixed("cupboard");
 		cupboard.addMoney(50);
-		cupboard.addTool(new Tools("apple","A green apple, it seems still ripe", 2));
+		cupboard.addTool(new Tool("apple","A green apple, it seems still ripe", 2));
 		Rooms[2].addFixed(cupboard);
 		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45, true, "gnam gnam");
-		Weapon axe = new Weapon("axe","A shiny axe", 50, 8, 0.90f);
-		Demogorgon.setWeapon(axe);
-		Tools eyeG = new Tools("goblin eye", "a horrid claw",8);
-		Demogorgon.addObj(eyeG);
+		Weapon axe = new Weapon("axe","A shiny axe", 50, 8, 0.95f);
+		goblin.setWeapon(axe);
+		Tool eyeG = new Tool("goblin eye", "a horrid claw",8);
+		goblin.addObj(eyeG);
 		Rooms[2].addnpcs(goblin);
 		
 	}

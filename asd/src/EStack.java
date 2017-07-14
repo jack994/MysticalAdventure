@@ -1,7 +1,9 @@
 import java.util.Stack;
 
-//testing comments
-
+/**
+ * this class allows the use of the history in the textbox.
+ * @author giacomobenso
+ */
 public class EStack extends Stack<String> {
 
 	private static final long serialVersionUID = 1L;

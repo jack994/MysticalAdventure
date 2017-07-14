@@ -1,11 +1,15 @@
-
+/**
+ * abstract class used as superclass for the classes NpcBad and NpcGood
+ * @author giacomobenso
+ *
+ */
 public abstract class NPC extends Character {
 
 	private String description;
+	private boolean firstTimeMet;
+	private String firstSpeech;
 	private String speech;
 	private boolean active; //auto-attacker for NPCBad, auto-talker for NPCGood
-	private String firstSpeech;
-	private boolean firstTimeMet;
 
 	public NPC(String name, String description, int HP, boolean active, String speech) {
 		super(name, HP);
@@ -26,10 +30,11 @@ public abstract class NPC extends Character {
 
 		Weapon wp = weapon;
 		if (!weapon.getName().equals("none")) {
-			currentRoom.addTool((Tools) weapon);
+			currentRoom.addTool((Tool) weapon);
+			return super.dropAllItems() + ", " + wp.getName();
 		}
 		weapon = null;
-		return super.dropAllItems() + " " + wp.getName();
+		return super.dropAllItems();
 	}
 
 	public String getSpeech(){

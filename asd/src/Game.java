@@ -47,23 +47,31 @@ public class Game {
 	public String processCommand(Command command) {
 		String firstWord = command.getFirstWord();
 
-		if(firstWord.equals("go"))
+		if(firstWord.equals("go")){
 			return goRoom(command);
-		else if(firstWord.equals("help"))
+		}
+		else if(firstWord.equals("help")){
 			return printHelp(command);
-		else if(firstWord.equals("pick up") || firstWord.equals("take"))	
+		}
+		else if(firstWord.equals("pick up") || firstWord.equals("take")){
 			return pickTool(command);
-		else if(firstWord.equals("drop") || firstWord.equals("leave"))
+		}
+		else if(firstWord.equals("drop") || firstWord.equals("leave")){
 			return dropTool(command);
-		else if(firstWord.equals("attack"))	
+		}
+		else if(firstWord.equals("attack"))	{
 			return attack(command);
-		else if(firstWord.equals("equip"))
+		}
+		else if(firstWord.equals("equip")){
 			return equip(command);
-		else if(firstWord.equals("examine"))
+		}
+		else if(firstWord.equals("examine")){
 			return examineObj(command);
+		}
 		else if(firstWord.equals("speak to") || firstWord.equals("talk to") 
-				|| firstWord.equals("talk") || firstWord.equals("speak"))
+				|| firstWord.equals("talk") || firstWord.equals("speak")){
 			return speakToChar(command);
+		}
 		
 		else return "I can't understand what you mean, write 'help' for the command list";
 
@@ -97,24 +105,24 @@ public class Game {
 			return "what do you want to " + command.getFirstWord() + "?";
 		else {
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) {
-				if (temp.getClass() == Tools.class || temp.getClass() == Weapon.class) {
+				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
 					currentPlayer.addObjCalled(temp.getName());
-					frame.addItemToMenu((Tools) temp);
+					frame.addItemToMenu((Tool) temp);
 					currentPlayer.currentRoom.removeItemNamed(command.getSecondWord());
-					return "you picked up " + temp.getName();
+					return "you picked up " + temp.getName() + beingattacked();
 				} else {
 					return "you can't pick up " + temp.getName() + " try the command \"examine " + temp.getName()
-							+ "\"";
+							+ "\"" + beingattacked();
 				}
 			}
-			return "you don't see any " + command.getSecondWord();
+			return "you don't see any " + command.getSecondWord() + beingattacked();
 		}
 	}
 
 	public String dropTool(Command command) {
-		Tools t = currentPlayer.getToolFromString(command.getSecondWord());
+		Tool t = currentPlayer.getToolFromString(command.getSecondWord());
 		if (!command.hasSecondWord())
-			return "what do you want to " + command.getFirstWord() + "?";
+			return "what do you want to " + command.getFirstWord() + "?" + beingattacked();
 		else {
 			if (t != null) {
 				if(currentPlayer.getWeapon().getName().equals(t.getName())){
@@ -123,34 +131,35 @@ public class Game {
 				}	
 				frame.removeItemFromMenu(t.getName());
 				currentPlayer.currentRoom.addTool(t);
-				return currentPlayer.removeObjCalled(command.getSecondWord());
+				return currentPlayer.removeObjCalled(command.getSecondWord()) + beingattacked();
 			}
 		}
-		return "You are not carrying " + command.getSecondWord();
+		return "You are not carrying " + command.getSecondWord() + beingattacked();
 	}
 
 	public String examineObj(Command command) {
 		if (!command.hasSecondWord() || command.getSecondWord().equals("room")) {
-			return currentPlayer.currentRoom.getNameAndDescription();
+			return currentPlayer.currentRoom.getNameAndDescription() + beingattacked();
 		}
 		Item tmp;
 		if (((tmp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null)
 				|| ((tmp = currentPlayer.getToolFromString(command.getSecondWord())) != null) 
 				) {
-			if (tmp.getClass() == Tools.class || tmp.getClass() == Weapon.class) {
-				Tools t = (Tools) tmp;
-				return t.getDescription();
+			if (tmp.getClass() == Tool.class || tmp.getClass() == Weapon.class) {
+				Tool t = (Tool) tmp;
+				return t.getDescription() + beingattacked();
 			} else {
 				Fixed t = (Fixed) tmp;
 				t.open();
 				if (!t.getToolList().isEmpty()) {
-					return "items contained : " + t.getToolList() + "<BR>" + "money contained: " + t.getMoney();
+					return "items contained : " + t.getToolList() + "<BR>" + "money contained: " 
+				+ t.getMoney() + "<BR><BR>" + beingattacked();
 				} else {
-					return "money contained: " + t.getMoney();
+					return "money contained: " + t.getMoney() + beingattacked();
 				}
 			}
 		}
-		return "I don't understand what you mean with " + command.getSecondWord();
+		return "I don't understand what you mean with " + command.getSecondWord() + "<BR><BR>" + beingattacked();
 	}
 	
 	public String attack(Command command){
@@ -162,7 +171,7 @@ public class Game {
 			if(!enemy.isAlive()){
 				return enemy.getName() + " is already dead";
 			}
-			if(enemy.getClass() == NpcBad.class)
+			else if(enemy.getClass() == NpcBad.class)
 				return currentPlayer.attackTarget(enemy) + "<BR><BR>" + enemy.attackTarget(currentPlayer);
 			else return "you cannot attack " + command.getSecondWord();
 		}
@@ -173,33 +182,33 @@ public class Game {
 		if(!command.hasSecondWord()){
 			return "what do you want to equip?";
 		}
-		Tools t;
+		Tool t;
 		if((t = currentPlayer.getToolFromString(command.getSecondWord()))!= null){
 			if(t.getClass() == Weapon.class){
 				frame.getWeaponLabel().setText(t.getName());
-				return currentPlayer.equipWeapon((Weapon)t);
+				return currentPlayer.equipWeapon((Weapon)t) + beingattacked();
 			}
 			else{
-				return "you can only equip weapons";
+				return "you can only equip weapons" + beingattacked();
 			}
 		}
-		return "There is no " + command.getSecondWord();
+		return "There is no " + command.getSecondWord() + beingattacked();
 	}
 	
 	public String speakToChar(Command command){
 		if(!command.hasSecondWord()){
-			return "you: blablablabla. <BR>if you want to speak to someone write 'speak to <subject>'";
+			return "you: blablablabla. <BR>if you want to speak to someone write 'speak to <subject>'" + beingattacked();
 		}
 		NPC npc;
 		if((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null){
 			if(npc.getClass() == NpcGood.class){
-				return npc.getSpeech();
+				return npc.getSpeech() + beingattacked();
 			}
 			else{
 				return npc.getSpeech() + "<BR>" + npc.attackTarget(currentPlayer);
 			}
 		}
-		return "you can't speak to " + command.getSecondWord();
+		return "you can't speak to " + command.getSecondWord() + beingattacked();
 	}
 	
 	public String printHelp(Command command) {
@@ -221,6 +230,18 @@ public class Game {
 
 	public void start() {
 		printWelcome();
+	}
+	
+	public String beingattacked(){
+		for(NPC attacker : currentPlayer.getCurrentRoom().getNPCArray()){
+			if((attacker.getClass() == NpcBad.class) && attacker.isActive() && attacker.isAlive()){
+				return "<BR><BR>" + attacker.attackTarget(currentPlayer);
+			}
+			else{
+				return "";
+			}
+		}
+		return "";
 	}
 
 	public static void main(String[] args) {

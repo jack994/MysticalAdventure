@@ -39,7 +39,7 @@ public class Room {
 
 	}
 
-	public void addTool(Tools o) {
+	public void addTool(Tool o) {
 		items.add(o);
 	}
 
@@ -68,7 +68,7 @@ public class Room {
 				return items.get(i);
 			if(items.get(i).getClass() == Fixed.class && (f = (Fixed) items.get(i)).hasBeenOpened()){
 				if(!f.getToolsArrayList().isEmpty()){
-					for(Tools x : f.getToolsArrayList()){
+					for(Tool x : f.getToolsArrayList()){
 						if(Name.equals(x.getName())){
 							return x;
 						}

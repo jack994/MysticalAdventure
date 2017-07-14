@@ -1,5 +1,5 @@
 
-public class Weapon extends Tools {
+public class Weapon extends Tool {
 	
 	private int damage;
 	private float precision;

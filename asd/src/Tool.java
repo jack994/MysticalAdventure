@@ -1,10 +1,10 @@
 
-public class Tools extends Item {
+public class Tool extends Item {
 
 	private int value;
 	private String description;
 
-	public Tools(String name, String description, int value) {
+	public Tool(String name, String description, int value) {
 		super(name);
 		this.value = value;
 		this.description = description;

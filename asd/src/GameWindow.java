@@ -5,9 +5,10 @@ import javax.swing.*;
 public class GameWindow extends JFrame {
 	
 	private int itemCounter = 8;
-	private int startItem = 8;
-	private int endItem = 36;
-	private boolean fullBag = false;
+	private static int greenLabelsCounter = 100;
+	private static int startItem = 8;
+	private static int endItem = 36;
+	private static boolean fullBag = false;
 
 	private static final long serialVersionUID = 1L;
 	Font f = new Font("sansSerif", Font.PLAIN, 13);
@@ -17,13 +18,26 @@ public class GameWindow extends JFrame {
 	private static JTextField input;
 
 	private static JPanel menuPanel;
-	private static JPanel[] first18;
+	private static JPanel first4;
+	private static JPanel second4;
+	private static JPanel statsPanel;
+	private static JPanel items1;
+	private static JPanel items2;
+	private static JPanel items3;
+	private static JPanel items4;
+	private static JPanel items5;
+	private static JPanel items6;
+	private static JPanel allItems1;
+	private static JPanel allItems2;
+	private static JPanel allItems3;
 	private static JPanel ingredients1;
 	private static JPanel ingredients2;
 	private static JLabel ingredients;
 	private static JPanel mysIngredient;
 	private static JLabel[] labels;
 	private static JPanel pfittiz;
+	private static JPanel ingrpan;
+	private static JLabel[] labss;
 
 	public GameWindow() {
 		makeFrame();
@@ -41,53 +55,110 @@ public class GameWindow extends JFrame {
 		pane.setBackground(Color.WHITE);
 		pane.setContentType("text/html");
 		input = new JTextField();
-		input.setPreferredSize(new Dimension(770, 50));
+		input.setPreferredSize(new Dimension(1000, 50));
 		labels = new JLabel[38];
-		for (int i = 0; i < labels.length; i++) {
-			labels[i] = new JLabel("");
+		for (int k = 0; k < labels.length; k++) {
+			labels[k] = new JLabel("");
 		}
-		labels[0].setText("Deaths: ");
-		labels[1].setText(0 + "");
-		labels[2].setText("Money: ");
-		labels[3].setText(0 + "");
+		labels[0].setText("Life: ");
+		labels[1].setText(0 + "");  ////////////////////////////////
+		labels[2].setText("Deaths: ");
+		labels[3].setText(0 + "");		
 		labels[4].setText("Weapon: ");
 		labels[5].setText("none");
-		labels[6].setText("Item: ");
+		labels[6].setText("Item:  ");
 		labels[6].setFont(f2);
-		labels[7].setText("Quantity: ");
+		labels[7].setText("Q.ty:  ");
 		labels[7].setFont(f2);
-		menuPanel = new JPanel(new GridLayout(22, 1));
-		first18 = new JPanel[18];
-		for (int i = 0; i < first18.length; i++) {
-			first18[i] = new JPanel(new GridLayout(1, 2));
-			first18[i].add(labels[i * 2]);
-			first18[i].add(labels[(i * 2) + 1]);
-			menuPanel.add(first18[i]);
-			if (i == 3) {
-				first18[i].setBackground(Color.WHITE);
+		labels[6].setOpaque(true);
+		labels[7].setOpaque(true);
+		labels[6].setBackground(Color.WHITE);
+		labels[7].setBackground(Color.WHITE);
+		menuPanel = new JPanel(new GridLayout(5,1));
+		first4 = new JPanel(new GridLayout(3, 1));
+		second4 = new JPanel(new GridLayout(3, 1));
+		statsPanel = new JPanel(new BorderLayout());
+		items1 = new JPanel(new GridLayout(4, 1));
+		items2 = new JPanel(new GridLayout(4, 1));
+		items3 = new JPanel(new GridLayout(4, 1));
+		items4 = new JPanel(new GridLayout(4, 1));
+		items5 = new JPanel(new GridLayout(4, 1));
+		items6 = new JPanel(new GridLayout(4, 1));
+		allItems1 = new JPanel(new BorderLayout());
+		allItems2 = new JPanel(new BorderLayout());
+		allItems3 = new JPanel(new BorderLayout());
+		
+		int index;
+		for(index = 0; index < 3; index++) {
+			if(index==0){				
+				first4.add(labels[index * 2]);
+				JPanel pann = new JPanel(new GridLayout(1,100));
+				labss = new JLabel[100];
+				for(int z=0; z<labss.length; z++){
+					labss[z] = new JLabel("");
+					labss[z].setOpaque(true);
+					pann.add(labss[z]);
+					labss[z].setBackground(Color.GREEN);
+				}
+				second4.add(pann);
+			}
+			else{
+			first4.add(labels[index * 2]);
+			second4.add(labels[(index * 2) + 1]);
 			}
 		}
+		statsPanel.add(first4, BorderLayout.WEST);
+		statsPanel.add(second4, BorderLayout.CENTER);
+		menuPanel.add(statsPanel);
+		while(index < 7) {
+			items1.add(labels[index * 2]);
+			items2.add(labels[(index * 2) + 1]);
+			index++;
+		}
+		while(index < 11) {
+			items3.add(labels[(index * 2)]);
+			items4.add(labels[(index * 2) + 1]);
+			index++;
+		}
+		while(index < 15) {
+			items5.add(labels[index * 2]);
+			items6.add(labels[(index * 2) + 1]);
+			index++;
+		}
+		allItems1.add(items1, BorderLayout.CENTER);
+		allItems1.add(items2, BorderLayout.EAST);
+		menuPanel.add(allItems1);
+		allItems2.add(items3, BorderLayout.CENTER);
+		allItems2.add(items4, BorderLayout.EAST);
+		menuPanel.add(allItems2);
+		allItems3.add(items5, BorderLayout.CENTER);
+		allItems3.add(items6, BorderLayout.EAST);
+		menuPanel.add(allItems3);
 		ingredients = new JLabel("Ingredients :");
+		ingredients.setOpaque(true);
+		ingredients.setBackground(Color.WHITE);
 		ingredients.setFont(f2);
 		ingredients1 = new JPanel(new GridLayout(1, 3));
 		ingredients2 = new JPanel(new GridLayout(1, 3));
 		mysIngredient = new JPanel(new GridLayout(1, 2));
-		menuPanel.add(ingredients);
-		menuPanel.add(ingredients1);
-		menuPanel.add(ingredients2);
-		menuPanel.add(mysIngredient);
+		ingrpan = new JPanel(new GridLayout(4,1));
+		ingrpan.add(ingredients);
+		ingrpan.add(ingredients1);
+		ingrpan.add(ingredients2);
+		ingrpan.add(mysIngredient);
+		menuPanel.add(ingrpan);
 		menuPanel.setBackground(Color.WHITE);
 		menuPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-		menuPanel.setPreferredSize(new Dimension(180, 180));
+		menuPanel.setPreferredSize(new Dimension(300, 300));
 		getContentPane().add(menuPanel, BorderLayout.WEST);
 		getContentPane().add(panelPane, BorderLayout.CENTER);
-		pfittiz = new JPanel();
-		pfittiz.add(input);
-		pfittiz.setBorder(BorderFactory.createEmptyBorder(0, 180, 0, 0));
+		pfittiz = new JPanel(new BorderLayout());
+		pfittiz.add(input, BorderLayout.CENTER);
+		pfittiz.setBorder(BorderFactory.createEmptyBorder(0, 300, 0, 0));
 		pfittiz.setBackground(Color.WHITE);
 		getContentPane().add(pfittiz, BorderLayout.SOUTH);
 		setVisible(true);
-		setSize(new Dimension(950, 650));
+		setSize(new Dimension(1100, 680));
 		input.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent key) {
 				int keyCode = key.getKeyCode();
@@ -137,7 +208,7 @@ public class GameWindow extends JFrame {
 		return fullBag;
 	}
 
-	public void addItemToMenu(Tools tool) {
+	public void addItemToMenu(Tool tool) {
 		if (itemCounter * 2 <= endItem) {
 			if (itemCounter * 2 == endItem) {
 				fullBag = true;
@@ -162,6 +233,36 @@ public class GameWindow extends JFrame {
 				labels[i + 1].setText("");
 				itemCounter -= 2;
 
+			}
+		}
+	}
+	public static void decreaseLife(int life){
+		if(life < (greenLabelsCounter)){
+			greenLabelsCounter -= life;
+			int i = 0;
+			for(JLabel l : labss){
+				if(i<greenLabelsCounter){
+					l.setBackground(Color.GREEN);
+				}
+				else{
+					l.setBackground(Color.RED);
+				}
+				i++;
+			}
+		}
+	}
+	public void increaseLife(int life){
+		if((life + greenLabelsCounter) < 100){
+			greenLabelsCounter += life;
+			int i = 0;
+			for(JLabel l : labss){
+				if(i<greenLabelsCounter){
+					l.setBackground(Color.GREEN);
+				}
+				else{
+					l.setBackground(Color.RED);
+				}
+				i++;
 			}
 		}
 	}

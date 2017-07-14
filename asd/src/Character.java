@@ -6,7 +6,7 @@ public abstract class Character {
 
 	protected String name;
 	protected boolean isAlive;
-	protected ArrayList<Tools> itemsHeld;
+	protected ArrayList<Tool> itemsHeld;
 	protected Room currentRoom;
 	protected int money;
 	protected int HP; // initial life
@@ -14,7 +14,7 @@ public abstract class Character {
 	protected Weapon weapon;
 
 	public Character(String name, int HP) {
-		itemsHeld = new ArrayList<Tools>();
+		itemsHeld = new ArrayList<Tool>();
 		isAlive = true;
 		this.name = name;
 		this.HP = HP;
@@ -91,7 +91,7 @@ public abstract class Character {
 	 * add object to the ArrayList containing the items the character is carying.
 	 * @param o
 	 */
-	public void addObj(Tools o) {
+	public void addObj(Tool o) {
 		itemsHeld.add(o);
 	}
 
@@ -99,8 +99,8 @@ public abstract class Character {
 	 * @param s: string to be recognised
 	 * @return the object in the arraylist corresponding to the string passed
 	 */
-	public Tools getToolFromString(String s) {
-		for (Tools x : itemsHeld) {
+	public Tool getToolFromString(String s) {
+		for (Tool x : itemsHeld) {
 			if (x.getName().equals(s)) {
 				return x;
 			}
@@ -117,7 +117,7 @@ public abstract class Character {
 		String b = "";
 		Item t;
 		if((t = currentRoom.getItemNamed(o))!= null){
-			itemsHeld.add((Tools) t);
+			itemsHeld.add((Tool) t);
 			b = o;
 		}
 	
@@ -155,13 +155,13 @@ public abstract class Character {
 	 */
 	public String dropAllItems(){
 		String all = "";
-		for(Tools x: itemsHeld){
+		for(Tool x: itemsHeld){
 			this.currentRoom.addTool(x);
 			all = all + x.getName() + ", " ;
 		}
 		itemsHeld.clear();
 		if(all.length() > 3){
-			all = all.substring(0, (all.length() -3));
+			all = all.substring(0, (all.length() -2));
 		}
 		return this.getName() + " dropped: " + all; 
 	}
@@ -172,15 +172,22 @@ public abstract class Character {
 	 * @return a string describing the action.
 	 */
 	public String attackTarget(Character target){
+		if(!this.isAlive){
+			return "";
+		}
 		Random rand = new Random();
 		int damage;
 		
-		int r = rand.nextInt(100);
+		int r = rand.nextInt(101);
 		if(r < this.getWeapon().getPrecisionOutOf100()){
 			damage = (100 * this.weapon.getDamage()) / target.getHP();
 			target.setLifeRemaining(target.getLifeRemaining() - damage);
 			if(target.getLifeRemaining() <= 0){
 				return target.getName() + " is dead<BR>" + target.die();
+			}
+			if(target.getClass() == Player.class){
+				GameWindow.decreaseLife(damage);   // decrease life in the green life bar
+				return this.getName() + " attacks "+ target.getName();
 			}
 			return this.getName() + " attacks "+ target.getName() + "<BR>" + target.getName() + " remaining life: " + target.getLifeRemaining() + "%";
 		}

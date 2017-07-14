@@ -1,13 +1,17 @@
 import java.util.ArrayList;
 
+/**
+ * Big items impossible to carry.
+ * @author giacomobenso
+ */
 public class Fixed extends Item {
 	private int money;
-	private boolean opened;
-	private ArrayList<Tools> t;
+	private boolean opened; // has the item been examined?
+	private ArrayList<Tool> t; // List of tools within 
 
 	public Fixed(String name) {
 		super(name);
-		t = new ArrayList<Tools>();
+		t = new ArrayList<Tool>();
 		opened = false;
 
 	}
@@ -20,17 +24,21 @@ public class Fixed extends Item {
 		return opened;
 	}
 
-	void addTool(Tools d) {
+	void addTool(Tool d) {
 		t.add(d);
 	}
 
-	public ArrayList<Tools> getToolsArrayList(){
+	public ArrayList<Tool> getToolsArrayList(){
 		return t;
 	}
 	
+	/**
+	 * creates a string with all the items in the arraylist.
+	 * @return a string with all the items in the arraylist, comma separated.
+	 */
 	String getToolList() {
 		String toreturn = "";
-		for (Tools c : t) {
+		for (Tool c : t) {
 			toreturn += c.getName() + ", ";
 		}
 		if(toreturn.length()>3){
@@ -39,9 +47,14 @@ public class Fixed extends Item {
 		return toreturn;
 	}
 
-	Tools getToolCalled(String d) {
+	/**
+	 * passing a string to this method wie find the item with that name in the arraylist
+	 * @param d String corresponding to the name of the item we want to find in the arraylist
+	 * @return the item
+	 */
+	Tool getToolCalled(String d) {
 		
-		for (Tools c : t) {
+		for (Tool c : t) {
 			if (c.getName().equals(d))
 			return c;
 		}
