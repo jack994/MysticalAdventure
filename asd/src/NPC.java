@@ -1,9 +1,11 @@
+import java.io.Serializable;
+
 /**
  * abstract class used as superclass for the classes NpcBad and NpcGood
  * @author giacomobenso
  *
  */
-public abstract class NPC extends Character {
+public abstract class NPC extends Character implements Serializable{
 
 	private String description;
 	private boolean firstTimeMet;
@@ -11,8 +13,8 @@ public abstract class NPC extends Character {
 	private String speech;
 	private boolean active; //auto-attacker for NPCBad, auto-talker for NPCGood
 
-	public NPC(String name, String description, int HP, boolean active, String speech) {
-		super(name, HP);
+	public NPC(String name, String description, int HP, int money, boolean active, String speech) {
+		super(name, HP, money);
 		this.description = description;
 		this.active = active;
 		this.speech = speech;

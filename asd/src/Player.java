@@ -1,17 +1,18 @@
-public class Player extends Character {
+import java.io.Serializable;
+
+public class Player extends Character implements Serializable{
 	
 	public Player(String name) {
-		super(name, 100);
-		money = 100;
+		super(name, 100, 100);
 	}
 
 	public String getItems() {
 		String items = "";
 		for (int i = 0; i < itemsHeld.size(); i++) {
 			if (!itemsHeld.get(i).equals(itemsHeld.get(itemsHeld.size() - 1)))
-				items = items + itemsHeld.get(i).getDescription() + ", ";
+				items = items + itemsHeld.get(i).getName() + ", ";
 			else
-				items = items + itemsHeld.get(i).getDescription() + ". ";
+				items = items + itemsHeld.get(i).getName() + ". ";
 		}
 		return "you are carrying: " + items;
 	}

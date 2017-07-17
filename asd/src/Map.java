@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Map {
+public class Map implements Serializable{
 	private Room[] Rooms;
 
 	public Map() {
@@ -50,14 +51,14 @@ public class Map {
 		Fixed bed = new Fixed("bed");
 		bed.addTool(new Tool("key","A golden key", 0));
 		Rooms[0].addFixed(bed);
-		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50, false, "grawallll");
-		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 10, 0.90f);
+		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50,0, false, "grawallll",3);
+		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 6, 0.90f);
 		Demogorgon.setWeapon(demo);
 		Tool demoC = new Tool("claw of demogorgon", "a horrid claw",8);
 		Demogorgon.addObj(demoC);
 		Rooms[0].addnpcs(Demogorgon);
 		
-		NpcGood druid = new NpcGood("Druid", "a busy druid with enormous horns", 1000, true, "are you still here?");
+		NpcGood druid = new NpcGood("druid", "a busy druid with enormous horns", 1000,150, true, "are you still here?");
 		druid.setFirstSpeech("Aaawww finally you woke up! I was waiting for you");
 		Rooms[1].addnpcs(druid);
 		Fixed chest = new Fixed("chest");
@@ -70,8 +71,8 @@ public class Map {
 		cupboard.addMoney(50);
 		cupboard.addTool(new Tool("apple","A green apple, it seems still ripe", 2));
 		Rooms[2].addFixed(cupboard);
-		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45, true, "gnam gnam");
-		Weapon axe = new Weapon("axe","A shiny axe", 50, 8, 0.95f);
+		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45,45, true, "gnam gnam",1);
+		Weapon axe = new Weapon("axe","A shiny axe", 50, 6, 0.95f);
 		goblin.setWeapon(axe);
 		Tool eyeG = new Tool("goblin eye", "a horrid claw",8);
 		goblin.addObj(eyeG);

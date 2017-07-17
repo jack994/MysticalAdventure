@@ -1,10 +1,19 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Game {
-	private GameWindow frame;
+public class Game implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	public static GameWindow frame;
 	private Command callerCommand;
-	private Player currentPlayer;
+	public Player currentPlayer;
 	private Room StartRoom;
 	private Map map;
 	public static EStack THESTACK = new EStack(10);;
@@ -101,8 +110,22 @@ public class Game {
 			return "Your bag is full";
 		}
 		Item temp;
-		if (!command.hasSecondWord())
+		if (!command.hasSecondWord()){
 			return "what do you want to " + command.getFirstWord() + "?";
+		}
+		else if(command.getSecondWord().equals("money")){
+			for(Item f : currentPlayer.getCurrentRoom().getItemsArray()){
+				if(f.getClass() == Fixed.class){
+					if(((Fixed) f).hasBeenOpened() && ((Fixed) f).getMoney() > 0){
+						int mon;
+						currentPlayer.addMoney(mon = ((Fixed) f).getMoney());
+						((Fixed) f).removeAllMoney();
+						return "money added: " + mon;
+					}
+				}
+			}
+			return "error money not found";
+		}
 		else {
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) {
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
@@ -243,10 +266,5 @@ public class Game {
 		}
 		return "";
 	}
-
-	public static void main(String[] args) {
-
-		Game g = new Game();
-		g.start();
-	}
+	
 }

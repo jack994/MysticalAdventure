@@ -1,8 +1,9 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class Character {
+public abstract class Character implements Serializable{
 
 	protected String name;
 	protected boolean isAlive;
@@ -13,13 +14,14 @@ public abstract class Character {
 	protected int lifeRemaining;
 	protected Weapon weapon;
 
-	public Character(String name, int HP) {
+	public Character(String name, int HP, int money) {
 		itemsHeld = new ArrayList<Tool>();
 		isAlive = true;
 		this.name = name;
 		this.HP = HP;
+		this.money = money;
 		lifeRemaining = 100;
-		Weapon NN = new Weapon("none","no weapon",0,1,0.5f);
+		Weapon NN = new Weapon("none", "no weapon", 0, 1, 0.95f);
 		weapon = NN;
 	}
 
@@ -47,7 +49,7 @@ public abstract class Character {
 		return lifeRemaining;
 	}
 	
-	public double getMoneyAmount() {
+	public int getMoneyAmount() {
 		return money;
 	}
 
@@ -59,10 +61,21 @@ public abstract class Character {
 		return weapon;
 	}
 	
+	public ArrayList<Tool> getItemsHeldArray(){
+		return itemsHeld;
+	}
 	//----------------setter methods-------------------//
 	
 	public void addMoney(int money) {
 		this.money += money;
+		Game.frame.getMoneyLabel().setText(this.money + "");
+	}
+	
+	public void removeMoney(int money){
+		if(this.money > money){
+		this.money -= money;
+		Game.frame.getMoneyLabel().setText(this.money + "");
+		}
 	}
 	
 	public void setCurrentRoom(Room room) {
@@ -186,7 +199,7 @@ public abstract class Character {
 				return target.getName() + " is dead<BR>" + target.die();
 			}
 			if(target.getClass() == Player.class){
-				GameWindow.decreaseLife(damage);   // decrease life in the green life bar
+				Game.frame.decreaseLife(damage);   // decrease life in the green life bar
 				return this.getName() + " attacks "+ target.getName();
 			}
 			return this.getName() + " attacks "+ target.getName() + "<BR>" + target.getName() + " remaining life: " + target.getLifeRemaining() + "%";

@@ -1,10 +1,11 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Room {
+public class Room implements Serializable{
 	private String name;
 	private String description;
 	private ArrayList<Item> items;

@@ -1,43 +1,49 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
+
 import javax.swing.*;
 
-public class GameWindow extends JFrame {
+public class GameWindow extends JFrame implements Serializable{
 	
-	private int itemCounter = 8;
-	private static int greenLabelsCounter = 100;
-	private static int startItem = 8;
-	private static int endItem = 36;
+	private static int itemCounter = 10;
+	public static int greenLabelsCounter = 100;
+	private static final int startItem = 10;
+	private static final int endItem = 36;
 	private static boolean fullBag = false;
 
 	private static final long serialVersionUID = 1L;
 	Font f = new Font("sansSerif", Font.PLAIN, 13);
 	Font f2 = new Font("sansSerif", Font.BOLD, 14);
-	private static JScrollPane panelPane;
-	private static JTextPane pane;
-	private static JTextField input;
+	private JScrollPane panelPane;
+	private JTextPane pane;
+	private JTextField input;
+	private JMenuBar menubar;
+	private JMenu menu;
+	public  JMenuItem save;
+	public  JMenuItem load;
 
-	private static JPanel menuPanel;
-	private static JPanel first4;
-	private static JPanel second4;
-	private static JPanel statsPanel;
-	private static JPanel items1;
-	private static JPanel items2;
-	private static JPanel items3;
-	private static JPanel items4;
-	private static JPanel items5;
-	private static JPanel items6;
-	private static JPanel allItems1;
-	private static JPanel allItems2;
-	private static JPanel allItems3;
-	private static JPanel ingredients1;
-	private static JPanel ingredients2;
-	private static JLabel ingredients;
-	private static JPanel mysIngredient;
-	private static JLabel[] labels;
-	private static JPanel pfittiz;
-	private static JPanel ingrpan;
-	private static JLabel[] labss;
+	private JPanel menuPanel;   
+	private JPanel first4;
+	private JPanel second4;
+	private JPanel statsPanel;
+	private JPanel items1;
+	private JPanel items2;
+	private JPanel items3;
+	private JPanel items4;
+	private JPanel items5;
+	private JPanel items6;
+	private JPanel allItems1;
+	private JPanel allItems2;
+	private JPanel allItems3;
+	private JPanel ingredients1;
+	private JPanel ingredients2;
+	private JLabel ingredients;
+	private JPanel mysIngredient;
+	private JLabel[] labels;
+	private JPanel pfittiz;
+	private JPanel ingrpan;
+	private JLabel[] labss;
 
 	public GameWindow() {
 		makeFrame();
@@ -56,27 +62,29 @@ public class GameWindow extends JFrame {
 		pane.setContentType("text/html");
 		input = new JTextField();
 		input.setPreferredSize(new Dimension(1000, 50));
-		labels = new JLabel[38];
+		labels = new JLabel[40];
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
 		}
-		labels[0].setText("Life: ");
+		labels[0].setText(" Life: ");
 		labels[1].setText(0 + "");  ////////////////////////////////
-		labels[2].setText("Deaths: ");
+		labels[2].setText(" Deaths:  ");
 		labels[3].setText(0 + "");		
-		labels[4].setText("Weapon: ");
-		labels[5].setText("none");
-		labels[6].setText("Item:  ");
-		labels[6].setFont(f2);
-		labels[7].setText("Q.ty:  ");
-		labels[7].setFont(f2);
-		labels[6].setOpaque(true);
-		labels[7].setOpaque(true);
-		labels[6].setBackground(Color.WHITE);
-		labels[7].setBackground(Color.WHITE);
+		labels[4].setText(" Weapon: ");
+		labels[5].setText(" none");
+		labels[6].setText(" Money:   ");
+		labels[7].setText(100 + "");
+		labels[8].setText(" Item:  ");
+		labels[8].setFont(f2);
+		labels[9].setText("Q.ty:  ");
+		labels[9].setFont(f2);
+		labels[8].setOpaque(true);
+		labels[9].setOpaque(true);
+		labels[8].setBackground(Color.WHITE);
+		labels[9].setBackground(Color.WHITE);
 		menuPanel = new JPanel(new GridLayout(5,1));
-		first4 = new JPanel(new GridLayout(3, 1));
-		second4 = new JPanel(new GridLayout(3, 1));
+		first4 = new JPanel(new GridLayout(4, 1));
+		second4 = new JPanel(new GridLayout(4, 1));
 		statsPanel = new JPanel(new BorderLayout());
 		items1 = new JPanel(new GridLayout(4, 1));
 		items2 = new JPanel(new GridLayout(4, 1));
@@ -89,7 +97,7 @@ public class GameWindow extends JFrame {
 		allItems3 = new JPanel(new BorderLayout());
 		
 		int index;
-		for(index = 0; index < 3; index++) {
+		for(index = 0; index < 4; index++) {
 			if(index==0){				
 				first4.add(labels[index * 2]);
 				JPanel pann = new JPanel(new GridLayout(1,100));
@@ -98,6 +106,9 @@ public class GameWindow extends JFrame {
 					labss[z] = new JLabel("");
 					labss[z].setOpaque(true);
 					pann.add(labss[z]);
+					if(z>greenLabelsCounter){
+						labss[z].setBackground(Color.RED);
+					}else
 					labss[z].setBackground(Color.GREEN);
 				}
 				second4.add(pann);
@@ -177,6 +188,14 @@ public class GameWindow extends JFrame {
 				}
 			}
 		});
+		menubar = new JMenuBar();
+		menu = new JMenu("menu");
+		save = new JMenuItem("save");
+		load = new JMenuItem("load");
+		menu.add(save);
+		menu.add(load);
+		menubar.add(menu);
+		setJMenuBar(menubar);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
@@ -193,11 +212,11 @@ public class GameWindow extends JFrame {
 	}
 
 	public JLabel getDeathsLabel() {
-		return labels[1];
+		return labels[3];
 	}
 
 	public JLabel getMoneyLabel() {
-		return labels[3];
+		return labels[7];
 	}
 
 	public JLabel getWeaponLabel() {
@@ -207,6 +226,29 @@ public class GameWindow extends JFrame {
 	public boolean BagFull() {
 		return fullBag;
 	}
+	
+public void resetLifelabel(){
+		
+	int i = 0;
+	for(JLabel l : labss){
+		if(i<greenLabelsCounter){
+			l.setBackground(Color.GREEN);
+		}
+		else{
+			l.setBackground(Color.RED);
+		}
+		i++;
+	}
+}
+//		
+//		
+//		String s = getDeathsLabel().getText(); ///////////////// TODO reset deaths after save.
+//		
+//		getWeaponLabel().setText(Game.currentPlayer.getWeapon().getName());
+//		getMoneyLabel().setText(Game.currentPlayer.getMoneyAmount()+"");
+//		
+//		//for(Game.currentPlayer.get)
+//	}
 
 	public void addItemToMenu(Tool tool) {
 		if (itemCounter * 2 <= endItem) {
@@ -236,7 +278,7 @@ public class GameWindow extends JFrame {
 			}
 		}
 	}
-	public static void decreaseLife(int life){
+	public void decreaseLife(int life){
 		if(life < (greenLabelsCounter)){
 			greenLabelsCounter -= life;
 			int i = 0;

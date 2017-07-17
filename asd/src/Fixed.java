@@ -1,10 +1,11 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Big items impossible to carry.
  * @author giacomobenso
  */
-public class Fixed extends Item {
+public class Fixed extends Item implements Serializable{
 	private int money;
 	private boolean opened; // has the item been examined?
 	private ArrayList<Tool> t; // List of tools within 
@@ -67,6 +68,9 @@ public class Fixed extends Item {
 
 	void addMoney(int m) {
 		money += m;
+	}
+	void removeAllMoney() {
+		money = 0;
 	}
 
 	int getMoney() {

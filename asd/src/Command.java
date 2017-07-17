@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class Command {
+public class Command implements Serializable{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
