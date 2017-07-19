@@ -240,15 +240,13 @@ public void resetLifelabel(){
 		i++;
 	}
 }
-//		
-//		
-//		String s = getDeathsLabel().getText(); ///////////////// TODO reset deaths after save.
-//		
-//		getWeaponLabel().setText(Game.currentPlayer.getWeapon().getName());
-//		getMoneyLabel().setText(Game.currentPlayer.getMoneyAmount()+"");
-//		
-//		//for(Game.currentPlayer.get)
-//	}
+
+public void resetItemsCounter(){
+	itemCounter = 10;
+	for (int k = itemCounter; k < 22; k++) {
+		labels[k].setText("");
+	}
+}
 
 	public void addItemToMenu(Tool tool) {
 		if (itemCounter * 2 <= endItem) {
