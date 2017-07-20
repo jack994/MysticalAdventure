@@ -38,6 +38,10 @@ public abstract class NPC extends Character implements Serializable{
 		weapon = null;
 		return super.dropAllItems();
 	}
+	
+	public void setSpeech(String newSpeech){
+		speech = newSpeech;
+	}
 
 	public String getSpeech(){
 		if(firstTimeMet && (firstSpeech != null)){

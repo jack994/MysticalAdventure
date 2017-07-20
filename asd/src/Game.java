@@ -55,7 +55,7 @@ public class Game implements Serializable{
 
 	public String processCommand(Command command) {
 		String firstWord = command.getFirstWord();
-
+		
 		if(firstWord.equals("go")){
 			return goRoom(command);
 		}
@@ -81,9 +81,24 @@ public class Game implements Serializable{
 				|| firstWord.equals("talk") || firstWord.equals("speak")){
 			return speakToChar(command);
 		}
+		else if(currentPlayer.currentRoom.getName().equals("THE MEADOW") && 
+				firstWord.equals("say")){
+			return saySomething(command);
+		}
 		
 		else return "I can't understand what you mean, write 'help' for the command list";
 
+	}
+	
+	public String saySomething(Command command){
+		if((command.getSecondWord().equals("moon") || command.getSecondWord().equals("the moon")) && 
+				currentPlayer.getCurrentRoom().getName().equals("THE MEADOW")){
+			map.addPassage(3, 4, "south");
+			currentPlayer.getCurrentRoom().getNPCNamed("treant").setSpeech("Good job with the riddle, now you can pass.");
+			return "the treant slowly moves left, there is now a passage where he sat (south).";
+		}else{
+			return "nothing happens";
+		}
 	}
 
 	public String goRoom(Command command) {
@@ -225,6 +240,9 @@ public class Game implements Serializable{
 		NPC npc;
 		if((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null){
 			if(npc.getClass() == NpcGood.class){
+				if(npc.getName().equals("druid")){
+					currentPlayer.getCurrentRoom().removeNpcNamed("druid");
+				}
 				return npc.getSpeech() + beingattacked();
 			}
 			else{

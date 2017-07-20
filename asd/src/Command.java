@@ -7,7 +7,7 @@ public class Command implements Serializable{
 
 	private static final String[] commandWords = 
 		{ "help", "go", "drop", "pick up", "take", "leave", "examine", "attack", "equip",
-			"speak", "talk", "talk to", "speak to"};
+			"speak", "talk", "talk to", "speak to", "say"};
 	
 	public Command(String first, String second){
 		firstWord = first;
