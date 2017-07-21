@@ -62,9 +62,9 @@ public class Map implements Serializable {
 
 		Fixed wardrobe = new Fixed("wardrobe");
 		wardrobe.addMoney(100);
+		wardrobe.addTool(new Tool("torch", "a wooden torch, could be helpful", 2));
 		Rooms[0].addFixed(wardrobe);
 		Fixed bed = new Fixed("bed");
-		bed.addTool(new Tool("key", "A golden key", 0));
 		Rooms[0].addFixed(bed);
 		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50, 0, false,
 				"grawallll", 3);
@@ -92,10 +92,10 @@ public class Map implements Serializable {
 		cupboard.addMoney(50);
 		cupboard.addTool(new Tool("apple", "A green apple, it seems still ripe", 2));
 		Rooms[2].addFixed(cupboard);
-		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45, 45, true, "gnam gnam", 1);
+		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45, 45, true, "Grwaaal", 1);
 		Weapon axe = new Weapon("axe", "A shiny axe", 50, 6, 0.95f);
 		goblin.setWeapon(axe);
-		Tool eyeG = new Tool("goblin eye", "a horrid eye", 8);
+		Tool eyeG = new Tool("goblin eye", "a disgusting goblin eye", 8);
 		goblin.addObj(eyeG);
 		Rooms[2].addnpcs(goblin);
 

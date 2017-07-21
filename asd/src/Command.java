@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Command implements Serializable{
 	
@@ -7,10 +8,14 @@ public class Command implements Serializable{
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
 
-	private static final String[] commandWords = 
-		{ "help", "go", "drop", "pick up", "take", "leave", "examine", "attack", "equip",
-			"speak", "talk", "talk to", "speak to", "say"};
-	
+	private static ArrayList<String> commandWords = new ArrayList<String>(){
+		private static final long serialVersionUID = 1L;
+	{
+	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
+	    add("equip"); add("speak"); add("talk"); add("talk to"); add("speak to"); add("say");
+	}
+	};
+
 	public Command(String first, String second){
 		firstWord = first;
 		secondWord = second;
@@ -43,14 +48,10 @@ public class Command implements Serializable{
 	 */
 	public String listCommands(){
 		String ret = "";
-		for(int i = 0; i < commandWords.length ; i++){
-			if(i == commandWords.length -1){
-				ret = ret + commandWords[i] + ". ";
-			}
-			else{
-			ret = ret + commandWords[i] + ",&nbsp;";
-			}
+		for(String com : commandWords){
+			ret = ret + com + ",&nbsp;";
 		}
+		ret = ret.substring(0, ret.length()-7) + ".";
 		return ret;
 	}
 	
@@ -61,10 +62,10 @@ public class Command implements Serializable{
 	 */
 	public String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
-		for(int i = 0; i < commandWords.length; i++){
-		if(instruction.startsWith(commandWords[i])){
-			ret[0] = commandWords[i];
-			ret[1] = instruction.replace(commandWords[i], "");
+		for(String s : commandWords){
+		if(instruction.startsWith(s)){
+			ret[0] = s;
+			ret[1] = instruction.replace(s, "");
 		}
 		}
 		if(ret[0] == null){	
