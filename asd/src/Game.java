@@ -86,8 +86,9 @@ public class Game implements Serializable{
 	}
 	
 	public String saySomething(Command command){
+		
 		if((command.getSecondWord().equals("moon") || command.getSecondWord().equals("the moon")) && 
-				currentPlayer.getCurrentRoom().getName().equals("THE MEADOW")){
+				currentPlayer.getCurrentRoom().getName().equals("THE MEADOW")){ //treant riddle solved
 			map.addPassage(3, 4, "south");
 			currentPlayer.getCurrentRoom().getNPCNamed("treant").setSpeech("Good job with the riddle, now you can pass.");
 			return "the treant slowly moves left, there is now a passage where he sat (south).";
@@ -175,6 +176,7 @@ public class Game implements Serializable{
 			return currentPlayer.currentRoom.getNameAndDescription() + beingattacked();
 		}
 		Item tmp;
+		NPC npc;
 		if (((tmp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null)
 				|| ((tmp = currentPlayer.getToolFromString(command.getSecondWord())) != null) 
 				) {
@@ -186,13 +188,16 @@ public class Game implements Serializable{
 				t.open();
 				if (!t.getToolList().isEmpty()) {
 					return "items contained : " + t.getToolList() + "<BR>" + "money contained: " 
-				+ t.getMoney() + "<BR><BR>" + beingattacked();
+				+ t.getMoney() + beingattacked();
 				} else {
 					return "money contained: " + t.getMoney() + beingattacked();
 				}
 			}
 		}
-		return "I don't understand what you mean with " + command.getSecondWord() + "<BR><BR>" + beingattacked();
+		else if((npc = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null){
+			return npc.getDescription();
+		}
+		return "I don't understand what you mean with " + command.getSecondWord() + beingattacked();
 	}
 	
 	public String attack(Command command){

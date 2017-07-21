@@ -31,7 +31,7 @@ public class Map implements Serializable {
 						+ " thick you could't even pass through.</i>");
 		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the ligtht "
 				+ "is still passing through the leaves and the air is humid");
-		Rooms[5] = new Room("THE WOOD - East 1",
+		Rooms[5] = new Room("THE WOOD - East",
 				"the trees in this part of the forest are thicker and you struggle to see anything in this " + "area.");
 		Rooms[6] = new Room("THE WOOD - Valley",
 				"in the middle of this area there is a river and all around flowers grow luxuriant. east you "
