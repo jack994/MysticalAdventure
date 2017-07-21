@@ -1,6 +1,8 @@
 import java.io.Serializable;
 
 public class Command implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
@@ -14,7 +16,7 @@ public class Command implements Serializable{
 		secondWord = second;
 	}
 	public Command(){
-		// empty constructor
+		// empty constructor needed in class Game
 	}
 	
 	public String getFirstWord(){
@@ -37,7 +39,7 @@ public class Command implements Serializable{
 	
 	/**
 	 * makes a list of the commands
-	 * @return a string containing all the availabel commands
+	 * @return a string containing all the available commands
 	 */
 	public String listCommands(){
 		String ret = "";
@@ -46,7 +48,7 @@ public class Command implements Serializable{
 				ret = ret + commandWords[i] + ". ";
 			}
 			else{
-			ret = ret + commandWords[i] + ", ";
+			ret = ret + commandWords[i] + ",&nbsp;";
 			}
 		}
 		return ret;

@@ -6,6 +6,9 @@ import java.util.ArrayList;
  * @author giacomobenso
  */
 public class Fixed extends Item implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private int money;
 	private boolean opened; // has the item been examined?
 	private ArrayList<Tool> t; // List of tools within 

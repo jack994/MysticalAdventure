@@ -1,10 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Game implements Serializable{
@@ -16,7 +11,7 @@ public class Game implements Serializable{
 	public Player currentPlayer;
 	private Room StartRoom;
 	private Map map;
-	public static EStack THESTACK = new EStack(10);;
+	public static EStack THESTACK = new EStack(10);
 	public final Weapon NN = new Weapon("none","no weapon",0,1,0.5f);
 
 	public Game() {
@@ -253,12 +248,12 @@ public class Game implements Serializable{
 	}
 	
 	public String printHelp(Command command) {
-		if (command.hasSecondWord()) {
-			return "the 'help' command needs to be used by its own!";
-		} else {
-			callerCommand = new Command();
-			return "your commands are: " + command.listCommands();
-		}
+
+			return "<b>Your commands are:</b> <i>" + command.listCommands() + "</i><BR>" + 
+			"commands can be combined with other words or objects (usually charachters or items in the room),"
+			+ " some examples are : <b>'go north', 'examine', 'examine chest', 'pick up key', 'attack goblin',"
+			+ " 'say hello'.</b>";
+		
 	}
 
 	public void printWelcome() {

@@ -2,6 +2,8 @@ import java.io.Serializable;
 
 public class Player extends Character implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
 	public Player(String name) {
 		super(name, 100, 100);
 	}

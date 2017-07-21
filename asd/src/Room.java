@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Room implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String description;
 	private ArrayList<Item> items;

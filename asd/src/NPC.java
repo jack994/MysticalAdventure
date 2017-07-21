@@ -6,6 +6,8 @@ import java.io.Serializable;
  *
  */
 public abstract class NPC extends Character implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	private String description;
 	private boolean firstTimeMet;

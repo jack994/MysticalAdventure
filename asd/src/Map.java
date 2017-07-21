@@ -1,6 +1,9 @@
 import java.io.Serializable;
 
-public class Map implements Serializable{
+public class Map implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	private Room[] Rooms;
 
 	public Map() {
@@ -28,12 +31,14 @@ public class Map implements Serializable{
 						+ " thick you could't even pass through.</i>");
 		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the ligtht "
 				+ "is still passing through the leaves and the air is humid");
-		Rooms[5] = new Room("THE WOOD - East 1", "the trees in this part of the forest are thicker and you struggle to see anything in this "
-				+ "area.");
-		Rooms[6] = new Room("THE WOOD - Valley", "in the middle of this area there is a river and all around flowers grow luxuriant. east you "
-				+ "can see a waterfall, beside it, a dark entrance of what seems to be a tunnel.");
-		Rooms[7] = new Room("THE TUNNEL - Entrance","You can see nothing but the entrance of the tunnel behind you. it's really dark.");
-		
+		Rooms[5] = new Room("THE WOOD - East 1",
+				"the trees in this part of the forest are thicker and you struggle to see anything in this " + "area.");
+		Rooms[6] = new Room("THE WOOD - Valley",
+				"in the middle of this area there is a river and all around flowers grow luxuriant. east you "
+						+ "can see a waterfall, beside it, a dark entrance of what seems to be a tunnel.");
+		Rooms[7] = new Room("THE TUNNEL - Entrance",
+				"You can see nothing but the entrance of the tunnel behind you. it's really dark.");
+
 		return Rooms[3];
 	}
 
@@ -54,21 +59,23 @@ public class Map implements Serializable{
 	}
 
 	public void addItemsToRooms() {
-		
+
 		Fixed wardrobe = new Fixed("wardrobe");
 		wardrobe.addMoney(100);
 		Rooms[0].addFixed(wardrobe);
 		Fixed bed = new Fixed("bed");
-		bed.addTool(new Tool("key","A golden key", 0));
+		bed.addTool(new Tool("key", "A golden key", 0));
 		Rooms[0].addFixed(bed);
-		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50,0, false, "grawallll",3);
-		Weapon demo = new Weapon("sword","A shiny sword with some blood on the blade, possibly yours", 50, 6, 0.90f);
+		NpcBad Demogorgon = new NpcBad("demogorgon", "a horrid shadow with a shaape of a dragon", 50, 0, false,
+				"grawallll", 3);
+		Weapon demo = new Weapon("sword", "A shiny sword with some blood on the blade, possibly yours", 50, 6, 0.90f);
 		Demogorgon.setWeapon(demo);
-		Tool demoC = new Tool("claw of demogorgon", "a horrid claw",8);
+		Tool demoC = new Tool("claw of demogorgon", "a horrid claw", 8);
 		Demogorgon.addObj(demoC);
 		Rooms[0].addnpcs(Demogorgon);
-		
-		NpcGood druid = new NpcGood("druid", "a busy druid with enormous horns", 1000,150, true, "Look, the forest is dying, I need your help to "
+
+		NpcGood druid = new NpcGood("druid", "a busy druid with enormous horns", 1000, 150, true,
+				"Look, the forest is dying, I need your help to "
 				+ "find three ingredients to make a potion that will heal it, the creatures of the forest will tell you which ingredients i need."
 				+ " sorry if i can't tell you anything more but I have to go, come back to me when you have the three ingredients."
 				+ " The Druid runs towards the exit door.<BR><BR><b>druid :</b> ah, I almost forgot, treants like riddles and the number 7!");
@@ -76,25 +83,26 @@ public class Map implements Serializable{
 		Rooms[1].addnpcs(druid);
 		Fixed chest = new Fixed("chest");
 		chest.addMoney(150);
-		chest.addTool(new Weapon("knife","A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.99f));
+		chest.addTool(
+				new Weapon("knife", "A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.99f));
 		Rooms[1].addFixed(chest);
-		Rooms[1].addTool(new Tool("salt","It's just some tablesalt", 5));
-		
+		Rooms[1].addTool(new Tool("salt", "It's just some tablesalt", 5));
+
 		Fixed cupboard = new Fixed("cupboard");
 		cupboard.addMoney(50);
-		cupboard.addTool(new Tool("apple","A green apple, it seems still ripe", 2));
+		cupboard.addTool(new Tool("apple", "A green apple, it seems still ripe", 2));
 		Rooms[2].addFixed(cupboard);
-		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45,45, true, "gnam gnam",1);
-		Weapon axe = new Weapon("axe","A shiny axe", 50, 6, 0.95f);
+		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45, 45, true, "gnam gnam", 1);
+		Weapon axe = new Weapon("axe", "A shiny axe", 50, 6, 0.95f);
 		goblin.setWeapon(axe);
-		Tool eyeG = new Tool("goblin eye", "a horrid claw",8);
+		Tool eyeG = new Tool("goblin eye", "a horrid eye", 8);
 		goblin.addObj(eyeG);
 		Rooms[2].addnpcs(goblin);
-		
-		NpcGood treant = new NpcGood("treant","an enormous alive tree that blocks the passage to the wood", 100, 130, false, 
-				"Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
+
+		NpcGood treant = new NpcGood("treant", "an enormous alive tree that blocks the passage to the wood", 100, 130,
+				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
-		
+
 	}
 
 	public Room getRoomCalled(String name) {
@@ -121,8 +129,8 @@ public class Map implements Serializable{
 		}
 		return false;
 	}
-	
-	public void addPassage(int roomNumber, int roomConnection, String name){
-		Rooms[roomNumber].setDirection( name, Rooms[roomConnection]);
+
+	public void addPassage(int roomNumber, int roomConnection, String name) {
+		Rooms[roomNumber].setDirection(name, Rooms[roomConnection]);
 	}
 }

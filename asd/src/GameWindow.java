@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 import javax.swing.*;
 
-public class GameWindow extends JFrame implements Serializable{
-	
+public class GameWindow extends JFrame implements Serializable {
+
 	private static int itemCounter = 10;
 	public static int greenLabelsCounter = 100;
 	private static final int startItem = 10;
-	private static final int endItem = 36;
+	private static final int endItem = 32;
 	private static boolean fullBag = false;
 
 	private static final long serialVersionUID = 1L;
@@ -20,10 +20,10 @@ public class GameWindow extends JFrame implements Serializable{
 	private JTextField input;
 	private JMenuBar menubar;
 	private JMenu menu;
-	public  JMenuItem save;
-	public  JMenuItem load;
+	public JMenuItem save;
+	public JMenuItem load;
 
-	private JPanel menuPanel;   
+	private JPanel menuPanel;
 	private JPanel first4;
 	private JPanel second4;
 	private JPanel statsPanel;
@@ -67,9 +67,8 @@ public class GameWindow extends JFrame implements Serializable{
 			labels[k] = new JLabel("");
 		}
 		labels[0].setText(" Life: ");
-		labels[1].setText(0 + "");  ////////////////////////////////
 		labels[2].setText(" Deaths:  ");
-		labels[3].setText(0 + "");		
+		labels[3].setText(0 + "");
 		labels[4].setText(" Weapon: ");
 		labels[5].setText(" none");
 		labels[6].setText(" Money:   ");
@@ -82,9 +81,9 @@ public class GameWindow extends JFrame implements Serializable{
 		labels[9].setOpaque(true);
 		labels[8].setBackground(Color.WHITE);
 		labels[9].setBackground(Color.WHITE);
-		menuPanel = new JPanel(new GridLayout(5,1));
-		first4 = new JPanel(new GridLayout(4, 1));
-		second4 = new JPanel(new GridLayout(4, 1));
+		menuPanel = new JPanel(new GridLayout(5, 1));
+		first4 = new JPanel(new GridLayout(5, 1));
+		second4 = new JPanel(new GridLayout(5, 1));
 		statsPanel = new JPanel(new BorderLayout());
 		items1 = new JPanel(new GridLayout(4, 1));
 		items2 = new JPanel(new GridLayout(4, 1));
@@ -95,45 +94,56 @@ public class GameWindow extends JFrame implements Serializable{
 		allItems1 = new JPanel(new BorderLayout());
 		allItems2 = new JPanel(new BorderLayout());
 		allItems3 = new JPanel(new BorderLayout());
-		
+
 		int index;
-		for(index = 0; index < 4; index++) {
-			if(index==0){				
+		for (index = 0; index < 5; index++) {
+			if (index == 0) {
 				first4.add(labels[index * 2]);
-				JPanel pann = new JPanel(new GridLayout(1,100));
+				JPanel pan = new JPanel(new GridLayout(1, 100));
 				labss = new JLabel[100];
-				for(int z=0; z<labss.length; z++){
+				for (int z = 0; z < labss.length; z++) {
 					labss[z] = new JLabel("");
 					labss[z].setOpaque(true);
-					pann.add(labss[z]);
-					if(z>greenLabelsCounter){
+					pan.add(labss[z]);
+					if (z > greenLabelsCounter) {
 						labss[z].setBackground(Color.RED);
-					}else
-					labss[z].setBackground(Color.GREEN);
+					} else
+						labss[z].setBackground(Color.GREEN);
 				}
-				second4.add(pann);
-			}
-			else{
-			first4.add(labels[index * 2]);
-			second4.add(labels[(index * 2) + 1]);
+				second4.add(pan);
+			} else if (index == 4) {
+				JPanel pan1 = new JPanel(new BorderLayout());
+				JPanel pan2 = new JPanel(new BorderLayout());
+				pan1.add(labels[index * 2], BorderLayout.WEST);
+				pan2.add(labels[(index * 2) + 1], BorderLayout.EAST);
+				pan1.setBackground(Color.white);
+				pan2.setBackground(Color.white);
+				first4.add(pan1);
+				second4.add(pan2);
+			} else {
+				first4.add(labels[index * 2]);
+				second4.add(labels[(index * 2) + 1]);
 			}
 		}
 		statsPanel.add(first4, BorderLayout.WEST);
 		statsPanel.add(second4, BorderLayout.CENTER);
 		menuPanel.add(statsPanel);
-		while(index < 7) {
+		while (index < 9) {
 			items1.add(labels[index * 2]);
 			items2.add(labels[(index * 2) + 1]);
+			items2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
 			index++;
 		}
-		while(index < 11) {
+		while (index < 13) {
 			items3.add(labels[(index * 2)]);
 			items4.add(labels[(index * 2) + 1]);
+			items4.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
 			index++;
 		}
-		while(index < 15) {
+		while (index < 17) {
 			items5.add(labels[index * 2]);
 			items6.add(labels[(index * 2) + 1]);
+			items6.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
 			index++;
 		}
 		allItems1.add(items1, BorderLayout.CENTER);
@@ -152,36 +162,36 @@ public class GameWindow extends JFrame implements Serializable{
 		ingredients1 = new JPanel(new GridLayout(1, 3));
 		ingredients2 = new JPanel(new GridLayout(1, 3));
 		mysIngredient = new JPanel(new GridLayout(1, 2));
-		ingrpan = new JPanel(new GridLayout(4,1));
+		ingrpan = new JPanel(new GridLayout(4, 1));
 		ingrpan.add(ingredients);
 		ingrpan.add(ingredients1);
 		ingrpan.add(ingredients2);
 		ingrpan.add(mysIngredient);
 		menuPanel.add(ingrpan);
 		menuPanel.setBackground(Color.WHITE);
-		menuPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
-		menuPanel.setPreferredSize(new Dimension(300, 300));
+		menuPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		menuPanel.setPreferredSize(new Dimension(280, 280));
 		getContentPane().add(menuPanel, BorderLayout.WEST);
 		getContentPane().add(panelPane, BorderLayout.CENTER);
 		pfittiz = new JPanel(new BorderLayout());
 		pfittiz.add(input, BorderLayout.CENTER);
-		pfittiz.setBorder(BorderFactory.createEmptyBorder(0, 300, 0, 0));
+		pfittiz.setBorder(BorderFactory.createEmptyBorder(0, 260, 0, 0));
 		pfittiz.setBackground(Color.WHITE);
 		getContentPane().add(pfittiz, BorderLayout.SOUTH);
 		setVisible(true);
-		setSize(new Dimension(1100, 680));
+		setSize(new Dimension(1080, 680));
 		input.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent key) {
 				int keyCode = key.getKeyCode();
-				
+
 				switch (keyCode) {
 				case (KeyEvent.VK_UP): {
-					if(!Game.THESTACK.isEmpty())
+					if (!Game.THESTACK.isEmpty())
 						input.setText(Game.THESTACK.pop());
 					break;
 				}
 				case (KeyEvent.VK_DOWN): {
-					if(!Game.THESTACK.getS2().isEmpty())
+					if (!Game.THESTACK.getS2().isEmpty())
 						input.setText(Game.THESTACK.pushFromS2());
 					break;
 				}
@@ -226,35 +236,34 @@ public class GameWindow extends JFrame implements Serializable{
 	public boolean BagFull() {
 		return fullBag;
 	}
-	
-public void resetLifelabel(){
-		
-	int i = 0;
-	for(JLabel l : labss){
-		if(i<greenLabelsCounter){
-			l.setBackground(Color.GREEN);
-		}
-		else{
-			l.setBackground(Color.RED);
-		}
-		i++;
-	}
-}
 
-public void resetItemsCounter(){
-	itemCounter = 10;
-	for (int k = itemCounter; k < 22; k++) {
-		labels[k].setText("");
+	public void resetLifelabel() {
+
+		int i = 0;
+		for (JLabel l : labss) {
+			if (i < greenLabelsCounter) {
+				l.setBackground(Color.GREEN);
+			} else {
+				l.setBackground(Color.RED);
+			}
+			i++;
+		}
 	}
-}
+
+	public void resetItemsCounter() {
+		itemCounter = 10;
+		for (int k = itemCounter; k < endItem; k++) {
+			labels[k].setText("");
+		}
+	}
 
 	public void addItemToMenu(Tool tool) {
-		if (itemCounter * 2 <= endItem) {
-			if (itemCounter * 2 == endItem) {
+		if (itemCounter <= endItem) {
+			if (itemCounter == endItem) {
 				fullBag = true;
 			}
 			for (int j = startItem; j < endItem; j = j + 2) {
-				if (labels[j].getText().equals(tool.getDescription())) {
+				if (labels[j].getText().equals(tool.getName())) {
 					int tmp = Integer.parseInt(labels[j + 1].getText());
 					labels[j + 1].setText((tmp + 1) + "");
 					return;
@@ -267,39 +276,44 @@ public void resetItemsCounter(){
 	}
 
 	public void removeItemFromMenu(String tool) {
+		int qty;
 		for (int i = 0; i < labels.length; i++) {
 			if (tool.equals(labels[i].getText())) {
-				labels[i].setText("");
-				labels[i + 1].setText("");
-				itemCounter -= 2;
+				if ((qty = Integer.parseInt(labels[i + 1].getText())) == 1) {
+					labels[i].setText("");
+					labels[i + 1].setText("");
+					itemCounter -= 2;
+				} else {
+					labels[i + 1].setText((qty - 1) + "");
+				}
 
 			}
 		}
 	}
-	public void decreaseLife(int life){
-		if(life < (greenLabelsCounter)){
+
+	public void decreaseLife(int life) {
+		if (life < (greenLabelsCounter)) {
 			greenLabelsCounter -= life;
 			int i = 0;
-			for(JLabel l : labss){
-				if(i<greenLabelsCounter){
+			for (JLabel l : labss) {
+				if (i < greenLabelsCounter) {
 					l.setBackground(Color.GREEN);
-				}
-				else{
+				} else {
 					l.setBackground(Color.RED);
 				}
 				i++;
 			}
 		}
 	}
-	public void increaseLife(int life){
-		if((life + greenLabelsCounter) < 100){
+
+	public void increaseLife(int life) {
+		if ((life + greenLabelsCounter) < 100) {
 			greenLabelsCounter += life;
 			int i = 0;
-			for(JLabel l : labss){
-				if(i<greenLabelsCounter){
+			for (JLabel l : labss) {
+				if (i < greenLabelsCounter) {
 					l.setBackground(Color.GREEN);
-				}
-				else{
+				} else {
 					l.setBackground(Color.RED);
 				}
 				i++;

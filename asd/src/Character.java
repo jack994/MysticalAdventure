@@ -5,6 +5,8 @@ import java.util.Random;
 
 public abstract class Character implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	protected String name;
 	protected boolean isAlive;
 	protected ArrayList<Tool> itemsHeld;

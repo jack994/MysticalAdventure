@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,22 +7,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class Serial {
-	
+
 	static Game g;
-	
+
 	public static void serializer() {
-	try {
-		FileOutputStream fileOut = new FileOutputStream("./folder/savedGame.ser");
-		ObjectOutputStream out = new ObjectOutputStream(fileOut);
-		out.writeObject(g);
-		out.close();
-		fileOut.close();
-		System.out.printf("Serialized data is saved in ./folder/savedGame.ser");
-	} catch (IOException i) {
-		i.printStackTrace();
+		try {
+			FileOutputStream fileOut = new FileOutputStream("./folder/savedGame.ser");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(g);
+			out.close();
+			fileOut.close();
+			System.out.printf("Serialized data is saved in ./folder/savedGame.ser");
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
 	}
-}
-	
+
 	public static void deserializer(boolean dispose) {
 		try {
 			FileInputStream fileIn = new FileInputStream("./folder/savedGame.ser");
@@ -31,8 +30,8 @@ public class Serial {
 			g = (Game) in.readObject();
 			in.close();
 			fileIn.close();
-			GameWindow.greenLabelsCounter = g.currentPlayer.getLifeRemaining(); // reset correct life in life bar
-			if(!dispose){
+			GameWindow.greenLabelsCounter = g.currentPlayer.getLifeRemaining(); // reset correct life in life-bar
+			if (!dispose) {
 				Game.frame = new GameWindow();
 			}
 			Game.frame.getTextBox().addActionListener(new ActionListener() {
@@ -41,12 +40,12 @@ public class Serial {
 					g.write();
 				}
 			});
-			Game.frame.getMoneyLabel().setText(g.currentPlayer.getMoneyAmount()+""); ///// QUESTO FUNZIONA!!!!
-			Game.frame.getWeaponLabel().setText(g.currentPlayer.getWeapon().getName()); ///// QUESTO FUNZIONA!!!!
+			Game.frame.getMoneyLabel().setText(g.currentPlayer.getMoneyAmount() + ""); // reset money in JFrame
+			Game.frame.getWeaponLabel().setText(g.currentPlayer.getWeapon().getName()); //reset weapon in JFrame
 			Game.frame.resetItemsCounter();
-				for(Tool t : g.currentPlayer.getItemsHeldArray()){
-					Game.frame.addItemToMenu(t);
-				}			
+			for (Tool t : g.currentPlayer.getItemsHeldArray()) {
+				Game.frame.addItemToMenu(t);
+			}
 			g.start();
 		} catch (IOException i) {
 			i.printStackTrace();
@@ -59,21 +58,21 @@ public class Serial {
 		}
 	}
 
-public static void main(String[] args) {
+	public static void main(String[] args) {
 
-	deserializer(false);
+		deserializer(false);
 
-	Game.frame.save.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			serializer();			
-		}
-	});
+		Game.frame.save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				serializer();
+			}
+		});
 
-	Game.frame.load.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			deserializer(true);
+		Game.frame.load.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deserializer(true);
 
-		}
-	});
-}
+			}
+		});
+	}
 }

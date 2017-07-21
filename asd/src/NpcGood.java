@@ -1,6 +1,8 @@
 import java.io.Serializable;
 
 public class NpcGood extends NPC implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 
 	public NpcGood(String name, String description, int HP,int money, boolean active, String speech) {
 		super(name, description, HP, money, active, speech);
