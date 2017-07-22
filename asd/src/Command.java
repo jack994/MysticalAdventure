@@ -56,6 +56,14 @@ public class Command implements Serializable{
 	}
 	
 	/**
+	 * dynamically add a new command to the list of commands
+	 * @param toAdd
+	 */
+	public void addCommand(String toAdd){
+			commandWords.add(toAdd);
+	}
+	
+	/**
 	 * finds the instructions in the String and separeates them.
 	 * @param instruction
 	 * @return

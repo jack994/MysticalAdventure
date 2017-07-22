@@ -20,24 +20,30 @@ public class Map implements Serializable {
 
 	public Room makeRoom() {
 
-		Rooms[0] = new Room("THE BEDROOM", "you are in a room that looks like a bedroom");
+		Rooms[0] = new Room("THE BEDROOM", "you are in a room that looks like a bedroom, some stairs lead "
+				+ "back to the Living Room", false);
 		Rooms[1] = new Room("THE LIVING ROOM",
-				"you are in the living room, all the house seems really tidy and clean.");
+				"you are in the living room, all the house seems really tidy and clean. some stairs lead upstairs, "
+				+ "south there is the main entrance and east a wooden door", false);
 		Rooms[2] = new Room("THE KITCHEN",
-				"you are in the kitchen, the light of a lantern shines in the middle of it.");
+				"you are in the kitchen, the light of a lantern shines in the middle of it. west there is "
+				+ "the door thet leads back to the kitchen.", false);
 		Rooms[3] = new Room("THE MEADOW",
 				"you are in a misty meadow in the middle of what seems to be a small wood,"
 						+ " north, in the middle of the medow you can barely see a house and all around you it's only trees, they are so"
-						+ " thick you could't even pass through.</i>");
+						+ " thick you could't even pass through. South one of the trees seems moving.", false);
 		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the ligtht "
-				+ "is still passing through the leaves and the air is humid");
+				+ "is still passing through the leaves and the air is humid. all around you there are only trees.", false);
 		Rooms[5] = new Room("THE WOOD - East",
-				"the trees in this part of the forest are thicker and you struggle to see anything in this " + "area.");
+				"the trees in this part of the wood are thicker and you struggle to see anything in this area.", true);
 		Rooms[6] = new Room("THE WOOD - Valley",
 				"in the middle of this area there is a river and all around flowers grow luxuriant. east you "
-						+ "can see a waterfall, beside it, a dark entrance of what seems to be a tunnel.");
-		Rooms[7] = new Room("THE TUNNEL - Entrance",
-				"You can see nothing but the entrance of the tunnel behind you. it's really dark.");
+						+ "can see a waterfall, beside it, a dark entrance of what seems to be a tunnel.", false);
+		Rooms[7] = new Room("THE TUNNEL",
+				"You can see nothing but the entrance of the tunnel behind you. it's really dark.", true);
+		Rooms[8] = new Room("THE WOOD - West", "This part of the wood looks more trashy compared to the others, you "
+				+ "notice a burning smell and some trees around look completly burnt.", false);
+		Rooms[9] = new Room("THE CAVE", "You are in a small cave, the burning smell here is stronger.", false);
 
 		return Rooms[3];
 	}
@@ -56,13 +62,17 @@ public class Map implements Serializable {
 		Rooms[6].setDirection("south", Rooms[5]);
 		Rooms[6].setDirection("north", Rooms[7]);
 		Rooms[7].setDirection("south", Rooms[6]);
+		Rooms[4].setDirection("west", Rooms[8]);
+		Rooms[8].setDirection("east", Rooms[4]);
+		Rooms[8].setDirection("west", Rooms[9]);
+		Rooms[9].setDirection("east", Rooms[8]);
 	}
 
 	public void addItemsToRooms() {
 
 		Fixed wardrobe = new Fixed("wardrobe");
 		wardrobe.addMoney(100);
-		wardrobe.addTool(new Tool("torch", "a wooden torch, could be helpful", 2));
+		wardrobe.addTool(new Weapon("torch", "a wooden torch, could be helpful", 5, 5, 0.90f));
 		Rooms[0].addFixed(wardrobe);
 		Fixed bed = new Fixed("bed");
 		Rooms[0].addFixed(bed);
@@ -81,41 +91,36 @@ public class Map implements Serializable {
 				+ " The Druid runs towards the exit door.<BR><BR><b>druid :</b> ah, I almost forgot, treants like riddles and the number 7!");
 		druid.setFirstSpeech("Aaawww finally you woke up! I was waiting for you");
 		Rooms[1].addnpcs(druid);
-		Fixed chest = new Fixed("chest");
-		chest.addMoney(150);
-		chest.addTool(
-				new Weapon("knife", "A shiny knife with some blood on the blade, it's still fresh", 50, 10, 0.99f));
-		Rooms[1].addFixed(chest);
+		Fixed chest1 = new Fixed("chest");
+		chest1.addMoney(150);
+		chest1.addTool(new Weapon("knife", "A shiny knife with some blood on the blade, it's still fresh", 50, 8, 0.98f));
+		Rooms[1].addFixed(chest1);
 		Rooms[1].addTool(new Tool("salt", "It's just some tablesalt", 5));
 
 		Fixed cupboard = new Fixed("cupboard");
 		cupboard.addMoney(50);
 		cupboard.addTool(new Tool("apple", "A green apple, it seems still ripe", 2));
 		Rooms[2].addFixed(cupboard);
-		NpcBad goblin = new NpcBad("goblin", "a red goblin", 45, 45, true, "Grwaaal", 1);
-		Weapon axe = new Weapon("axe", "A shiny axe", 50, 6, 0.95f);
-		goblin.setWeapon(axe);
-		Tool eyeG = new Tool("goblin eye", "a disgusting goblin eye", 8);
-		goblin.addObj(eyeG);
-		Rooms[2].addnpcs(goblin);
 
 		NpcGood treant = new NpcGood("treant", "an enormous alive tree that blocks the passage to the wood", 100, 130,
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
+		
+		Fixed chest2 = new Fixed("chest");
+		chest2.addMoney(100);
+		chest2.addTool(new Tool("healing potion", "a little flusk with a green liquid inside it", 50));
+		Rooms[5].addFixed(chest2);
+		
+		NpcBad goblin = new NpcBad("goblin pyromaniac", "a red goblin with an axe in fire in his"
+				+ " hands and some flasks hanging from his belt", 45, 45, true, "Grwaaal", 1);
+		Weapon axe = new Weapon("pyromaniac axe", "a dirty axe, it smells like smoke", 50, 6, 0.97f);
+		goblin.setWeapon(axe);
+		Tool eyeG = new Tool("goblin eye", "a disgusting goblin eye", 8);
+		Tool matches = new Tool("matches", "few matches in a box, the goblin might have used this to light up his fires", 8);
+		goblin.addObj(eyeG);
+		goblin.addObj(matches);
+		Rooms[9].addnpcs(goblin);
 
-	}
-
-	public Room getRoomCalled(String name) {
-		int i = 0;
-		Room toReturn = new Room("", "");
-		while (i <= Rooms.length) {
-			if (Rooms[i].getName().equals(name)) {
-				toReturn = Rooms[i];
-				break;
-			}
-			i++;
-		}
-		return toReturn;
 	}
 
 	public boolean hasRoomCalled(String des) {

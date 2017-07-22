@@ -26,6 +26,7 @@ public class Game implements Serializable{
 		StartRoom = map.createRoom();
 		currentPlayer = new Player("Giacomo");
 		currentPlayer.setCurrentRoom(StartRoom);
+		callerCommand = new Command();
 	}
 
 	public void write() {
@@ -36,7 +37,6 @@ public class Game implements Serializable{
 			}
 			THESTACK.push(frame.getTextBox().getText());
 			toAdd = toAdd + "<p><b>" + " > " + frame.getTextBox().getText() + "</b></p>";
-			callerCommand = new Command();
 			String[] a = callerCommand.contanisInstruction(frame.getTextBox().getText().toLowerCase());
 			Command command2 = new Command(a[0], a[1].trim());
 			toAdd = toAdd + "<p>" + processCommand(command2) + "</p>";
@@ -80,9 +80,36 @@ public class Game implements Serializable{
 				firstWord.equals("say")){
 			return saySomething(command);
 		}
-		
-		else return "I can't understand what you mean, write 'help' for the command list";
+		else if(firstWord.equals("light up")){
+			return "test!!!"; ////// TODO what appens when light up
+		}
+		else return "I can't understand, write 'help' for the command list";
 
+	}
+	
+	/**
+	 * checks if the tool picked up creates a new commandWord
+	 * @param t
+	 */
+	public void checkNewCommand(Tool t){ 
+		if(t.getName().equals("matches")){
+			callerCommand.addCommand("light up");
+		}
+	}
+	
+	public String lightUp(Command command){
+		if(command.getSecondWord().equals("torch") || command.getSecondWord().equals("the torch")){
+			if(currentPlayer.getToolFromString("torch") != null){
+				if(currentPlayer.getCurrentRoom().getName().equals("THE WOOD - East") ||
+						currentPlayer.getCurrentRoom().getName().equals("THE TUNNEL")){
+					return "you can see nothing! try to do it where there is some light";
+				}else{
+					return "Dummy"; //TODO need to decide what happens when light up torch
+				}
+			}
+			return "Dummy";
+		}
+		return "Dummy";
 	}
 	
 	public String saySomething(Command command){
@@ -143,6 +170,7 @@ public class Game implements Serializable{
 					currentPlayer.addObjCalled(temp.getName());
 					frame.addItemToMenu((Tool) temp);
 					currentPlayer.currentRoom.removeItemNamed(command.getSecondWord());
+					checkNewCommand((Tool) temp);
 					return "you picked up " + temp.getName() + beingattacked();
 				} else {
 					return "you can't pick up " + temp.getName() + " try the command \"examine " + temp.getName()
@@ -202,7 +230,7 @@ public class Game implements Serializable{
 	
 	public String attack(Command command){
 		if(!command.hasSecondWord()){
-			return "Who do you want to attack?";
+			return "Who do you want to attack? write 'attack <target>'";
 		}
 		NPC enemy;
 		if((enemy = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null){
@@ -227,7 +255,7 @@ public class Game implements Serializable{
 				return currentPlayer.equipWeapon((Weapon)t) + beingattacked();
 			}
 			else{
-				return "you can only equip weapons" + beingattacked();
+				return "it would be useless" + beingattacked();
 			}
 		}
 		return "There is no " + command.getSecondWord() + beingattacked();

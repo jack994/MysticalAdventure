@@ -52,6 +52,8 @@ public class GameWindow extends JFrame implements Serializable {
 
 	public void makeFrame() {
 
+		System.setProperty("apple.laf.useScreenMenuBar", "true"); //use the native menubar in OSX
+		
 		panelPane = new JScrollPane();
 		pane = new JTextPane();
 		panelPane.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));

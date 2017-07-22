@@ -14,8 +14,9 @@ public class Room implements Serializable{
 	private ArrayList<Item> items;
 	private HashMap<String, Room> directions;
 	private ArrayList<NPC> npcs;
+	private boolean dark;
 
-	public Room(String Name, String description) {
+	public Room(String Name, String description, boolean dark) {
 		Name = "<b>" + Name + "</b>";
 		this.name = Name;
 		description = "<i>" + description + "</i>";
@@ -23,6 +24,7 @@ public class Room implements Serializable{
 		items = new ArrayList<Item>();
 		directions = new HashMap<String, Room>();
 		npcs = new ArrayList<NPC>();
+		this.setDark(dark);
 	}
 
 	public String getName() {
@@ -155,6 +157,14 @@ public class Room implements Serializable{
 			return true;
 		else
 			return false;
+	}
+
+	public boolean isDark() {
+		return dark;
+	}
+
+	public void setDark(boolean dark) {
+		this.dark = dark;
 	}
 
 }
