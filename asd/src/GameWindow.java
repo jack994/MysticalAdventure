@@ -279,11 +279,14 @@ public class GameWindow extends JFrame implements Serializable {
 
 	public void removeItemFromMenu(String tool) {
 		int qty;
-		for (int i = 0; i < labels.length; i++) {
+		for (int i = startItem; i < itemCounter; i+=2) {
 			if (tool.equals(labels[i].getText())) {
 				if ((qty = Integer.parseInt(labels[i + 1].getText())) == 1) {
-					labels[i].setText("");
-					labels[i + 1].setText("");
+					while(i<itemCounter){
+						labels[i].setText(labels[i+2].getText());
+						labels[i + 1].setText(labels[i+3].getText());
+						i+=2;
+					}
 					itemCounter -= 2;
 				} else {
 					labels[i + 1].setText((qty - 1) + "");

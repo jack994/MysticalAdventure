@@ -105,16 +105,20 @@ public class Room implements Serializable{
 
 	public String getItemString() {
 		String toReturn = "ITEMS: ";
+		if(!dark){
 		for (int i = 0; i < items.size(); i++) {
 			toReturn += " -" + items.get(i).getName();
+		}
 		}
 		return toReturn;
 	}
 
 	public String getNPCString() {
 		String toReturn = "CHARACTERS: ";
+		if(!dark){
 		for (int i = 0; i < npcs.size(); i++) {
 			toReturn += " -" + npcs.get(i).getName();
+		}
 		}
 		return toReturn;
 	}
@@ -138,8 +142,10 @@ public class Room implements Serializable{
 	public String getDirectionsString() {
 		String returnString = "POSSIBLE DIRECTIONS: ";
 		Set<String> keys = directions.keySet();
+		if(!dark){
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();)
 			returnString += " -" + iter.next();
+		}
 		return returnString;
 	}
 
@@ -165,6 +171,10 @@ public class Room implements Serializable{
 
 	public void setDark(boolean dark) {
 		this.dark = dark;
+	}
+	
+	public void setDescription(String description){
+		this.description = description;
 	}
 
 }

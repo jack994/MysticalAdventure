@@ -44,6 +44,8 @@ public class Map implements Serializable {
 		Rooms[8] = new Room("THE WOOD - West", "This part of the wood looks more trashy compared to the others, you "
 				+ "notice a burning smell and some trees around look completly burnt.", false);
 		Rooms[9] = new Room("THE CAVE", "You are in a small cave, the burning smell here is stronger.", false);
+		Rooms[10] = new Room("THE SWAMP","a stinky flooded swamp full of bugs, judging from the stink there could"
+				+ "be someone dead here",false); //TODO finish this room
 
 		return Rooms[3];
 	}
@@ -72,7 +74,8 @@ public class Map implements Serializable {
 
 		Fixed wardrobe = new Fixed("wardrobe");
 		wardrobe.addMoney(100);
-		wardrobe.addTool(new Weapon("torch", "a wooden torch, could be helpful", 5, 5, 0.90f));
+		wardrobe.addTool(new Weapon("torch", "a wooden torch, someone has already used it. "
+				+ "it should still be possible to light it up", 5, 3, 0.90f));
 		Rooms[0].addFixed(wardrobe);
 		Fixed bed = new Fixed("bed");
 		Rooms[0].addFixed(bed);

@@ -10,7 +10,7 @@ public class NpcGood extends NPC implements Serializable{
 
 	public String interact(Character pl) {
 		if(isActive() && isFirstTimeMet()){
-			return getSpeech();
+			return "<BR><BR>" + getSpeech() + "<BR><BR>";
 		}
 		return "";
 	}

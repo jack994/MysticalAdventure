@@ -81,7 +81,7 @@ public class Game implements Serializable{
 			return saySomething(command);
 		}
 		else if(firstWord.equals("light up")){
-			return "test!!!"; ////// TODO what appens when light up
+			return lightUp(command);
 		}
 		else return "I can't understand, write 'help' for the command list";
 
@@ -98,18 +98,26 @@ public class Game implements Serializable{
 	}
 	
 	public String lightUp(Command command){
+		if(!command.hasSecondWord()){
+			return "What do you want to light up? <BR>Write 'light up <object>'";
+		}		
 		if(command.getSecondWord().equals("torch") || command.getSecondWord().equals("the torch")){
 			if(currentPlayer.getToolFromString("torch") != null){
 				if(currentPlayer.getCurrentRoom().getName().equals("THE WOOD - East") ||
 						currentPlayer.getCurrentRoom().getName().equals("THE TUNNEL")){
 					return "you can see nothing! try to do it where there is some light";
 				}else{
-					return "Dummy"; //TODO need to decide what happens when light up torch
+					if(currentPlayer.getWeapon().getName().equals("torch")){
+						currentPlayer.getWeapon().setDamage(5); // damage increased by fire (also new functionality)
+						currentPlayer.getWeapon().setDescription("the torch flames shine bright");
+						return "you light up the torch";
+					}
+					return "torch needs to be equiped first"; 
 				}
 			}
-			return "Dummy";
+			return "Yuo are not carrying any torch.";
 		}
-		return "Dummy";
+		return "you can't light up " + command.getSecondWord();
 	}
 	
 	public String saySomething(Command command){
@@ -125,16 +133,17 @@ public class Game implements Serializable{
 	}
 
 	public String goRoom(Command command) {
+		
 		String toReturn = "";
 		
 		if (currentPlayer.getCurrentRoom().hasDirection(command.getSecondWord())) {
 			Room next = currentPlayer.getCurrentRoom().getDirectionRoom(command.getSecondWord());
 			currentPlayer.setCurrentRoom(next);
+			enlight(currentPlayer.getCurrentRoom()); //enlight the room if you are carying a torch			
 			toReturn = currentPlayer.getCurrentRoom().getNameAndDescription();
 			if(!(currentPlayer.getCurrentRoom().getNPCArray()).isEmpty()){
-				toReturn += "<BR><BR>";
 				for(NPC npc : currentPlayer.getCurrentRoom().getNPCArray()){
-					toReturn += npc.interact(currentPlayer) + "<BR><BR>";
+					toReturn += npc.interact(currentPlayer);
 				}
 			}
 		} else {
@@ -252,6 +261,11 @@ public class Game implements Serializable{
 		if((t = currentPlayer.getToolFromString(command.getSecondWord()))!= null){
 			if(t.getClass() == Weapon.class){
 				frame.getWeaponLabel().setText(t.getName());
+				if(currentPlayer.getWeapon().getName().equals("torch")){ // put out the torch
+					currentPlayer.getWeapon().setDamage(3);
+					currentPlayer.getWeapon().setDescription("a wooden torch, someone has already used it. "
+							+ "it should still be possible to light it up");
+				}
 				return currentPlayer.equipWeapon((Weapon)t) + beingattacked();
 			}
 			else{
@@ -311,6 +325,36 @@ public class Game implements Serializable{
 			}
 		}
 		return "";
+	}
+	
+	public void enlight(Room currentR){
+		
+		if(currentPlayer.getWeapon().getName().equals("torch") && currentPlayer.getWeapon().getDamage() == 5){
+			if(currentR.getName().equals("THE WOOD - East")){
+				currentR.setDark(false);
+				currentR.setDescription("the trees in this part of the wood are thicker"
+						+ " but the light of your torch heps you see better");
+			}
+			else if(currentR.getName().equals("THE TUNNEL")){
+				currentR.setDark(false);
+				currentPlayer.getCurrentRoom().setDescription("The light of your torch enlights the tunnel");
+				map.addPassage(7, 10, "east");
+				map.addPassage(10, 7, "west");
+			}
+		}
+		else{
+			if(currentR.getName().equals("THE WOOD - East")){
+				currentR.setDark(true);
+				currentR.setDescription("the trees in this part of the wood are thicker and you struggle"
+						+ " to see anything in this area");
+			}
+			else if(currentR.getName().equals("THE TUNNEL")){
+				currentR.setDark(true);
+				currentPlayer.getCurrentRoom().setDescription("You can see nothing but the entrance"
+						+ " of the tunnel behind you. it's really dark");
+			}
+		}
+	
 	}
 	
 }
