@@ -5,25 +5,15 @@ public class Tool extends Item implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int value;
-	private String description;
 
-	public Tool(String name, String description, int value) {
-		super(name);
+	public Tool(String name,String description, int value) {
+		super(name, description);
 		this.value = value;
-		this.description = description;
 
 	}
 
 	public int getValue() {
 		return value;
-	}
-	
-	public String getDescription(){
-		return description;
-	}
-	
-	public void setDescription(String description){
-		this.description = description;
 	}
 
 }

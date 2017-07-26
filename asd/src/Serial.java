@@ -71,7 +71,6 @@ public class Serial {
 		Game.frame.load.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deserializer(true);
-
 			}
 		});
 	}

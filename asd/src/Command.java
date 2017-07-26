@@ -8,7 +8,7 @@ public class Command implements Serializable{
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
 
-	private static ArrayList<String> commandWords = new ArrayList<String>(){
+	private ArrayList<String> commandWords = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
 	{
 	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");

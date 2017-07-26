@@ -11,15 +11,14 @@ public class Fixed extends Item implements Serializable{
 	
 	private int money;
 	private boolean opened; // has the item been examined?
-	private ArrayList<Tool> t; // List of tools within 
+	private ArrayList<Tool> toolList; // List of tools within 
 
-	public Fixed(String name) {
-		super(name);
-		t = new ArrayList<Tool>();
+	public Fixed(String name, String description) {
+		super(name, description);
+		toolList = new ArrayList<Tool>();
 		opened = false;
-
 	}
-	
+		
 	public void open(){
 		opened = true;
 	}
@@ -29,11 +28,11 @@ public class Fixed extends Item implements Serializable{
 	}
 
 	void addTool(Tool d) {
-		t.add(d);
+		toolList.add(d);
 	}
 
 	public ArrayList<Tool> getToolsArrayList(){
-		return t;
+		return toolList;
 	}
 	
 	/**
@@ -41,8 +40,9 @@ public class Fixed extends Item implements Serializable{
 	 * @return a string with all the items in the arraylist, comma separated.
 	 */
 	String getToolList() {
+		
 		String toreturn = "";
-		for (Tool c : t) {
+		for (Tool c : toolList) {
 			toreturn += c.getName() + ", ";
 		}
 		if(toreturn.length()>3){
@@ -58,7 +58,7 @@ public class Fixed extends Item implements Serializable{
 	 */
 	Tool getToolCalled(String d) {
 		
-		for (Tool c : t) {
+		for (Tool c : toolList) {
 			if (c.getName().equals(d))
 			return c;
 		}
@@ -66,7 +66,7 @@ public class Fixed extends Item implements Serializable{
 	}
 	
 	public void removeItemNamed(String name){
-		t.remove(getToolCalled(name));
+		toolList.remove(getToolCalled(name));
 	}
 
 	void addMoney(int m) {

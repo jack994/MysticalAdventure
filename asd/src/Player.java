@@ -23,7 +23,7 @@ public class Player extends Character implements Serializable{
 		//////////////////////////
 		///////// TODO/////////////
 		//////////////////////////
-		return "you died";
+		return "YOU DIED!";
 	}
 
 	public void spend(int money) {
