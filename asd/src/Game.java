@@ -1,20 +1,11 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Serializable;
-
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.*;
 import java.util.Random;
 
-public class Game implements Serializable {
+public class Game {
 
-	private static final long serialVersionUID = 1L;
-
-	public static GameWindow frame;
-	private Command callerCommand;
+	public GameWindow frame;
 	public Player currentPlayer;
 	private Room StartRoom;
 	private Map map;
@@ -34,25 +25,47 @@ public class Game implements Serializable {
 		StartRoom = map.createRoom();
 		currentPlayer = new Player("Giacomo");
 		currentPlayer.setCurrentRoom(StartRoom);
-		callerCommand = new Command();
+	}
+	
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+	
+	public Room getStartRoom() {
+		return StartRoom;
 	}
 
 	public void write() {
 		String toAdd = "";
 		if (!frame.getTextBox().getText().equals("")) {
-			if (!frame.getPane().getText().equals("")) {
-				toAdd = frame.getPane().getText().replace("</html>", "");
-			}
-			THESTACK.push(frame.getTextBox().getText());
-			toAdd = toAdd + "<p><b>" + " > " + frame.getTextBox().getText() + "</b></p>";
-			String[] a = callerCommand.contanisInstruction(frame.getTextBox().getText().toLowerCase());
-			Command command2 = new Command(a[0], a[1].trim());
-			toAdd = toAdd + "<p>" + processCommand(command2) + "</p>";
-			frame.getTextBox().setText("");
-			toAdd = toAdd.replace("</body>", "");
-			toAdd = toAdd + "</body></html>";
-			toAdd = toAdd.replaceAll("<p>", "<p style=font-size:13px>");
-			frame.getPane().setText(toAdd);
+				if (!frame.getPane().getText().equals("")) {
+					toAdd = frame.getPane().getText().replace("</html>", "");
+				}			
+				THESTACK.push(frame.getTextBox().getText());
+				toAdd = toAdd + "<p><b>" + " > " + frame.getTextBox().getText() + "</b></p>";
+				String[] a = Command.contanisInstruction(frame.getTextBox().getText().toLowerCase());
+				Command command2 = new Command(a[0], a[1].trim());
+				toAdd = toAdd + "<p>" + processCommand(command2) + "</p>";
+				frame.getTextBox().setText("");
+				toAdd = toAdd.replace("</body>", "");
+				toAdd = toAdd + "</body></html>";
+				toAdd = toAdd.replaceAll("<p>", "<p style=font-size:13px>");
+				frame.getPane().setText(toAdd);
+				if(currentPlayer.getCurrentRoom().getName().equals("INCORRECT") || currentPlayer.getLifeRemaining() <=0){
+					currentPlayer.die();
+				}
 		}
 	}
 
@@ -94,10 +107,10 @@ public class Game implements Serializable {
 	 */
 	public void checkNewCommand(Tool t) {
 		if (t.getName().equals("matches")) {
-			callerCommand.addCommand("light up");
+			Command.addCommand("light up");
 		}
 		if (t.getName().equals("key")) {
-			callerCommand.addCommand("open");
+			Command.addCommand("open");
 		}
 	}
 
@@ -147,7 +160,7 @@ public class Game implements Serializable {
 				return "which one of them? write 'open door -number-'";
 			String[] tmp = command.getSecondWord().split(" ");
 			if (tmp[0].equals("door") && StringUtils.isNumeric(tmp[1])) {
-				if (Integer.parseInt(tmp[1]) < 6 && Integer.parseInt(tmp[1]) > 0) {
+				if (Integer.parseInt(tmp[1]) < 8 && Integer.parseInt(tmp[1]) > 0) {
 					if(Integer.parseInt(tmp[1]) == correctDoor)
 						map.addPassage(11, 13, "south");
 					else
@@ -183,17 +196,7 @@ public class Game implements Serializable {
 
 		if (currentPlayer.getCurrentRoom().hasDirection(command.getSecondWord())) {
 			Room next = currentPlayer.getCurrentRoom().getDirectionRoom(command.getSecondWord());
-			currentPlayer.setCurrentRoom(next);
-			if(currentPlayer.getCurrentRoom().getName().equals("INCORRECT")){
-				File fileIn = new File("./folder/savedGameDeath.ser");
-				File fileOut = new File("./folder/savedGame.ser");
-				try {
-					FileUtils.copyFile(fileIn, fileOut);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				Serial.deserializer(true);
-			}			
+			currentPlayer.setCurrentRoom(next);			
 			enlight(currentPlayer.getCurrentRoom()); // enlight the room if you
 														// are carying a torch
 			changeDoors(); // change results on the doors for lorwin's riddle
@@ -369,8 +372,12 @@ public class Game implements Serializable {
 
 	}
 
-	public void printWelcome() {
-		String toChange = "<html>" + "<h1>welcome to THE MYSTICAL ADVENTURE</h1>" + "<p>"
+	public void printWelcome(boolean dead) {
+		String toChange = "<html><body>";
+		if(dead){
+			toChange += "<p style='font-size: 40px'>YOU DIED!</p>";
+		}
+		toChange += "<h1>welcome to THE MYSTICAL ADVENTURE</h1>" + "<p>"
 				+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
 		toChange = toChange.replaceAll("<p>", "<p style=font-size:13px>");
 		frame.getPane().setText(toChange);
@@ -378,7 +385,7 @@ public class Game implements Serializable {
 	}
 
 	public void start() {
-		printWelcome();
+		printWelcome(false);
 	}
 
 	public String beingattacked() {
@@ -449,5 +456,4 @@ public class Game implements Serializable {
 					.setDescription(desc + map.getLorwinCodeSolution());
 		}
 	}
-
 }

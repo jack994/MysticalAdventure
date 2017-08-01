@@ -1,9 +1,8 @@
 import java.io.Serializable;
 
-public class Map implements Serializable {
-	
+public class Map implements Serializable{
+
 	private static final long serialVersionUID = 1L;
-	
 	private Room[] Rooms;
 	int[][] lorwinCode = { {3,672}, {4,4368}, {5,23520}, {6,100800} };
 	int currentCode = 1; 
@@ -53,8 +52,8 @@ public class Map implements Serializable {
 				+ "cannot contain both 0 and 1 in the same codeword.<BR> "
 				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'", false);
 		Rooms[12] = new Room("INCORRECT", "the door shuts behind you! you are in a completly dark room,"
-				+ " suddenly you hear a voice: -'You can't get out of here, you will now "
-				+ "stay here forever... AHAHHAHAHHAHAH'", false);
+				+ " suddenly you hear a voice: -'you are too stupid to meet me , you will now die from my poisonous gas"
+				+ "... AHAHHAHAHHAHAH!!!'", false);
 		Rooms[13] = new Room("CORRECT", "", false); // TODO finish this room.
 
 		return Rooms[3];

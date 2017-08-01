@@ -1,18 +1,19 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.Serializable;
 
 import javax.swing.*;
 
-public class GameWindow extends JFrame implements Serializable {
+public class GameWindow extends JFrame{
 
-	private static int itemCounter = 10;
+	private static final long serialVersionUID = 1L;
+	
 	public static int greenLabelsCounter = 100;
+	
+	private static int itemCounter = 10;
 	private static final int startItem = 10;
 	private static final int endItem = 32;
 	private static boolean fullBag = false;
 
-	private static final long serialVersionUID = 1L;
 	Font f = new Font("sansSerif", Font.PLAIN, 13);
 	Font f2 = new Font("sansSerif", Font.BOLD, 14);
 	private JScrollPane panelPane;
@@ -239,6 +240,13 @@ public class GameWindow extends JFrame implements Serializable {
 		return fullBag;
 	}
 
+	public void emptyBagLabels(){
+		for(int i = 5; i <= 17; i++){
+			labels[i*2].setText("");
+			labels[(i*2)+1].setText("");
+		}
+	}
+	
 	public void resetLifelabel() {
 
 		int i = 0;

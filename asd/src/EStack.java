@@ -1,11 +1,10 @@
-import java.io.Serializable;
 import java.util.Stack;
 
 /**
  * this class allows the use of the history in the textbox.
  * @author giacomobenso
  */
-public class EStack extends Stack<String> implements Serializable{
+public class EStack extends Stack<String>{
 
 	private static final long serialVersionUID = 1L;
 	int size;

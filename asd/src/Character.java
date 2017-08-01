@@ -70,13 +70,13 @@ public abstract class Character implements Serializable{
 	
 	public void addMoney(int money) {
 		this.money += money;
-		Game.frame.getMoneyLabel().setText(this.money + "");
+		MysticalAdventure.GAME.frame.getMoneyLabel().setText(this.money + "");
 	}
 	
 	public void removeMoney(int money){
 		if(this.money > money){
 		this.money -= money;
-		Game.frame.getMoneyLabel().setText(this.money + "");
+		MysticalAdventure.GAME.frame.getMoneyLabel().setText(this.money + "");
 		}
 	}
 	
@@ -197,11 +197,11 @@ public abstract class Character implements Serializable{
 		if(r < this.getWeapon().getPrecisionOutOf100()){
 			damage = (100 * this.weapon.getDamage()) / target.getHP();
 			target.setLifeRemaining(target.getLifeRemaining() - damage);
-			if(target.getLifeRemaining() <= 0){
+			if(target.getLifeRemaining() <= 0 && target.getClass() != Player.class){
 				return target.getName() + " is dead<BR>" + target.die();
 			}
 			if(target.getClass() == Player.class){
-				Game.frame.decreaseLife(damage);   // decrease life in the green life bar
+				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar
 				return this.getName() + " attacks "+ target.getName();
 			}
 			return this.getName() + " attacks "+ target.getName() + "<BR>" + target.getName() + " remaining life: " + target.getLifeRemaining() + "%";

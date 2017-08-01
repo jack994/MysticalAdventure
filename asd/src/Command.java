@@ -1,14 +1,11 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Command implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
 
-	private ArrayList<String> commandWords = new ArrayList<String>(){
+	private static ArrayList<String> commandWords = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
 	{
 	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
@@ -19,9 +16,6 @@ public class Command implements Serializable{
 	public Command(String first, String second){
 		firstWord = first;
 		secondWord = second;
-	}
-	public Command(){
-		// empty constructor needed in class Game
 	}
 	
 	public String getFirstWord(){
@@ -59,7 +53,7 @@ public class Command implements Serializable{
 	 * dynamically add a new command to the list of commands
 	 * @param toAdd
 	 */
-	public void addCommand(String toAdd){
+	public static void addCommand(String toAdd){
 			commandWords.add(toAdd);
 	}
 	
@@ -68,7 +62,7 @@ public class Command implements Serializable{
 	 * @param instruction
 	 * @return
 	 */
-	public String[] contanisInstruction(String instruction){
+	public static String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
 		for(String s : commandWords){
 		if(instruction.startsWith(s)){

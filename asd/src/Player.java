@@ -1,9 +1,9 @@
 import java.io.Serializable;
 
 public class Player extends Character implements Serializable{
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public Player(String name) {
 		super(name, 100, 100);
 	}
@@ -20,10 +20,8 @@ public class Player extends Character implements Serializable{
 	}
 
 	public String die() {
-		//////////////////////////
-		///////// TODO/////////////
-		//////////////////////////
-		return "YOU DIED!";
+		MysticalAdventure.die();
+		return "";
 	}
 
 	public void spend(int money) {
