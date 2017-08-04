@@ -161,10 +161,13 @@ public class Game {
 			String[] tmp = command.getSecondWord().split(" ");
 			if (tmp[0].equals("door") && StringUtils.isNumeric(tmp[1])) {
 				if (Integer.parseInt(tmp[1]) < 8 && Integer.parseInt(tmp[1]) > 0) {
-					if(Integer.parseInt(tmp[1]) == correctDoor)
+					if(Integer.parseInt(tmp[1]) == correctDoor){
 						map.addPassage(11, 13, "south");
-					else
+						map.addPassage(13, 11, "north");
+					}
+					else{
 						map.addPassage(11, 12, "south");
+					}
 					frame.removeItemFromMenu(ky.getName());    //remove the key
 					currentPlayer.removeObjCalled(ky.getName());
 					return "you unlocked the Door number " + tmp[1] + ", the key magically disappears."
@@ -355,9 +358,19 @@ public class Game {
 				if (npc.getName().equals("druid")) {
 					currentPlayer.getCurrentRoom().removeNpcNamed("druid");
 				}
+				if (npc.getName().equals("lorwin")) {
+					Ingredient ing;
+					if((ing = npc.getIngredient("phoenix plum")) != null){
+						npc.removeIngredient(ing);
+						frame.addIngredientToMenu(ing);
+						String speech = npc.getSpeech();
+						npc.setSecondSpeech("Hello my little friend, You know, you never stop learning.");
+						return speech + currentPlayer.addIngredient(ing);
+					}
+				}
 				return npc.getSpeech() + beingattacked();
 			} else {
-				return npc.getSpeech() + "<BR>" + npc.attackTarget(currentPlayer);
+				return npc.getSpeech() + beingattacked();
 			}
 		}
 		return "you can't speak to " + command.getSecondWord() + beingattacked();

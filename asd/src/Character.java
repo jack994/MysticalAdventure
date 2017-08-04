@@ -10,6 +10,7 @@ public abstract class Character implements Serializable{
 	protected String name;
 	protected boolean isAlive;
 	protected ArrayList<Tool> itemsHeld;
+	protected Ingredient[] ingredients;
 	protected Room currentRoom;
 	protected int money;
 	protected int HP; // initial life
@@ -25,6 +26,7 @@ public abstract class Character implements Serializable{
 		lifeRemaining = 100;
 		Weapon NN = new Weapon("none", "no weapon", 0, 1, 0.95f);
 		weapon = NN;
+		ingredients = new Ingredient[GameWindow.numOfIngredients];
 	}
 
 	//-------------abstract methods-------------//
@@ -121,6 +123,36 @@ public abstract class Character implements Serializable{
 			}
 		}
 		return null;
+	}
+	
+	public Ingredient getIngredient(String name){
+		for(int i = 0; i < ingredients.length; i ++){
+			if(ingredients[i] != null)
+			if(ingredients[i].getName().equals(name)){
+				return ingredients[i];
+			}
+		}
+		return null;
+	}
+	
+	public String addIngredient(Ingredient ing){
+		for(int i = 0; i < ingredients.length; i ++){
+			if(ingredients[i] == null){
+				ingredients[i] = ing;
+				return "<BR><BR>" + ing.getName() + " added to " + this.getName() + "'s inventory<BR>";
+			}
+		}
+		return "you cannot carry more than 3 ingredients";
+	}
+	
+	public void removeIngredient(Ingredient ing){
+		for(int i = 0; i < ingredients.length; i ++){
+			if(ingredients[i] != null){
+			if(ingredients[i].equals(ing)){
+				ingredients[i] = null;
+			}
+			}
+		}
 	}
 
 	/**

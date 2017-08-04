@@ -9,11 +9,11 @@ public abstract class NPC extends Character implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	private String description;
-	private boolean firstTimeMet;
-	private String firstSpeech;
-	private String speech;
-	private boolean active; //auto-attacker for NPCBad, auto-talker for NPCGood
+	protected String description;
+	protected boolean firstTimeMet;
+	protected String secondSpeech;
+	protected String speech;
+	protected boolean active; //auto-attacker for NPCBad, auto-talker for NPCGood
 
 	public NPC(String name, String description, int HP, int money, boolean active, String speech) {
 		super(name, HP, money);
@@ -46,15 +46,15 @@ public abstract class NPC extends Character implements Serializable{
 	}
 
 	public String getSpeech(){
-		if(firstTimeMet && (firstSpeech != null)){
+		if(firstTimeMet && (speech != null)){
 			firstTimeMet = false;
-			return "<b>"+ name + ": "+ "</b>" + firstSpeech;
+			return "<b>"+ name + ": "+ "</b>" + speech;
 		}
-		return "<b>"+ name + ": "+ "</b>" + speech;
+		return "<b>"+ name + ": "+ "</b>" + secondSpeech;
 	}
 	
-	public void setFirstSpeech(String firstSpeech){
-		this.firstSpeech = firstSpeech; 
+	public void setSecondSpeech(String Nspeech){
+		secondSpeech = Nspeech; 
 	}
 
 	public boolean isActive() {

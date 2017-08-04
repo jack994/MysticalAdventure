@@ -51,10 +51,10 @@ public class Map implements Serializable{
 				+ "valid codeword does not contain any digit more than once and "
 				+ "cannot contain both 0 and 1 in the same codeword.<BR> "
 				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'", false);
-		Rooms[12] = new Room("INCORRECT", "the door shuts behind you! you are in a completly dark room,"
-				+ " suddenly you hear a voice: -'you are too stupid to meet me , you will now die from my poisonous gas"
-				+ "... AHAHHAHAHHAHAH!!!'", false);
-		Rooms[13] = new Room("CORRECT", "", false); // TODO finish this room.
+		Rooms[12] = new Room("INCORRECT", "Die Insect!!!!", false);
+		Rooms[13] = new Room("Lorwin's Home", "The house is minimal and tidy, in the middle of the room there is a "
+				+ "tiny bed and a small table is placed beside it. A lot of books are piled up on the other"
+				+ " side of the room, some of them look like magic tomes", false);
 
 		return Rooms[3];
 	}
@@ -92,12 +92,11 @@ public class Map implements Serializable{
 		Fixed bed = new Fixed("bed", "someone has slept here");
 		Rooms[0].addFixed(bed);
 
-		NpcGood druid = new NpcGood("druid", "a busy druid with enormous horns", 1000, 150, true,
-				"Look, the forest is dying, I need your help to "
+		NpcGood druid = new NpcGood("druid", "a busy druid with enormous horns", 1000, 150, true, "Aaawww finally you woke up! I was waiting for you");
+		druid.setSecondSpeech("Look, the forest is dying, I need your help to "
 				+ "find three ingredients to make a potion that will heal it, the creatures of the forest will tell you which ingredients i need."
 				+ " sorry if i can't tell you anything more but I have to go, come back to me when you have the three ingredients."
 				+ " The Druid runs towards the exit door.<BR><BR><b>druid :</b> ah, I almost forgot, treants like riddles and the number 7!");
-		druid.setFirstSpeech("Aaawww finally you woke up! I was waiting for you");
 		Rooms[1].addnpcs(druid);
 		Fixed chest1 = new Fixed("chest", null);
 		chest1.addMoney(150);
@@ -147,7 +146,16 @@ public class Map implements Serializable{
 		Rooms[11].addFixed(Door5);
 		Rooms[11].addFixed(Door6);
 		Rooms[11].addFixed(Door7);
-
+		
+		NpcGood lorwin = new NpcGood("lorwin", "a tall pale elf wearing a green vest", 100, 150, true, "Good job my friend, Good job, "
+				+ "I understimated you.<BR>My name is Lowrwin and I am the sorcerer of the wood. The druid informed me about your "
+				+ "cleverness and I made that riddle complicated to make shure no one else but you could come to my house,"
+				+ " the wood it's filled with evil creatures.");
+		lorwin.setSecondSpeech("This one I am giving to you is a plum of the legendary phoenix"
+				+ "of the wood, it is really rare, don't lose it I only have one of those.");
+		Ingredient plum = new Ingredient("phoenix plum","a fire red plum once appartaining to a phoenix");
+		lorwin.addIngredient(plum);
+		Rooms[13].addnpcs(lorwin);
 	}
 
 	public boolean hasRoomCalled(String des) {

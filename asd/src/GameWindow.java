@@ -10,9 +10,11 @@ public class GameWindow extends JFrame{
 	public static int greenLabelsCounter = 100;
 	
 	private static int itemCounter = 10;
+	private static int ingrCounter = 0;
 	private static final int startItem = 10;
-	private static final int endItem = 32;
+	private static final int endItem = 34;
 	private static boolean fullBag = false;
+	public static int numOfIngredients = 3;
 
 	Font f = new Font("sansSerif", Font.PLAIN, 13);
 	Font f2 = new Font("sansSerif", Font.BOLD, 14);
@@ -37,11 +39,9 @@ public class GameWindow extends JFrame{
 	private JPanel allItems1;
 	private JPanel allItems2;
 	private JPanel allItems3;
-	private JPanel ingredients1;
-	private JPanel ingredients2;
 	private JLabel ingredients;
-	private JPanel mysIngredient;
 	private JLabel[] labels;
+	private JLabel[] labels2;
 	private JPanel pfittiz;
 	private JPanel ingrpan;
 	private JLabel[] labss;
@@ -65,7 +65,7 @@ public class GameWindow extends JFrame{
 		pane.setContentType("text/html");
 		input = new JTextField();
 		input.setPreferredSize(new Dimension(1000, 50));
-		labels = new JLabel[40];
+		labels = new JLabel[endItem];
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
 		}
@@ -162,14 +162,13 @@ public class GameWindow extends JFrame{
 		ingredients.setOpaque(true);
 		ingredients.setBackground(Color.WHITE);
 		ingredients.setFont(f2);
-		ingredients1 = new JPanel(new GridLayout(1, 3));
-		ingredients2 = new JPanel(new GridLayout(1, 3));
-		mysIngredient = new JPanel(new GridLayout(1, 2));
-		ingrpan = new JPanel(new GridLayout(4, 1));
+		ingrpan = new JPanel(new GridLayout(numOfIngredients+1, 1));
 		ingrpan.add(ingredients);
-		ingrpan.add(ingredients1);
-		ingrpan.add(ingredients2);
-		ingrpan.add(mysIngredient);
+		labels2 = new JLabel[numOfIngredients];
+		for(int i=0; i< numOfIngredients; i++){
+			labels2[i] = new JLabel("");
+			ingrpan.add(labels2[i]);
+		}
 		menuPanel.add(ingrpan);
 		menuPanel.setBackground(Color.WHITE);
 		menuPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -241,9 +240,9 @@ public class GameWindow extends JFrame{
 	}
 
 	public void emptyBagLabels(){
-		for(int i = 5; i <= 17; i++){
-			labels[i*2].setText("");
-			labels[(i*2)+1].setText("");
+		for(int i = startItem; i < endItem; i+=2){
+			labels[i].setText("");
+			labels[(i)+1].setText("");
 		}
 	}
 	
@@ -267,6 +266,13 @@ public class GameWindow extends JFrame{
 		}
 	}
 
+	public void addIngredientToMenu(Ingredient ingr){
+		if (ingrCounter <= numOfIngredients) {
+			labels2[ingrCounter].setText(ingr.getName());
+			ingrCounter ++;
+			}
+	}
+	
 	public void addItemToMenu(Tool tool) {
 		if (itemCounter <= endItem) {
 			if (itemCounter == endItem) {
