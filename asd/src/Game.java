@@ -61,7 +61,10 @@ public class Game {
 				frame.getTextBox().setText("");
 				toAdd = toAdd.replace("</body>", "");
 				toAdd = toAdd + "</body></html>";
-				toAdd = toAdd.replaceAll("<p>", "<p style=font-size:13px>");
+				toAdd = toAdd.replaceAll("<p>", "<p style='font-size:13px'>");
+				toAdd = toAdd.replaceAll("<table>", "<table style='border: 1px solid black; font-size: 15px;'>");
+				toAdd = toAdd.replaceAll("<th>", "<th style='padding: 5px; border: 1px solid black; font-size: 15px;'>");
+				toAdd = toAdd.replaceAll("<td>", "<td style='padding: 5px; border: 1px solid black; font-size: 15px;'>");
 				frame.getPane().setText(toAdd);
 				if(currentPlayer.getCurrentRoom().getName().equals("INCORRECT") || currentPlayer.getLifeRemaining() <=0){
 					currentPlayer.die();
@@ -89,12 +92,16 @@ public class Game {
 		} else if (firstWord.equals("speak to") || firstWord.equals("talk to") || firstWord.equals("talk")
 				|| firstWord.equals("speak")) {
 			return speakToChar(command);
-		} else if (currentPlayer.currentRoom.getName().equals("THE MEADOW") && firstWord.equals("say")) {
+		} else if (firstWord.equals("say")) {
 			return saySomething(command);
 		} else if (firstWord.equals("light up")) {
 			return lightUp(command);
 		} else if (firstWord.equals("open")){
-			return openDoor(command);	
+			return openDoor(command);
+		} else if (firstWord.equals("use")){
+			return useItem(command);
+		} else if (firstWord.equals("buy")){
+			return buyFromMerchant(command);
 		} else
 			return "You can't use this command, either it does not exist or you don't have the correct tools/items"
 					+ " to use it.<BR>You can check your currently available commands writing 'help'.";
@@ -113,13 +120,56 @@ public class Game {
 			Command.addCommand("open");
 		}
 	}
+	
+	public String buyFromMerchant(Command command){
+		Merchant merchant;
+		if((merchant = currentPlayer.getCurrentRoom().getMerchant()) == null){
+			return "there is no merchant in this area";
+		}
+		if(!command.hasSecondWord()){
+			return "what do you want to buy? write 'buy -item-'";
+		}
+		Tool t;
+		if((t = currentPlayer.buyToolFromMerchant(merchant, command.getSecondWord())) != null){
+			currentPlayer.removeMoney(t.getValue() * merchant.getPriceModifier());
+			merchant.removeObjCalled(t.getName());
+			currentPlayer.addObj(t);
+			frame.addItemToMenu(t);
+			return "you bought " + command.getSecondWord();
+		}
+		else{
+			return "you cannot buy " + command.getSecondWord();
+		}
+	}
+	
+	public String useItem(Command command){
+		if(!command.hasSecondWord()){
+			return "what do you want to use? write 'use -item-'";
+		}
+		if(command.getSecondWord().equals("potion")){
+			int life;
+			if((currentPlayer.getHP() - currentPlayer.getLifeRemaining()) > 50){
+				currentPlayer.setLifeRemaining(life = currentPlayer.getLifeRemaining() + 50);
+				GameWindow.greenLabelsCounter = life;
+				frame.resetLifelabel();
+				return "50 LP healed";
+			}	
+			else{
+				currentPlayer.setLifeRemaining(life = currentPlayer.getHP());
+				GameWindow.greenLabelsCounter = life;
+				frame.resetLifelabel();
+				return "50 LP healed";
+			}
+		}
+		return "You cannot use this item right now";
+	}
 
 	public String lightUp(Command command) {
 		if (currentPlayer.getToolFromString("matches") == null) {
 			return "you cannot light up anything without the appropriate tool" + beingattacked();
 		}
 		if (!command.hasSecondWord()) {
-			return "What do you want to light up? <BR>Write 'light up <object>'"+ beingattacked();
+			return "What do you want to light up? <BR>Write 'light up -object-'"+ beingattacked();
 		}
 		if (currentPlayer.getWeapon().getName().equals("torch") && currentPlayer.getWeapon().getDamage() == 5) {
 			return "your torch has already been lit"+ beingattacked();
@@ -257,12 +307,16 @@ public class Game {
 			return "what do you want to " + command.getFirstWord() + "?" + beingattacked();
 		else {
 			if (t != null) {
+				String remove;
 				if (currentPlayer.getWeapon().getName().equals(t.getName())) {
 					currentPlayer.setWeapon(NN);
 					frame.getWeaponLabel().setText(NN.getName());
 				}
-				frame.removeItemFromMenu(t.getName());
+				frame.removeItemFromMenu(remove = t.getName());
 				currentPlayer.currentRoom.addTool(t);
+				if(currentPlayer.getToolFromString(remove) == null && (remove.equals("key") || remove.equals("torch"))){
+					Command.removeCommand(remove);
+				}
 				return currentPlayer.removeObjCalled(command.getSecondWord()) + beingattacked();
 			}
 		}

@@ -113,9 +113,21 @@ public class Map implements Serializable{
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
 		
+		Merchant merchant1 = new Merchant("merchant", "a little man almost looking like a gnome with a huge bag on his back",
+				100, 300, "Greetings traveller, would you like to buy anything?", 3);
+		Weapon whip = new Weapon("whip", "a long brown whip", 80, 12, 0.96f);
+		Tool potion1 = new Tool("potion", "a little flusk with a green liquid inside it", 50);
+		Tool potion2 = new Tool("potion", "a little flusk with a green liquid inside it", 50);
+		Tool apple = new Tool("apple", "a green apple, seems quite ripe", 5);
+		merchant1.addObj(whip);
+		merchant1.addObj(potion1);
+		merchant1.addObj(potion2);
+		merchant1.addObj(apple);
+		Rooms[4].addnpcs(merchant1);
+		
 		Fixed chest2 = new Fixed("chest", null);
 		chest2.addMoney(100);
-		chest2.addTool(new Tool("healing potion", "a little flusk with a green liquid inside it", 50));
+		chest2.addTool(new Tool("potion", "a little flusk with a green liquid inside it", 50));
 		Rooms[5].addFixed(chest2);
 		
 		NpcBad goblin = new NpcBad("goblin pyromaniac", "a red goblin with an axe in fire in his"

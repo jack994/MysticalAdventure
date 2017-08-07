@@ -50,7 +50,12 @@ public abstract class NPC extends Character implements Serializable{
 			firstTimeMet = false;
 			return "<b>"+ name + ": "+ "</b>" + speech;
 		}
-		return "<b>"+ name + ": "+ "</b>" + secondSpeech;
+		if(secondSpeech != null){
+			return "<b>"+ name + ": "+ "</b>" + secondSpeech;
+		}
+		else{
+			return "<b>"+ name + ": "+ "</b>" + speech;
+		}
 	}
 	
 	public void setSecondSpeech(String Nspeech){

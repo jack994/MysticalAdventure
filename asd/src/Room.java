@@ -138,6 +138,15 @@ public class Room implements Serializable{
 		return null;
 	}
 	
+	public Merchant getMerchant(){
+		for(NPC npc : npcs){
+			if(npc.getClass() == Merchant.class){
+				return (Merchant)npc;
+			}
+		}
+		return null;
+	}
+	
 	public String getDirectionsString() {
 		String returnString = "POSSIBLE DIRECTIONS: ";
 		Set<String> keys = directions.keySet();

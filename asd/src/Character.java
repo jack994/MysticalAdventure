@@ -108,8 +108,8 @@ public abstract class Character implements Serializable{
 	 * add object to the ArrayList containing the items the character is carying.
 	 * @param o
 	 */
-	public void addObj(Tool o) {
-		itemsHeld.add(o);
+	public void addObj(Tool t) {
+		itemsHeld.add(t);
 	}
 
 	/**
@@ -183,8 +183,8 @@ public abstract class Character implements Serializable{
 	public String removeObjCalled(String o) {
 		String b = "";
 		for (int i = 0; i < itemsHeld.size(); i++) {
-			b = itemsHeld.get(i).getName();
 			if (b.equals(o)) {
+				b = itemsHeld.get(i).getName();
 				itemsHeld.remove(i);
 				break;
 			}

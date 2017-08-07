@@ -28,6 +28,16 @@ public class Player extends Character implements Serializable{
 		if (this.money >= money)
 			this.money -= money;
 	}
+	
+	public Tool buyToolFromMerchant(Merchant merchant, String tool){
+		Tool t;
+		if((t = merchant.getToolFromString(tool)) != null){
+			if(this.getMoneyAmount() >= (t.getValue() * merchant.getPriceModifier())){
+				return t;
+			}
+		}
+		return null;
+	}
 
 	public String equipWeapon(Weapon weapon){
 		for(int i =0; i< itemsHeld.size(); i++){

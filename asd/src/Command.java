@@ -9,7 +9,7 @@ public class Command{
 		private static final long serialVersionUID = 1L;
 	{
 	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
-	    add("equip"); add("speak"); add("talk"); add("talk to"); add("speak to"); add("say");
+	    add("equip"); add("speak"); add("talk"); add("talk to"); add("speak to"); add("say"); add("use"); add("buy");
 	}
 	};
 
@@ -58,7 +58,19 @@ public class Command{
 	}
 	
 	/**
-	 * finds the instructions in the String and separeates them.
+	 * removes the String passed as parameter from the command list.
+	 * @param toRem
+	 */
+	public static void removeCommand(String toRem){
+		for(String s : commandWords){
+			if(s.equals(toRem)){
+				commandWords.remove(s);
+			}
+		}
+	}
+	
+	/**
+	 * finds the instructions in the String and separates them.
 	 * @param instruction
 	 * @return
 	 */
