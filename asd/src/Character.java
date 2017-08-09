@@ -61,7 +61,7 @@ public abstract class Character implements Serializable{
 		return currentRoom;
 	}
 	
-	public Weapon getWeapon() {
+	public Weapon getWeapon() { //altro commento
 		return weapon;
 	}
 	
