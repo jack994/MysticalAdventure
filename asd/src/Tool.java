@@ -15,5 +15,6 @@ public class Tool extends Item implements Serializable{
 	public int getValue() {
 		return value;
 	}
+	
 
 }
