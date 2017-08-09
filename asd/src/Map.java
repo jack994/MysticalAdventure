@@ -55,6 +55,11 @@ public class Map implements Serializable{
 		Rooms[13] = new Room("Lorwin's Home", "The house is minimal and tidy, in the middle of the room there is a "
 				+ "tiny bed and a small table is placed beside it. A lot of books are piled up on the other"
 				+ " side of the room, some of them look like magic tomes", false);
+		Rooms[14] = new Room("Demo's Den","The area is quite dark but not enough to impede your sight, there is an unusual"
+				+ " smell of death... ",true);
+		Rooms[15] = new Room("THE WOOD - quiet area","This area is extremely quiet and pleasant, some birds sing...",false);
+		Rooms[16] = new Room("THE WOOD - Dirty spot","this area is surrounded by trees, a lot of trash is spreaded"
+				+ " on the floor.",false);
 
 		return Rooms[3];
 	}
@@ -79,6 +84,10 @@ public class Map implements Serializable{
 		Rooms[9].setDirection("east", Rooms[8]);
 		Rooms[4].setDirection("south", Rooms[11]);
 		Rooms[11].setDirection("north", Rooms[4]);
+		Rooms[8].setDirection("south", Rooms[14]);
+		Rooms[14].setDirection("north", Rooms[8]);
+		Rooms[8].setDirection("north", Rooms[15]);
+		Rooms[15].setDirection("south", Rooms[8]);
 		
 	}
 
@@ -94,8 +103,9 @@ public class Map implements Serializable{
 
 		NpcGood druid = new NpcGood("druid", "a busy druid with enormous horns", 1000, 150, true, "Aaawww finally you woke up! I was waiting for you");
 		druid.setSecondSpeech("Look, the forest is dying, I need your help to "
-				+ "find three ingredients to make a potion that will heal it, the creatures of the forest will tell you which ingredients i need."
-				+ " sorry if i can't tell you anything more but I have to go, come back to me when you have the three ingredients."
+				+ "find three ingredients to make a potion that will heal it, the creatures of the forest will tell you which ingredients I need."
+				+ " You should be able to get Lorwin to give you the first one, he's a friend of mine."
+				+ " Sorry if i can't tell you anything more but I have to go, come back to me when you have the three ingredients.<BR><BR>"
 				+ " The Druid runs towards the exit door.<BR><BR><b>druid :</b> ah, I almost forgot, treants like riddles and the number 7!");
 		Rooms[1].addnpcs(druid);
 		Fixed chest1 = new Fixed("chest", null);
@@ -151,6 +161,9 @@ public class Map implements Serializable{
 		Fixed Door5 = new Fixed("door 5", "The door is locked, on it someone wrote the number " + (lorwinCode[currentCode][1] +140));
 		Fixed Door6 = new Fixed("door 6", "The door is locked, on it someone wrote the number " + (lorwinCode[currentCode][1] +100));
 		Fixed Door7 = new Fixed("door 7", "The door is locked, on it someone wrote the number " + (lorwinCode[currentCode][1] -120));
+		NpcGood randomGuy = new NpcGood("elder man","an old man with a long white beard",100,100,false,"I think I"
+				+ " know the solution but I don't have the key to open the door!");
+		Rooms[11].addnpcs(randomGuy);
 		Rooms[11].addFixed(Door1);
 		Rooms[11].addFixed(Door2);
 		Rooms[11].addFixed(Door3);
@@ -164,10 +177,29 @@ public class Map implements Serializable{
 				+ "cleverness and I made that riddle complicated to make shure no one else but you could come to my house,"
 				+ " the wood it's filled with evil creatures.");
 		lorwin.setSecondSpeech("This one I am giving to you is a plum of the legendary phoenix"
-				+ "of the wood, it is really rare, don't lose it I only have one of those.");
+				+ "of the wood, it is really rare, don't lose it I only have one of those.<BR>"
+				+ "ah, thre is something you might need in the chest beside me, take it if you want.");
 		Ingredient plum = new Ingredient("phoenix plum","a fire red plum once appartaining to a phoenix");
 		lorwin.addIngredient(plum);
 		Rooms[13].addnpcs(lorwin);
+		Fixed chest3 = new Fixed("chest", null);
+		chest3.addMoney(100);
+		chest3.addTool(new Weapon("demon-slayer", "an ancient sword used to defeat demons", 500, 10, 0.99f));
+		Rooms[13].addFixed(chest3);
+		
+		NpcBad demogorgon = new NpcBad("demogorgon", "A horrid massive reptilian Demon with two mandrill heads and long"
+				+ " tentacles.", 500, 100, false, "Grwaaaaahhhlll", 100);
+		Tool demoTooth = new Tool("Demogorgon tooth", "A tooth of the legendary Demogorgon",0);
+		demogorgon.addObj(demoTooth);
+		Rooms[14].addnpcs(demogorgon);
+		
+		NpcGood helper = new NpcGood("scared man","a man with fear in his eyes", 100, 150, false, "I almost died down"
+				+ " there!! that demogorgon is so scary! I would give you a big prize if you defeat it for me!");
+		Tool passParTout = new Tool("passepartout","a key that could open any door",1000);
+		helper.addObj(passParTout);
+		Rooms[15].addnpcs(helper);
+		Fixed CDoor = new Fixed("door", "the door is locked");
+		Rooms[15].addFixed(CDoor);
 	}
 
 	public boolean hasRoomCalled(String des) {
