@@ -24,7 +24,7 @@ public abstract class Character implements Serializable{
 		this.HP = HP;
 		this.money = money;
 		lifeRemaining = 100;
-		Weapon NN = new Weapon("none", "no weapon", 0, 1, 0.95f);
+		Weapon NN = new Weapon("none", "no weapon", 0, 1, 0.95f);//Ciao
 		weapon = NN; // test commento
 		ingredients = new Ingredient[GameWindow.numOfIngredients];
 	}
