@@ -62,9 +62,15 @@ public class Command{
 	 * @param toRem
 	 */
 	public static void removeCommand(String toRem){
+		String com = "";
+		if(toRem.equalsIgnoreCase("key") || toRem.equals("passepartout"))
+			com = "open";
+		else if(toRem.equals("torch"))
+			com = "light up";
 		for(String s : commandWords){
-			if(s.equals(toRem)){
+			if(s.equals(com)){
 				commandWords.remove(s);
+				return;
 			}
 		}
 	}

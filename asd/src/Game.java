@@ -152,13 +152,16 @@ public class Game {
 				currentPlayer.setLifeRemaining(life = currentPlayer.getLifeRemaining() + 50);
 				GameWindow.greenLabelsCounter = life;
 				frame.resetLifelabel();
+				currentPlayer.removeObjCalled("potion");
 				return "50 LP healed";
 			}	
 			else{
+				int healed = currentPlayer.getHP() - currentPlayer.getLifeRemaining();
 				currentPlayer.setLifeRemaining(life = currentPlayer.getHP());
 				GameWindow.greenLabelsCounter = life;
 				frame.resetLifelabel();
-				return "50 LP healed";
+				currentPlayer.removeObjCalled("potion");
+				return healed + " LP healed";
 			}
 		}
 		return "You cannot use this item right now";
@@ -293,7 +296,7 @@ public class Game {
 					checkNewCommand((Tool) temp);
 					return "you picked up " + temp.getName() + beingattacked();
 				} else {
-					return "you can't pick up " + temp.getName() + " try the command examine " + temp.getName() + "\""
+					return "you can't pick up " + temp.getName() + " try the command 'examine " + temp.getName() + "'"
 							+ beingattacked();
 				}
 			}
@@ -313,11 +316,12 @@ public class Game {
 					frame.getWeaponLabel().setText(NN.getName());
 				}
 				frame.removeItemFromMenu(remove = t.getName());
+				currentPlayer.removeObjCalled(command.getSecondWord());
 				currentPlayer.currentRoom.addTool(t);
-				if(currentPlayer.getToolFromString(remove) == null && (remove.equals("key") || remove.equals("torch"))){
+				if((remove.equals("key") || remove.equals("torch"))){
 					Command.removeCommand(remove);
 				}
-				return currentPlayer.removeObjCalled(command.getSecondWord()) + beingattacked();
+				return "you dropped " + t.getName() + beingattacked();
 			}
 		}
 		return "You are not carrying " + command.getSecondWord() + beingattacked();
@@ -353,6 +357,9 @@ public class Game {
 						ret += "<BR>";
 					ret += "money contained: " + t.getMoney();
 				}
+				if(t.getMoney() == 0 && t.getToolList().isEmpty() && t.getDescription() == null){
+					ret = t.getName() + " is empty";
+				}
 				return ret + beingattacked();
 			}
 		} else if ((npc = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null) {
@@ -369,8 +376,13 @@ public class Game {
 		if ((enemy = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null) {
 			if (!enemy.isAlive()) {
 				return enemy.getName() + " is already dead";
-			} else if (enemy.getClass() == NpcBad.class)
+			} else if (enemy.getClass() == NpcBad.class){
+					if(enemy.getName().equals("demogorgon") && currentPlayer.getWeapon().getName().equals("demon-slayer")){
+						enemy.setLifeRemaining(0);
+						return enemy.getName() + " start burning form the inside and dies."+ "<BR>" + enemy.die();
+					}
 				return currentPlayer.attackTarget(enemy) + "<BR><BR>" + enemy.attackTarget(currentPlayer);
+			}
 			else
 				return "you cannot attack " + command.getSecondWord();
 		}
@@ -409,10 +421,10 @@ public class Game {
 		NPC npc;
 		if ((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null) {
 			if (npc.getClass() == NpcGood.class) {
-				if (npc.getName().equals("druid")) {
+				if (npc.getName().equals("druid") && currentPlayer.getCurrentRoom().getName().equals("THE LIVING ROOM")){
 					currentPlayer.getCurrentRoom().removeNpcNamed("druid");
 				}
-				if (npc.getName().equals("lorwin")) {
+				else if (npc.getName().equals("lorwin")) {
 					Ingredient ing;
 					if((ing = npc.getIngredient("phoenix plum")) != null){
 						npc.removeIngredient(ing);
@@ -421,6 +433,20 @@ public class Game {
 						npc.setSecondSpeech("Hello my little friend, You know, you never stop learning.");
 						return speech + currentPlayer.addIngredient(ing);
 					}
+				}
+				else if (npc.getName().equals("scared man") && 
+						(currentPlayer.getToolFromString("Demogorgon tooth")!= null)) {
+					npc.setSecondSpeech("Holy Guacamole you have defeated the demogorgon, I call tell it"
+							+ " from the tooth you are carrying!<BR>here, take your prize, I will never be "
+							+ "grateful enough.<BR>Now I must go, see you around.");
+					Tool k = npc.getToolFromString("passepartout");
+					npc.removeObjCalled("passepartout");
+					currentPlayer.addObj(k);
+					frame.addItemToMenu(k);
+					checkNewCommand(k);
+					currentPlayer.getCurrentRoom().removeNpcNamed("scared man");
+					return npc.getSpeech() + "<BR><BR>" + k.getName() + " added to " + 
+					currentPlayer.getName() + "'s inventory";
 				}
 				return npc.getSpeech() + beingattacked();
 			} else {
