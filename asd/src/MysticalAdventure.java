@@ -57,6 +57,7 @@ public class MysticalAdventure {
 			fileIn.close();
 			g.setCurrentPlayer(obj.getCurrentPlayer());
 			g.setMap(obj.getMap());
+			Command.commandWords = obj.getCommands();
 			GameWindow.greenLabelsCounter = obj.getCurrentPlayer().getLifeRemaining(); // reset correct life in life-bar
 			GAME.frame.resetLifelabel();
 			GAME.frame.getMoneyLabel().setText(obj.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
@@ -86,6 +87,7 @@ public class MysticalAdventure {
 			public void actionPerformed(ActionEvent e) {
 				ob.setCurrentPlayer(GAME.getCurrentPlayer());
 				ob.setMap(GAME.getMap());
+				ob.setCommands(Command.commandWords);
 				serializer(ob);
 			}
 		});

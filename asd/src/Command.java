@@ -5,7 +5,7 @@ public class Command{
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
 
-	private static ArrayList<String> commandWords = new ArrayList<String>(){
+	public static ArrayList<String> commandWords = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
 	{
 	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
@@ -83,9 +83,14 @@ public class Command{
 	public static String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
 		for(String s : commandWords){
-		if(instruction.startsWith(s + " ")){
+		if(instruction.startsWith(s)){
 			ret[0] = s;
 			ret[1] = instruction.replace(s, "");
+			if(!ret[1].equals("")){
+				if(!ret[1].startsWith(" ")){
+					ret[0] = null;
+				}					
+			}
 		}
 		}
 		if(ret[0] == null){	

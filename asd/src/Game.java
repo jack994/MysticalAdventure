@@ -224,7 +224,7 @@ public class Game {
 						map.addPassage(11, 12, "south");
 					}
 					frame.removeItemFromMenu(ky.getName());    //remove the key
-					currentPlayer.getCurrentRoom().getItemNamed("door" + tmp[1]).setDescription("The Door is Open");
+					currentPlayer.getCurrentRoom().getItemNamed("door " + tmp[1]).setDescription("The Door is Open");
 					currentPlayer.removeObjCalled(ky.getName());
 					return "you unlocked the Door number " + tmp[1] + ", the key magically disappears."
 							+ "<BR>the passage is now open (south)";
