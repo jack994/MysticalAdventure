@@ -146,13 +146,14 @@ public class Game {
 		if(!command.hasSecondWord()){
 			return "what do you want to use? write 'use -item-'";
 		}
-		if(command.getSecondWord().equals("potion")){
+		if(command.getSecondWord().equals("potion") && currentPlayer.getToolFromString("potion") != null){
 			int life;
 			if((currentPlayer.getHP() - currentPlayer.getLifeRemaining()) > 50){
 				currentPlayer.setLifeRemaining(life = currentPlayer.getLifeRemaining() + 50);
 				GameWindow.greenLabelsCounter = life;
 				frame.resetLifelabel();
 				currentPlayer.removeObjCalled("potion");
+				frame.removeItemFromMenu("potion");
 				return "50 LP healed";
 			}	
 			else{
@@ -161,6 +162,7 @@ public class Game {
 				GameWindow.greenLabelsCounter = life;
 				frame.resetLifelabel();
 				currentPlayer.removeObjCalled("potion");
+				frame.removeItemFromMenu("potion");
 				return healed + " LP healed";
 			}
 		}
@@ -222,26 +224,51 @@ public class Game {
 						map.addPassage(11, 12, "south");
 					}
 					frame.removeItemFromMenu(ky.getName());    //remove the key
+					currentPlayer.getCurrentRoom().getItemNamed("door" + tmp[1]).setDescription("The Door is Open");
 					currentPlayer.removeObjCalled(ky.getName());
 					return "you unlocked the Door number " + tmp[1] + ", the key magically disappears."
 							+ "<BR>the passage is now open (south)";
 				} else
 					return "that door does not exist";
 			}
-		}
+		}		
+			if (command.getSecondWord().equals("door") || command.getSecondWord().equals("the door") 
+					&& currentPlayer.getToolFromString("passepartout") != null){
+				if (currentPlayer.getCurrentRoom().getName().equals("THE WOOD - Quiet area")) {
+					currentPlayer.getCurrentRoom().getItemNamed("door").setDescription("The Door is Open");
+					map.addPassage(15, 16, "west");
+					map.addPassage(16, 15, "east");
+					return "you opened the door, the passage is now open (west)";
+				}
+			}
+					
 		return "you can't open " + command.getSecondWord()+ beingattacked();
 	}
 
 	public String saySomething(Command command) {
 		if ((command.getSecondWord().equals("moon") || command.getSecondWord().equals("the moon"))
-				&& currentPlayer.getCurrentRoom().getName().equals("THE MEADOW")) { // treant
-																					// riddle
-																					// solved
-			map.addPassage(3, 4, "south");
-			currentPlayer.getCurrentRoom().getNPCNamed("treant")
-					.setSpeech("Good job with the riddle, now you can pass.");
-			return "the treant slowly moves left, there is now a passage where he sat (south).";
-		} else {
+				&& currentPlayer.getCurrentRoom().getName().equals("THE MEADOW")) { // riddle solved
+			NPC treant;
+			if(!(treant = currentPlayer.getCurrentRoom().getNPCNamed("treant")).getSpeech().equals("Good job"
+					+ " with the riddle, now you can pass.")){
+				map.addPassage(3, 4, "south");
+				treant.setSpeech("Good job with the riddle, now you can pass.");
+				return "the treant slowly moves left, there is now a passage where he sat (south).";
+			}else{
+				return "you already opened the passage";
+			}
+		}
+		else if((command.getSecondWord().equals("7") || command.getSecondWord().equals("seven"))
+				&& currentPlayer.getCurrentRoom().getName().equals("THE VALLEY")){
+			currentPlayer.getCurrentRoom().setDescription("in the middle of this area there is a river"
+					+ " and all around flowers grow luxuriant. east you can see a waterfall with a small entrance beside it. "
+					+ "North, a dark entrance looks like a tunnel.");
+				map.addPassage(6, 17, "east");
+				map.addPassage(17, 6, "west");
+				return "two of the trees over the waterfall move slightly and the flow of the waterfall canges,"
+						+ " a passage (east) has been uncovered";
+		}
+		else {
 			return "nothing happens"+ beingattacked();
 		}
 	}

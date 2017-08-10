@@ -56,10 +56,11 @@ public class Map implements Serializable{
 				+ "tiny bed and a small table is placed beside it. A lot of books are piled up on the other"
 				+ " side of the room, some of them look like magic tomes", false);
 		Rooms[14] = new Room("Demo's Den","The area is quite dark but not enough to impede your sight, there is an unusual"
-				+ " smell of death... ",true);
-		Rooms[15] = new Room("THE WOOD - quiet area","This area is extremely quiet and pleasant, some birds sing...",false);
-		Rooms[16] = new Room("THE WOOD - Dirty spot","this area is surrounded by trees, a lot of trash is spreaded"
+				+ " smell of death... ",false);
+		Rooms[15] = new Room("THE WOOD - Quiet area","This area is extremely quiet and pleasant, some birds sing...",false);
+		Rooms[16] = new Room("THE WOOD - Dirty spot","This area is surrounded by trees, a lot of trash is spreaded"
 				+ " on the floor.",false);
+		Rooms[17] = new Room("TO BE CONTINUED","",true);  ///////// TODO finish here.
 
 		return Rooms[3];
 	}
@@ -88,6 +89,8 @@ public class Map implements Serializable{
 		Rooms[14].setDirection("north", Rooms[8]);
 		Rooms[8].setDirection("north", Rooms[15]);
 		Rooms[15].setDirection("south", Rooms[8]);
+		Rooms[15].setDirection("west", Rooms[16]);
+		Rooms[16].setDirection("east", Rooms[15]);
 		
 	}
 
@@ -141,7 +144,7 @@ public class Map implements Serializable{
 		Rooms[5].addFixed(chest2);
 		
 		NpcBad goblin = new NpcBad("goblin pyromaniac", "a red goblin with an axe in fire in his"
-				+ " hands and some flasks hanging from his belt", 45, 45, true, "Grwaaal", 1);
+				+ " hands and some flasks hanging from his belt", 45, 45, true, "Grwaaal", 5);
 		Weapon axe = new Weapon("pyromaniac axe", "a dirty axe, it smells like smoke", 50, 6, 0.97f);
 		goblin.setWeapon(axe);
 		Tool eyeG = new Tool("goblin eye", "a disgusting goblin eye", 8);
@@ -152,7 +155,10 @@ public class Map implements Serializable{
 		
 		Fixed corp = new Fixed("floating corp", "a pale corp floating on the water");
 		corp.addTool(new Tool("key", "a golden key",0));
-		Rooms[10].addFixed(corp);	
+		Rooms[10].addFixed(corp);
+		NpcBad imp = new NpcBad("putrid imp","a horrid fetid creature looking like a flying goblin", 30, 25, true, 
+				"Grawam-Gragnam ahraaa", 12);
+		Rooms[10].addnpcs(imp);
 		
 		Fixed Door1 = new Fixed("door 1", "The door is locked, on it someone wrote the number " + (lorwinCode[currentCode][1] +35));
 		Fixed Door2 = new Fixed("door 2", "The door is locked, on it someone wrote the number " + (lorwinCode[currentCode][1] +47));
@@ -188,7 +194,7 @@ public class Map implements Serializable{
 		Rooms[13].addFixed(chest3);
 		
 		NpcBad demogorgon = new NpcBad("demogorgon", "A horrid massive reptilian Demon with two mandrill heads and long"
-				+ " tentacles.", 500, 100, false, "Grwaaaaahhhlll", 100);
+				+ " tentacles.", 500, 100, false, "Grwaaaaahhhlll", 50);
 		Tool demoTooth = new Tool("Demogorgon tooth", "A tooth of the legendary Demogorgon",0);
 		demogorgon.addObj(demoTooth);
 		Rooms[14].addnpcs(demogorgon);
@@ -200,6 +206,17 @@ public class Map implements Serializable{
 		Rooms[15].addnpcs(helper);
 		Fixed CDoor = new Fixed("door", "the door is locked");
 		Rooms[15].addFixed(CDoor);
+		
+		NpcBad imp1 = new NpcBad("putrid imp","a horrid fetid creature looking like a flying goblin", 30, 25, true, 
+				"Grawam-Gragnam ahraaa", 12);
+		Rooms[16].addnpcs(imp1);
+		Fixed chest4 = new Fixed("chest", null);
+		chest4.addMoney(50);
+		Tool scroll = new Tool("scroll","an ancient scroll, on it someone wrote: <BR>'where the water"
+				+ " roars the trees have ears, their favourite number they want to hear.'", 10);
+		chest4.addTool(scroll);
+		
+		
 	}
 
 	public boolean hasRoomCalled(String des) {

@@ -181,19 +181,14 @@ public abstract class Character implements Serializable{
 	 * @return a string describing the action.
 	 */
 	public String removeObjCalled(String o) {
-		String b = "";
-		for (int i = 0; i < itemsHeld.size(); i++) {
-			if (b.equals(o)) {
-				b = itemsHeld.get(i).getName();
-				itemsHeld.remove(i);
-				break;
+		
+		for(Tool t : itemsHeld){
+			if (t.getName().equals(o)){
+				itemsHeld.remove(t);
+				return this.getName() + "dropped" + o;
 			}
 		}
-		if (b.equals("")) {
-			return this.getName() + " doesn't have such a thing";
-		} else {
-			return this.getName() + " dropped " + b;
-		}
+		return null;
 	}
 	
 	/**
@@ -227,7 +222,9 @@ public abstract class Character implements Serializable{
 		
 		int r = rand.nextInt(101);
 		if(r < this.getWeapon().getPrecisionOutOf100()){
-			damage = (100 * this.weapon.getDamage()) / target.getHP();
+			damage = this.weapon.getDamage();
+			if(this.getClass() == NpcBad.class)
+				damage += ((NpcBad) this).getBonusAttack();
 			target.setLifeRemaining(target.getLifeRemaining() - damage);
 			if(target.getLifeRemaining() <= 0 && target.getClass() != Player.class){
 				return target.getName() + " is dead<BR>" + target.die();

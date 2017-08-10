@@ -83,7 +83,7 @@ public class Command{
 	public static String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
 		for(String s : commandWords){
-		if(instruction.startsWith(s)){
+		if(instruction.startsWith(s + " ")){
 			ret[0] = s;
 			ret[1] = instruction.replace(s, "");
 		}

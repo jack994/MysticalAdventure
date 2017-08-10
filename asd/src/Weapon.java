@@ -17,8 +17,13 @@ public class Weapon extends Tool implements Serializable{
 		return precision;
 	}
 	
-	public float getPrecisionOutOf100() {
-		return precision * 100;
+	public String getDescription(){
+		return super.getDescription() + "<BR>Damage: " + this.getDamage()
+		+ " - Precision: " + this.getPrecisionOutOf100() + "%";
+	}
+	
+	public int getPrecisionOutOf100() {
+		return (int) (precision * 100);
 	}
 
 	public int getDamage() {

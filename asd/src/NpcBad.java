@@ -8,7 +8,7 @@ public class NpcBad extends NPC implements Serializable{
 	
 	public NpcBad(String name, String description, int HP,int money, boolean active, String speech, int bonusAttack) {
 		super(name, description, HP, money, active, speech);
-		this.bonusAttack = bonusAttack;
+		this.setBonusAttack(bonusAttack);
 	}
 
 	public String interact(Character pl) {
@@ -20,9 +20,14 @@ public class NpcBad extends NPC implements Serializable{
 		}
 	}
 
-	public String attackTarget(Character target){
-		this.getWeapon().setDamage(this.getWeapon().getDamage() + bonusAttack);
-		return super.attackTarget(target);
+	public int getBonusAttack() {
+		return bonusAttack;
 	}
+
+	public void setBonusAttack(int bonusAttack) {
+		this.bonusAttack = bonusAttack;
+	}
+
+	
 }
 
