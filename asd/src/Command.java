@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Command{
+public class Command{//commento
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
