@@ -89,6 +89,10 @@ public abstract class NPC extends Character implements Serializable{
 		this.firstTimeMet = firstTimeMet;
 	}
 	
+	public void setDescription(String description){
+		this.description = description;
+	}
+	
 	public Weapon getWeapon() {
 		return weapon;
 	}

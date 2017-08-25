@@ -4,12 +4,13 @@ public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
+	private static final String[] ARTICLES = {" to ", " at ", " from ", " to the ", " the "};
 
 	public static ArrayList<String> commandWords = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
 	{
 	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
-	    add("equip"); add("speak"); add("talk"); add("talk to"); add("speak to"); add("say"); add("use"); add("buy");
+	    add("equip"); add("speak"); add("talk");  add("say"); add("use"); add("buy");
 	}
 	};
 
@@ -82,6 +83,11 @@ public class Command{
 	 */
 	public static String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
+		for (int i = 0; i < ARTICLES.length; i++){
+			if(instruction.contains(ARTICLES[i])){
+				instruction = instruction.replace(ARTICLES[i], " ");
+			}
+		}
 		for(String s : commandWords){
 		if(instruction.startsWith(s)){
 			ret[0] = s;

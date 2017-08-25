@@ -14,6 +14,7 @@ public class Room implements Serializable{
 	private HashMap<String, Room> directions;
 	private ArrayList<NPC> npcs;
 	private boolean dark;
+	protected int money;
 
 	public Room(String Name, String description, boolean dark) {
 		Name = "<b>" + Name + "</b>";
@@ -24,6 +25,7 @@ public class Room implements Serializable{
 		directions = new HashMap<String, Room>();
 		npcs = new ArrayList<NPC>();
 		this.setDark(dark);
+		money = 0;
 	}
 
 	public String getName() {
@@ -43,12 +45,33 @@ public class Room implements Serializable{
 				+ getNPCString();
 
 	}
+	
+	public void addMoney(int money){
+		this.money += money;
+	}
+	
+	public void removeMoney(int money){
+		if(this.money >= money){
+			this.money -= money;
+		}
+		else{
+			System.err.println("not enough money");
+		}
+	}
+	
+	public int getMoney(){
+		return money;
+	}
 
 	public void addTool(Tool o) {
 		items.add(o);
 	}
 
 	public void addFixed(Fixed o) {
+		items.add(o);
+	}
+	
+	public void addIngredient(Ingredient o){
 		items.add(o);
 	}
 
@@ -108,6 +131,9 @@ public class Room implements Serializable{
 		for (int i = 0; i < items.size(); i++) {
 			toReturn += " -" + items.get(i).getName();
 		}
+		}
+		if(money > 0){
+			toReturn += "<BR>MONEY: "+ money;
 		}
 		return toReturn;
 	}
