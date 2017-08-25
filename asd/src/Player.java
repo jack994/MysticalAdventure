@@ -16,7 +16,7 @@ public class Player extends Character implements Serializable{
 			else
 				items = items + itemsHeld.get(i).getName() + ". ";
 		}
-		return "you are carrying: " + items;
+		return "you are carrying: " + items;//------------------------------------------------------------------------------------------------------
 	}
 
 	public String die() {
@@ -43,7 +43,7 @@ public class Player extends Character implements Serializable{
 		for(int i =0; i< itemsHeld.size(); i++){
 			if(weapon.equals(itemsHeld.get(i))){
 				this.setWeapon(weapon);
-				return weapon.getName() + " equipped";
+				return "hai equipaggiato:" + weapon.getName();
 			}
 		}
 		return null;

@@ -1,15 +1,17 @@
 import java.util.ArrayList;
 
-public class Command{//commento
+public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
+	
+	private final static String[] articoli= {" il "," lo ", " la ", " i ", " gli ", " le "," col "," con "," a " };
 
 	public static ArrayList<String> commandWords = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
 	{
-	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
-	    add("equip"); add("speak"); add("talk"); add("talk to"); add("speak to"); add("say"); add("use"); add("buy");
+	    add("aiuto"); add("vai"); add("vai a"); add("lascia"); add("butta"); add("prendi"); add("esamina"); add("attacca");
+	    add("equipaggia"); add("parla"); add("pronuncia"); add("usa"); add("compra");
 	}
 	};
 
@@ -63,10 +65,10 @@ public class Command{//commento
 	 */
 	public static void removeCommand(String toRem){
 		String com = "";
-		if(toRem.equalsIgnoreCase("key") || toRem.equals("passepartout"))
-			com = "open";
-		else if(toRem.equals("torch"))
-			com = "light up";
+		if(toRem.equalsIgnoreCase("chiave") || toRem.equals("passepartout"))
+			com = "apri";
+		else if(toRem.equals("torcia"))
+			com = "accendi";
 		for(String s : commandWords){
 			if(s.equals(com)){
 				commandWords.remove(s);
@@ -82,7 +84,14 @@ public class Command{//commento
 	 */
 	public static String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
+		for(int i = 0; i<articoli.length; ++i){
+			if(instruction.contains(articoli[i])){
+				instruction = instruction.replace(articoli[i], " ");
+			}
+		}
 		for(String s : commandWords){
+			
+			
 		if(instruction.startsWith(s)){
 			ret[0] = s;
 			ret[1] = instruction.replace(s, "");

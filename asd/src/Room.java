@@ -103,7 +103,7 @@ public class Room implements Serializable{
 	}
 
 	public String getItemString() {
-		String toReturn = "ITEMS: ";
+		String toReturn = "OGGETTI: ";
 		if(!dark){
 		for (int i = 0; i < items.size(); i++) {
 			toReturn += " -" + items.get(i).getName();
@@ -113,7 +113,7 @@ public class Room implements Serializable{
 	}
 
 	public String getNPCString() {
-		String toReturn = "CHARACTERS: ";
+		String toReturn = "PERSONAGGI: ";
 		if(!dark){
 		for (int i = 0; i < npcs.size(); i++) {
 			toReturn += " -" + npcs.get(i).getName();
@@ -148,7 +148,7 @@ public class Room implements Serializable{
 	}
 	
 	public String getDirectionsString() {
-		String returnString = "POSSIBLE DIRECTIONS: ";
+		String returnString = "POSSIBILI DIREZIONI: ";
 		Set<String> keys = directions.keySet();
 		if(!dark){
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();)

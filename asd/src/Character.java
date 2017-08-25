@@ -24,7 +24,7 @@ public abstract class Character implements Serializable{
 		this.HP = HP;
 		this.money = money;
 		lifeRemaining = 100;
-		Weapon NN = new Weapon("none", "no weapon", 0, 1, 0.95f);//Ciao
+		Weapon NN = new Weapon("nessuna", "nessun'arma", 0, 1, 0.95f);//Ciao
 		weapon = NN; // test commento
 		ingredients = new Ingredient[GameWindow.numOfIngredients];
 	}
@@ -139,10 +139,10 @@ public abstract class Character implements Serializable{
 		for(int i = 0; i < ingredients.length; i ++){
 			if(ingredients[i] == null){
 				ingredients[i] = ing;
-				return "<BR><BR>" + ing.getName() + " added to " + this.getName() + "'s inventory<BR>";
+				return "<BR><BR>" + ing.getName() + " aggiunto all'inventario di " + this.getName() + " <BR>";
 			}
 		}
-		return "you cannot carry more than 3 ingredients";
+		return "non puoi trasportare più di 3 ingredienti";
 	}
 	
 	public void removeIngredient(Ingredient ing){
@@ -171,7 +171,7 @@ public abstract class Character implements Serializable{
 		if (b.equals("")) {
 			return null;
 		} else {
-			return this.getName() + " took " + b;
+			return this.getName() + " ha aggiuto all'inventario: " + b;
 		}
 	}
 
@@ -185,7 +185,7 @@ public abstract class Character implements Serializable{
 		for(Tool t : itemsHeld){
 			if (t.getName().equals(o)){
 				itemsHeld.remove(t);
-				return this.getName() + "dropped" + o;
+				return this.getName() + " ha lasciato cadere: " + o;
 			}
 		}
 		return null;
@@ -205,7 +205,7 @@ public abstract class Character implements Serializable{
 		if(all.length() > 3){
 			all = all.substring(0, (all.length() -2));
 		}
-		return this.getName() + " dropped: " + all; 
+		return this.getName() + " dropped: " + all;//-----------------------------------------------------------------------------------------------
 	}
 	
 	/**
@@ -227,16 +227,16 @@ public abstract class Character implements Serializable{
 				damage += ((NpcBad) this).getBonusAttack();
 			target.setLifeRemaining(target.getLifeRemaining() - damage);
 			if(target.getLifeRemaining() <= 0 && target.getClass() != Player.class){
-				return target.getName() + " is dead<BR>" + target.die();
+				return target.getName() + " e' morto<BR>" + target.die();
 			}
 			if(target.getClass() == Player.class){
 				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar
-				return this.getName() + " attacks "+ target.getName();
+				return this.getName() + " attacca "+ target.getName();
 			}
-			return this.getName() + " attacks "+ target.getName() + "<BR>" + target.getName() + " remaining life: " + target.getLifeRemaining() + "%";
+			return this.getName() + " attacca "+ target.getName() + "<BR>" + " vita restante " + target.getName() + ": " + target.getLifeRemaining() + "%";
 		}
 		else{
-			return this.getName() + " attacks "+ target.getName() + "<BR>" + this.getName() + " misses!";
+			return this.getName() + " attacca "+ target.getName() + "<BR>" + target.getName() + " mancato!";
 		}
 	}
 

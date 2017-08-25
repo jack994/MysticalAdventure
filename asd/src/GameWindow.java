@@ -69,16 +69,16 @@ public class GameWindow extends JFrame{
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
 		}
-		labels[0].setText(" Life: ");
-		labels[2].setText(" Deaths:  ");
+		labels[0].setText(" Vita: ");
+		labels[2].setText(" Morti:  ");
 		labels[3].setText(0 + "");
-		labels[4].setText(" Weapon: ");
-		labels[5].setText(" none");
-		labels[6].setText(" Money:   ");
+		labels[4].setText(" Arma: ");
+		labels[5].setText(" nessuna ");
+		labels[6].setText(" Monete:   ");
 		labels[7].setText(100 + "");
-		labels[8].setText(" Item:  ");
+		labels[8].setText(" Oggetti:  ");
 		labels[8].setFont(f2);
-		labels[9].setText("Q.ty:  ");
+		labels[9].setText("Q.ta':  ");
 		labels[9].setFont(f2);
 		labels[8].setOpaque(true);
 		labels[9].setOpaque(true);
@@ -158,7 +158,7 @@ public class GameWindow extends JFrame{
 		allItems3.add(items5, BorderLayout.CENTER);
 		allItems3.add(items6, BorderLayout.EAST);
 		menuPanel.add(allItems3);
-		ingredients = new JLabel("Ingredients :");
+		ingredients = new JLabel("Ingredienti :");
 		ingredients.setOpaque(true);
 		ingredients.setBackground(Color.WHITE);
 		ingredients.setFont(f2);
@@ -202,8 +202,8 @@ public class GameWindow extends JFrame{
 		});
 		menubar = new JMenuBar();
 		menu = new JMenu("menu");
-		save = new JMenuItem("save");
-		load = new JMenuItem("load");
+		save = new JMenuItem("salva");
+		load = new JMenuItem("carica");
 		menu.add(save);
 		menu.add(load);
 		menubar.add(menu);

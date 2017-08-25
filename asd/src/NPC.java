@@ -33,7 +33,7 @@ public abstract class NPC extends Character implements Serializable{
 	public String dropAllItems() {
 
 		Weapon wp = weapon;
-		if (!weapon.getName().equals("none")) {
+		if (!weapon.getName().equals("nessuna")) {
 			currentRoom.addTool((Tool) weapon);
 			return super.dropAllItems() + ", " + wp.getName();
 		}
@@ -78,7 +78,7 @@ public abstract class NPC extends Character implements Serializable{
 			else
 				items = items + itemsHeld.get(i).getDescription() + ". ";
 		}
-		return name + " is carrying: " + items;
+		return name + " is carrying: " + items;//-------------------------------------------------------------------------------------------------
 	}
 
 	public boolean isFirstTimeMet() {
