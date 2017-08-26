@@ -6,9 +6,9 @@ public class Command{
 	private String secondWord; //second part of the command
 	private static final String[] ARTICLES = {" to ", " at ", " from ", " to the ", " the "};
 
-	public static ArrayList<String> commandWords = new ArrayList<String>(){
+	public static ArrayList<String> commandWords = new ArrayList<String>(){ 
 		private static final long serialVersionUID = 1L;
-	{
+	{   // all the possible commands are stored here
 	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
 	    add("equip"); add("speak"); add("talk");  add("say"); add("use"); add("buy");
 	}
@@ -66,7 +66,7 @@ public class Command{
 		String com = "";
 		if(toRem.equalsIgnoreCase("key") || toRem.equals("passepartout"))
 			com = "open";
-		else if(toRem.equals("torch"))
+		else if(toRem.equals("torch") || toRem.equals("matches"))
 			com = "light up";
 		for(String s : commandWords){
 			if(s.equals(com)){
@@ -85,7 +85,7 @@ public class Command{
 		String[] ret = new String[2];
 		for (int i = 0; i < ARTICLES.length; i++){
 			if(instruction.contains(ARTICLES[i])){
-				instruction = instruction.replace(ARTICLES[i], " ");
+				instruction = instruction.replace(ARTICLES[i], " "); //remove articles
 			}
 		}
 		for(String s : commandWords){

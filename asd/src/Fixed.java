@@ -52,8 +52,8 @@ public class Fixed extends Item implements Serializable{
 	}
 
 	/**
-	 * passing a string to this method wie find the item with that name in the arraylist
-	 * @param d String corresponding to the name of the item we want to find in the arraylist
+	 * passing a string to this method will find the item with that name in the arraylist
+	 * @param d : String corresponding to the name of the item we want to find in the arraylist
 	 * @return the item
 	 */
 	Tool getToolCalled(String d) {

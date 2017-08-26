@@ -1,5 +1,9 @@
 import java.io.Serializable;
 
+/**
+ * class holding the whole map with all the rooms, items and characters in it
+ * @author giacomobenso
+ */
 public class Map implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -10,7 +14,19 @@ public class Map implements Serializable{
 	public Map() {
 		Rooms = new Room[50];
 	}
+	
+	public void setLorwinCode(int n) {
+		currentCode = n;
+	}
+	
+	public Room getRoom(int roomNumber){
+		return Rooms[roomNumber];
+	}
 
+	/**
+	 * method needed in the class game, it sets up all the rooms
+	 * @return
+	 */
 	public Room createRoom() {
 		Room p = makeRoom();
 		setRoomDirections();
@@ -18,27 +34,31 @@ public class Map implements Serializable{
 		return p;
 	}
 
+	/**
+	 * create all the rooms in the map with roomname, description and a boolean representing the darkness
+	 * @return
+	 */
 	public Room makeRoom() {
 
 		Rooms[0] = new Room("THE BEDROOM", "you are in a room that looks like a bedroom, some stairs lead "
 				+ "back to the Living Room", false);
 		Rooms[1] = new Room("THE LIVING ROOM",
 				"you are in the living room, all the house seems really tidy and clean. some stairs lead upstairs, "
-				+ "south there is the main entrance and east a wooden door", false);
+				+ "south there is the main entrance and east you see a wooden door", false);
 		Rooms[2] = new Room("THE KITCHEN",
-				"you are in the kitchen, the light of a lantern shines in the middle of it. west there is "
-				+ "the door that leads back to the kitchen.", false);
+				"you are in the kitchen, the light of a lantern shines in the middle of it. West, "
+				+ "the door that leads back to the living room.", false);
 		Rooms[3] = new Room("THE MEADOW",
-				"you are in a misty meadow in the middle of what seems to be a small wood,"
-						+ " north, in the middle of the medow you can barely see a house and all around you it's only trees, they are so"
-						+ " thick you couldn't even pass through. South one of the trees seems moving.", false);
-		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the ligtht "
+				"you are in a misty meadow in the middle of what seems to be a small wood."
+						+ " North, you can barely see a house; trees around you are so"
+						+ " thick you couldn't pass through. South one of the trees seems moving.", false);
+		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the light "
 				+ "is still passing through the leaves and the air is humid. all around you there are only trees.", false);
 		Rooms[5] = new Room("THE WOOD - East",
 				"the trees in this part of the wood are thicker and you struggle to see anything in this area.", true);
 		Rooms[6] = new Room("THE VALLEY",
 				"in the middle of this area there is a river and all around flowers grow luxuriant. east you "
-						+ "can see a waterfall. North, a dark entrance looks like a tunnel.", false);
+						+ "can see a gorgeous waterfall. North, a dark entrance looks like a tunnel.", false);
 		Rooms[7] = new Room("THE TUNNEL",
 				"You can see nothing but the entrance of the tunnel behind you. it's really dark.", true);
 		Rooms[8] = new Room("THE WOOD - West", "This part of the wood looks more trashy compared to the others, you "
@@ -46,30 +66,34 @@ public class Map implements Serializable{
 		Rooms[9] = new Room("THE CAVE", "You are in a small cave, the burning smell here is stronger.", false);
 		Rooms[10] = new Room("THE SWAMP","a stinky flooded swamp full of bugs, judging from the stink there could "
 				+ "be someone dead here", false); 
-		Rooms[11] = new Room("THE WOOD - South", "This area is surrounded by rock walls, five doors are on the south "
-				+ "side of the area, above them a well defined engraving says: 'In the Lorwin code a "
+		Rooms[11] = new Room("THE WOOD - South", "This area is surrounded by rock walls, seven doors are on the south "
+				+ "side of the area, above them a well defined engraving says: <i>'In the Lorwin code a "
 				+ "valid codeword does not contain any digit more than once and "
 				+ "cannot contain both 0 and 1 in the same codeword.<BR> "
-				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'", false);
+				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'</i>", false);
 		Rooms[12] = new Room("INCORRECT", "Die Insect!!!!", false);
-		Rooms[13] = new Room("Lorwin's Home", "The house is minimal and tidy, in the middle of the room there is a "
-				+ "tiny bed and a small table is placed beside it. A lot of books are piled up on the other"
+		Rooms[13] = new Room("LORWIN's HOME", "The house is minimal and tidy, in the middle of the room there is a "
+				+ "cute little bed and a small table is placed beside it. A lot of books are piled up on the other"
 				+ " side of the room, some of them look like magic tomes", false);
-		Rooms[14] = new Room("Demo's Den","The area is quite dark but not enough to impede your sight, there is an unusual"
+		Rooms[14] = new Room("DEMO's DEN","The area is quite dark but not enough to impede your sight, there is an unusual"
 				+ " smell of death... ",false);
-		Rooms[15] = new Room("THE WOOD - Quiet area","This area is extremely quiet and pleasant, some birds sing...",false);
+		Rooms[15] = new Room("THE WOOD - Quiet area","This area is extremely quiet and pleasant, some birds sing..."
+				+ " West, a massive rock wall with a door in the middle",false);
 		Rooms[16] = new Room("THE WOOD - Dirty spot","This area is surrounded by trees, a lot of trash is spreaded"
 				+ " on the floor. West, a wooden shed",false);
-		Rooms[17] = new Room("The Cave beyond the waterfall","The area is quite dark",true); 
-		Rooms[18] = new Room("Little Shed","You are in a tiny wooden shed",false);
-		Rooms[19] = new Room("Cave beyond the waterfall - behind the door", "the roof is so low you have to crawl to get in. "
+		Rooms[17] = new Room("THE CAVE BEYOND THE WATERFALL","The area is quite dark",true); 
+		Rooms[18] = new Room("LITTLE SHED","You are in a tiny wooden shed",false);
+		Rooms[19] = new Room("THE CAVE BEYOND THE WATERFALL - behind the door", "the roof is so low you have to crawl to get in. "
 				+ "There is a strong smell of moist and the floor is wet.", true);
-		Rooms[20] = new Room("THE OBLIVION","The air is thick and warm, you are in a sort of square floating in the middle"
+		Rooms[20] = new Room("THE OBLIVION","The air is thick and warm, you are in a sort of plane rock floating in the middle"
 				+ " of nothing, all around this 'square' flames burn like in hell.",false);
 
 		return Rooms[3];
 	}
 
+	/**
+	 * connect the rooms among them with directions.
+	 */
 	public void setRoomDirections() {
 		Rooms[0].setDirection("down", Rooms[1]);
 		Rooms[1].setDirection("east", Rooms[2]);
@@ -101,6 +125,9 @@ public class Map implements Serializable{
 		Rooms[19].setDirection("west", Rooms[17]);
 	}
 
+	/**
+	 * 'populate' the rooms, all the items and characters are inserted
+	 */
 	public void addItemsToRooms() {
 
 		Fixed wardrobe = new Fixed("wardrobe", null);
@@ -126,7 +153,7 @@ public class Map implements Serializable{
 
 		Fixed cupboard = new Fixed("cupboard", null);
 		cupboard.addMoney(50);
-		cupboard.addTool(new Tool("apple", "A green apple, it seems still ripe", 2));
+		cupboard.addTool(new Tool("apple", "A green apple, it seems still sour", 2));
 		Rooms[2].addFixed(cupboard);
 
 		NpcGood treant = new NpcGood("treant", "an enormous alive tree that blocks the passage to the wood", 100, 130,
@@ -137,7 +164,7 @@ public class Map implements Serializable{
 				100, 300, "Greetings traveller, would you like to buy anything?", 3);
 		Weapon whip = new Weapon("whip", "a long brown whip", 80, 12, 0.95f);
 		Weapon gladius = new Weapon("gladius", "a golden ancient gladius, f****** sharp", 200, 16, 0.98f);
-		Tool apple = new Tool("apple", "a green apple, seems quite ripe", 5);
+		Tool apple = new Tool("apple", "a green apple, seems quite sour", 5);
 		merchant1.addObj(whip);
 		merchant1.addObj(gladius);
 		for(int i = 0; i< 5; i++){
@@ -151,6 +178,9 @@ public class Map implements Serializable{
 		chest2.addMoney(100);
 		chest2.addTool(new Tool("potion", "A little flusk with a green liquid inside it", 50));
 		Rooms[5].addFixed(chest2);
+		
+		Fixed ccp = new Fixed("corp","a pale dead man with blue eyes");
+		Rooms[8].addFixed(ccp);
 		
 		NpcBad goblin = new NpcBad("goblin pyromaniac", "a red goblin with an axe in fire in his"
 				+ " hands and some flasks hanging from his belt", 45, 100, true, "Grwaaal", 5);
@@ -212,11 +242,12 @@ public class Map implements Serializable{
 		Fixed chest6 = new Fixed("chest", null);
 		chest6.addMoney(350);
 		chest6.addTool(new Weapon("long sword", "A long sharp shiny sword", 150, 20, 0.97f));
-		chest6.addTool(new Tool("apple", "a green apple, seems quite ripe", 5));
+		chest6.addTool(new Tool("apple", "a green apple, seems quite sour", 5));
 		Rooms[14].addFixed(chest6);
 		
 		NpcGood helper = new NpcGood("scared man","a man with fear in his eyes", 100, 150, false, "I almost died down"
-				+ " there!! that demogorgon is so scary! I would give you a big prize if you defeat it for me!");
+				+ " there!! that demogorgon is so scary! I would give you a big prize if you defeat it and bring"
+				+ " a proof of his death to me!");
 		Tool passParTout = new Tool("passepartout","a key that could open any door",1000);
 		helper.addObj(passParTout);
 		Rooms[15].addnpcs(helper);
@@ -251,8 +282,8 @@ public class Map implements Serializable{
 			Tool potion = new Tool("potion", "A little flusk with a green liquid inside it", 50);
 			merchant2.addObj(potion);
 		}
-		Tool apple1 = new Tool("apple", "a green apple, seems quite ripe", 5);
-		Tool apple2 = new Tool("apple", "a green apple, seems quite ripe", 5);
+		Tool apple1 = new Tool("apple", "a green apple, seems quite sour", 5);
+		Tool apple2 = new Tool("apple", "a green apple, seems quite sour", 5);
 		merchant2.addObj(excalibur);
 		merchant2.addObj(apple1);
 		merchant2.addObj(apple2);
@@ -268,8 +299,8 @@ public class Map implements Serializable{
 		Rooms[19].addFixed(gnome);
 		
 		NpcBad dremora = new NpcBad("lord dremora", "a scary dark demon with human-ish shape, small black horns and a huge"
-				+ " sword",500,0,true,"How you dare to come to my kingdom, you insolent little human, you will die for your "
-						+ " stupidity!",5);
+				+ " sword",500,0,true,"How dare you to come to my kingdom, you insolent little human, you will die for your "
+						+ " arrogance!",5);
 		Ingredient heart = new Ingredient("dremora heart", "the hearth of the king of demons, it's still pulsing");
 		dremora.addObj(heart);
 		Weapon sw = new Weapon("demoniac sword","the sword of the king of demons, a unique and legendary piece", 1000, 15, 0.98f);
@@ -277,35 +308,29 @@ public class Map implements Serializable{
 		Rooms[20].addnpcs(dremora);
 	}
 
-	public boolean hasRoomCalled(String des) {
-		int i = 0;
-
-		while (i <= Rooms.length) {
-			if (Rooms[i].getDescription().equals(des)) {
-				return true;
-			}
-			i++;
-		}
-		return false;
-	}
-
+	/**
+	 * create a new connection between two rooms
+	 * @param roomNumber: from 
+	 * @param roomConnection: to
+	 * @param name: name of the connection (direction)
+	 */
 	public void addPassage(int roomNumber, int roomConnection, String name) {
 		Rooms[roomNumber].setDirection(name, Rooms[roomConnection]);
 	}
 
+	/**
+	 * get the solution of the active lorwin's code
+	 * @return
+	 */
 	public int getLorwinCodeSolution() {
 		return lorwinCode[currentCode][1];
 	}
 	
+	/**
+	 * get the length of the active lorwin's code
+	 * @return
+	 */
 	public int getLorwinCodeLength(){
 		return lorwinCode[currentCode][0];
-	}
-
-	public void setLorwinCode(int n) {
-		currentCode = n;
-	}
-	
-	public Room getRoom(int roomNumber){
-		return Rooms[roomNumber];
 	}
 }

@@ -9,10 +9,19 @@ import java.io.ObjectOutputStream;
 
 import org.apache.commons.io.FileUtils;
 
+/**
+ * class containing the main method and the methods needed to save and load the game
+ * @author giacomobenso
+ *
+ */
 public class MysticalAdventure {
 	
 	public static Game GAME;
 	
+	/**
+	 * save the game serializing an object 
+	 * @param obj: object to serialize
+	 */
 	public static void serializer(SavedObj obj) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream("./lib/savedGame/savedGame.ser");
@@ -26,6 +35,9 @@ public class MysticalAdventure {
 		}
 	}
 
+	/**
+	 * when the player dies restart the game from the beginning, the saved game is erased
+	 */
 	public static void die(){
 		File fileIn = new File("./lib/savedGame/savedGameDeath.ser");
 		File fileOut = new File("./lib/savedGame/savedGame.ser");
@@ -34,7 +46,7 @@ public class MysticalAdventure {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			GAME.setCurrentPlayer(new Player("Giacomo"));
+			GAME.setCurrentPlayer(new Player("Eldor"));
 			Map m = new Map();
 			GAME.setMap(m);
 			GAME.getCurrentPlayer().setCurrentRoom(m.createRoom());
@@ -48,6 +60,11 @@ public class MysticalAdventure {
 			GAME.printWelcome(true);
 	}
 	
+	/**
+	 * load the saved game deserializing the object
+	 * @param obj: object to be deserialized
+	 * @param g: the game
+	 */
 	public static void deserializer(SavedObj obj, Game g) {
 		try {
 			FileInputStream fileIn = new FileInputStream("./lib/savedGame/savedGame.ser");
@@ -76,6 +93,8 @@ public class MysticalAdventure {
 		}
 	}
 
+//   ***********************************  MAIN METHOD ************************************
+	
 	public static void main(String[] args) {
 
 		GAME = new Game();
@@ -104,4 +123,6 @@ public class MysticalAdventure {
 			}
 		});
 	}
+
+//	*******************************************************************************************
 }

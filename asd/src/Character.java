@@ -29,10 +29,8 @@ public abstract class Character implements Serializable{
 
 	//-------------abstract methods-------------//
 	
-	public abstract String getItems();
 	public abstract String die();
-	
-	
+		
 	//------------------getter methods-----------------//
 	
 	public String getName() {
@@ -137,6 +135,7 @@ public abstract class Character implements Serializable{
 		for(NPC npc : this.getCurrentRoom().getNPCArray()){
 			if((t = npc.getToolFromString(o)) != null){
 				itemsHeld.add((Tool) t);
+				npc.removeObjCalled(t.getName());
 				return t.getName() + " added to " + this.getName() + "'s inventory";
 			}
 		}		

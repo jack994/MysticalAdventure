@@ -1,9 +1,15 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * class needed to serialize the object and save the game state. We need to save the map, the commands and the
+ * player states.
+ * @author giacomobenso
+ */
 public class SavedObj implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
 	private Player currentPlayer;
 	private Map map;
 	private ArrayList<String> commands;

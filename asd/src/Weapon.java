@@ -1,11 +1,15 @@
 import java.io.Serializable;
 
+/**
+ * a tool with damage and precision, it can be equipped
+ * @author giacomobenso
+ */
 public class Weapon extends Tool implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private int damage;
-	private float precision;
+	private float precision; // out of 1
 
 	public Weapon(String name, String description, int value, int damage, float incMiss) {
 		super(name, description, value);
