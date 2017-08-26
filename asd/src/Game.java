@@ -10,7 +10,7 @@ public class Game {
 	private Room StartRoom;
 	private Map map;
 	public static EStack THESTACK = new EStack(10);
-	public final Weapon NN = new Weapon("nessuna", "nessun'arma", 0, 1, 0.5f);
+	public final Weapon NN = new Weapon("nessuna", "nessun'arma", 0, 1, 0.95f);
 	private int correctDoor = 1;
 
 	public Game() {
@@ -23,7 +23,7 @@ public class Game {
 		});
 		map = new Map();
 		StartRoom = map.createRoom();
-		currentPlayer = new Player("Giacomo");
+		currentPlayer = new Player("Eldor");
 		currentPlayer.setCurrentRoom(StartRoom);
 	}
 	
@@ -180,8 +180,8 @@ public class Game {
 		}
 		if (command.getSecondWord().equals("torcia") || command.getSecondWord().equals("la torcia")) {
 			if (currentPlayer.getToolFromString("torcia") != null) {
-				if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Est")
-						|| currentPlayer.getCurrentRoom().getName().equals("TUNNEL")) {
+				if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Est")
+						|| currentPlayer.getCurrentRoom().getName().equals("IL TUNNEL")) {
 					return "non si vede niente! prova a farlo dove c'e' un po' di luce"+ beingattacked();
 				} else {
 					if (currentPlayer.getWeapon().getName().equals("torcia")) {
@@ -209,7 +209,7 @@ public class Game {
 		if (!command.hasSecondWord()) {
 			return "cosa vuoi aprire? <BR>scrivi 'apri -oggetto-'"+ beingattacked();
 		}
-		if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Sud")) {
+		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
 			if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta"))
 				return "quale vuoi aprire? scrivi 'apri porta -numero-'";
 			String[] tmp = command.getSecondWord().split(" ");
@@ -230,14 +230,15 @@ public class Game {
 				} else
 					return "la porta non esiste";
 			}
-		}		
+		}
 			if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta") 
 					&& currentPlayer.getToolFromString("passepartout") != null){
-				if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Area tranquilla")) {
+				if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Area tranquilla")) {
 					currentPlayer.getCurrentRoom().getItemNamed("porta").setDescription("La porta e' aperta");
 					map.addPassage(15, 16, "ovest");
 					map.addPassage(16, 15, "est");
 					return "hai aperto la porta, il passaggio e' ora aperto (ovest)";
+
 				}
 			}
 					
@@ -245,8 +246,9 @@ public class Game {
 	}
 
 	public String saySomething(Command command) {
+		NPC npc;
 		if ((command.getSecondWord().equals("luna") || command.getSecondWord().equals("la luna"))
-				&& currentPlayer.getCurrentRoom().getName().equals("LA RADURA")) { // riddle solved//---------------------------------------------
+				&& currentPlayer.getCurrentRoom().getName().equals("LA RADURA")) { // riddle solved
 			NPC treant;
 			if(!(treant = currentPlayer.getCurrentRoom().getNPCNamed("treant")).getSpeech().equals("Bel lavoro"
 					+ " con l'indovinello, ora puoi passare.")){
@@ -257,8 +259,22 @@ public class Game {
 				return "hai gia' aperto il passaggio";
 			}
 		}
+		else if((npc = currentPlayer.getCurrentRoom().getNPCNamed("demogorgone")) != null){
+			if(!npc.isAlive){
+				if(command.getSecondWord().equals("15546")){
+					currentPlayer.setCurrentRoom(map.getRoom(20));
+					return "letti i numeri inizi a sentirti debole eperdi i sensi...<BR><BR>" + 
+							currentPlayer.getCurrentRoom().getNameAndDescription();
+				}
+				else{
+					return "non succede niente";
+				}
+			}else {
+				return "non succede niente"+ beingattacked();
+			}
+		}
 		else if((command.getSecondWord().equals("7") || command.getSecondWord().equals("sette"))
-				&& currentPlayer.getCurrentRoom().getName().equals("VALLE")){
+				&& currentPlayer.getCurrentRoom().getName().equals("LA VALLE")){
 			currentPlayer.getCurrentRoom().setDescription("in mezzo a quest'area c'e' un fiume"
 					+ " e tutto intorno la vegetazione cresce rigogliosa. Ad est si vede una cascata con una piccola entrata accanto. "
 					+ "A nord c'e' un ingersso buio, sembra un tunnel.");
@@ -300,12 +316,17 @@ public class Game {
 		}
 		Item temp;
 		if (!command.hasSecondWord()) {
-			return "cosa vuoi prendere?";
+			return "cosa vuoi prendere? " + command.getFirstWord();
 		} else if (command.getSecondWord().equals("monete")) {
+			int mon;
+			if((mon = currentPlayer.getCurrentRoom().getMoney()) > 0){
+				currentPlayer.getCurrentRoom().removeMoney(mon);
+				currentPlayer.addMoney(mon);
+				return "monete aggiunte: " + mon;
+			}
 			for (Item f : currentPlayer.getCurrentRoom().getItemsArray()) {
 				if (f.getClass() == Fixed.class) {
 					if (((Fixed) f).hasBeenOpened() && ((Fixed) f).getMoney() > 0) {
-						int mon;
 						currentPlayer.addMoney(mon = ((Fixed) f).getMoney());
 						((Fixed) f).removeAllMoney();
 						return "monete aggiunte: " + mon;
@@ -315,18 +336,40 @@ public class Game {
 			return "non ci sono monete da prendere";
 		} else {
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) {
+				if(temp.getName().equals("fiore di belladonna")){
+					currentPlayer.getCurrentRoom().removeItemNamed("fiore d'ibisco");
+				}
+				else if(temp.getName().equals("fiore d'ibisco")){
+					currentPlayer.getCurrentRoom().removeItemNamed("fiore di belladonna");
+				}
+				else if(temp.getName().equals("cuore di dremora")){
+					NpcGood druid = new NpcGood("druido","un druido con delle corna enormi", 1000, 150, true, currentPlayer.getName()
+							+ "!! hai trvato tutti gli ingredienti! Ho sempre creduto in te!<BR>C'e' una cosa che dovresti sapere,"
+							+ " tu non sei una persona reale, ti ho evocato per portare a termine la mia missione di salvare il bosco.<BR>E c'e' di piu'... "
+							+ "la pozione per curare il bosco ha bisogno di quattro ingredienti, e l'ultimo di questi e' l'anima dell'evocazione che ha trvato gli altri tre"
+							+ " <BR>Mi dispiace...");
+					map.getRoom(1).addnpcs(druid);
+					currentPlayer.setCurrentRoom(map.getRoom(14));
+					return "letti i numeri inizi a sentirti debole eperdi i sensi...<BR><BR>" + 
+							currentPlayer.getCurrentRoom().getNameAndDescription();
+				}
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
 					currentPlayer.addObjCalled(temp.getName());
 					frame.addItemToMenu((Tool) temp);
 					currentPlayer.currentRoom.removeItemNamed(command.getSecondWord());
 					checkNewCommand((Tool) temp);
 					return "hai raccolto: " + temp.getName() + beingattacked();
-				} else {
-					return "impossibile raccogliere: " + temp.getName() + " prova con il comando 'esamina " + temp.getName() + "'"
+				}
+				else if(temp.getClass() == Ingredient.class){
+					frame.addIngredientToMenu((Ingredient) temp);
+					return currentPlayer.addObjCalled(temp.getName());
+				}
+				else {
+					return "impossibile raccogliere: " + temp.getName() + "; prova con il comando 'esamina " + temp.getName() + "'"
 							+ beingattacked();
 				}
 			}
-			return "impossibile vedere: " + command.getSecondWord() + beingattacked();
+			return "impossibile prendere: " + command.getSecondWord() + beingattacked();
 		}
 	}
 
@@ -381,7 +424,7 @@ public class Game {
 						ret += "<BR><BR>";
 					else if (!t.getToolList().isEmpty())
 						ret += "<BR>";
-					ret += "soldi contenuti: " + t.getMoney();
+					ret += "monete contenute: " + t.getMoney();
 				}
 				if(t.getMoney() == 0 && t.getToolList().isEmpty() && t.getDescription() == null){
 					ret = t.getName() + " e' pieno";
@@ -405,7 +448,14 @@ public class Game {
 			} else if (enemy.getClass() == NpcBad.class){
 					if(enemy.getName().equals("demogorgone") && currentPlayer.getWeapon().getName().equals("uccisore di demoni")){
 						enemy.setLifeRemaining(0);
-						return enemy.getName() + " comincia a bruciare dall'interno e muore."+ "<BR>" + enemy.die();
+						enemy.setDescription("Il Demogorgone ha un collare con scritti alcuni numeri: 6, 66, 426, 2586");
+						return "la tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e muore."+ "<BR>" + enemy.die();
+					}
+					else if(enemy.getName().equals("lord dremora") && currentPlayer.getWeapon().getName().equals("uccisore di demoni")){
+						enemy.setLifeRemaining(enemy.getLifeRemaining() - 100);
+						if(enemy.getLifeRemaining() < 150){
+							return "la tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e muore."+ "<BR>" + enemy.die();
+						}
 					}
 				return currentPlayer.attackTarget(enemy) + "<BR><BR>" + enemy.attackTarget(currentPlayer);
 			}
@@ -436,7 +486,7 @@ public class Game {
 				return "sarebbe inutile" + beingattacked();
 			}
 		}
-		return "There is no " + command.getSecondWord() + beingattacked();//-----------------------------------------------------------------------
+		return command.getSecondWord()+ "inesistente" + beingattacked();
 	}
 
 	public String speakToChar(Command command) {
@@ -447,31 +497,40 @@ public class Game {
 		NPC npc;
 		if ((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null) {
 			if (npc.getClass() == NpcGood.class) {
-				if (npc.getName().equals("druid") && currentPlayer.getCurrentRoom().getName().equals("SOGGIORNO")){
-					currentPlayer.getCurrentRoom().removeNpcNamed("druid");
+				if (npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")){
+					currentPlayer.getCurrentRoom().removeNpcNamed("druido");
 				}
 				else if (npc.getName().equals("lorwin")) {
-					Ingredient ing;
-					if((ing = npc.getIngredient("pium di fenice")) != null){
-						npc.removeIngredient(ing);
-						frame.addIngredientToMenu(ing);
+					Tool ing;
+					if((ing = npc.getToolFromString("piuma di fenice")) != null){
+						npc.removeObjCalled(ing.getName());
+						frame.addIngredientToMenu((Ingredient)ing);
 						String speech = npc.getSpeech();
 						npc.setSecondSpeech("Ciao mio piccolo amico, sai, non smetti mai di imparare.");
-						return speech + currentPlayer.addIngredient(ing);
+						return speech + "<BR><BR>" + currentPlayer.addObjCalled(ing.getName());
 					}
 				}
-				else if (npc.getName().equals("uomo spaventato") && 
+				else if (npc.getName().equals("vecchio spaventato") && 
 						(currentPlayer.getToolFromString("Dente di demogorgon")!= null)) {
-					npc.setSecondSpeech("Holy Guacamole hai sconfitto il demogorgon,"
+					npc.setSecondSpeech("Accipicchia! Hai sconfitto il demogorgone,"
 							+ " lo si vede dal dente che stai portando!<BR>Tieni, prendi questo regalo, "
-							+ "non sarò mai abbastanza grato.<BR>Ora devo andare,buona fortuna! .");//-------------------see you around------------------------
+							+ "non sarò mai abbastanza grato.<BR>Ah, dimenticavo, ho visto passare di qui uno strano druido"
+							+ "che ti stava cercando e ha detto qualcosa come <b>fiore di belladonna</b>"
+							+ " e <b>cuore del re dell'oblivion</b>,"
+							+ " Non so proprio cosa volesse dire.<BR>Ora devo andare,buona fortuna!");
 					Tool k = npc.getToolFromString("passepartout");
 					npc.removeObjCalled("passepartout");
 					currentPlayer.addObj(k);
 					frame.addItemToMenu(k);
 					checkNewCommand(k);
-					currentPlayer.getCurrentRoom().removeNpcNamed("uomo spaventato");
-					return npc.getSpeech() + "<BR><BR>" + k.getName() + " aggiunto all'inventario di  " + 
+					currentPlayer.getCurrentRoom().removeNpcNamed("vecchio spaventato");
+					//add some enemies:
+					NpcBad goblin = new NpcBad("goblin","un goblin rosso",50,100,true,"arghaaaaaalllhhh",7);
+					goblin.addObj(new Tool("mela", "una mela verde, sembra acerba", 5));
+					map.getRoom(8).addnpcs(goblin);
+					map.getRoom(14).addnpcs(new NpcBad("lupo","un enorme lupo grigio con gli occhi gialli",50,40,true,"grrrrrrrrhhhh",5));
+					
+					return npc.getSpeech() + "<BR><BR>" + k.getName() + ": aggiunto all'inventario di " + 
 					currentPlayer.getName();
 				}
 				return npc.getSpeech() + beingattacked();
@@ -479,7 +538,7 @@ public class Game {
 				return npc.getSpeech() + beingattacked();
 			}
 		}
-		return "you can't speak to " + command.getSecondWord() + beingattacked();//----------------------------------------------------------------
+		return "impossibile parlare con: " + command.getSecondWord() + beingattacked();
 	}
 
 	public String printHelp(Command command) {
@@ -496,7 +555,7 @@ public class Game {
 		if(dead){
 			toChange += "<p style='font-size: 40px'>YOU DIED!</p>";
 		}
-		toChange += "<h1>Benvenuto ne 'L'AVVENTURA MISTICA'</h1>" + "<p>"//--------------------------------------------------------------------------
+		toChange += "<h1>Benvenuto ne 'L'AVVENTURA MISTICA'</h1>" + "<p>"
 				+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
 		toChange = toChange.replaceAll("<p>", "<p style=font-size:13px>");
 		frame.getPane().setText(toChange);
@@ -521,41 +580,50 @@ public class Game {
 	public void enlight(Room currentR) {
 
 		if (currentPlayer.getWeapon().getName().equals("torcia") && currentPlayer.getWeapon().getDamage() == 5) {
-			if (currentR.getName().equals("BOSCO - Est")) {
+			if (currentR.getName().equals("IL BOSCO - Est")) {
 				currentR.setDark(false);
 				currentR.setDescription("gli alberi in questa parte del bosco sono fitti"
 						+ " ma la luce della tua torcia ti aiuta a vedere meglio");
-			} else if (currentR.getName().equals("TUNNEL")) {
+			} else if (currentR.getName().equals("IL TUNNEL")) {
 				currentR.setDark(false);
 				currentPlayer.getCurrentRoom().setDescription("La luce della torcia illumina il tunnel");
 				map.addPassage(7, 10, "est");
 				map.addPassage(10, 7, "ovest");
 			}
+			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
+				currentR.setDark(false);
+				currentR.setDescription("Una caverna fredda ed umida con dell'erba e dei fiori.<BR><BR>"
+						+ "Senti una voce che dice: 'SOLO UN FIORE POTRAI RACCOGLIERE'");
+			}
 		} else {
-			if (currentR.getName().equals("BOSCO - Est")) {
+			if (currentR.getName().equals("IL BOSCO - Est")) {
 				currentR.setDark(true);
-				currentR.setDescription("gli alberi in questa parte del bosco sono fitti e tu devi dimenarti"//----------------------------------------
+				currentR.setDescription("gli alberi in questa parte del bosco sono fitti e fai fatica"
 						+ " per cercare di vedere qualcosa");
-			} else if (currentR.getName().equals("TUNNEL")) {
+			} else if (currentR.getName().equals("IL TUNNEL")) {
 				currentR.setDark(true);
 				currentPlayer.getCurrentRoom().setDescription(
 						"Non puoi vedere altro che l'ingresso" + " del tunnel dietro di te. E' davvero buio!");
+			}
+			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
+				currentR.setDark(true);
+				currentR.setDescription("La grotta e' piuttosto buia");
 			}
 		}
 
 	}
 
 	public void changeDoors() {
-		if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Sud")) {
+		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
 			Random rand = new Random();
 			int code = rand.nextInt(4);
 			map.setLorwinCode(code);
 			String desc = "La porta e' chiusa, qualcuno ci ha scritto un numero sopra ";
-			currentPlayer.getCurrentRoom().setDescription("Quest'area e' circondata da pareti rocciose. Sette porte sono poste "//-----------------
-				+ "verso il lato a sud e sopra un'incisione ben definita recita: 'In the Lorwin code a "
-				+ "valid codeword does not contain any digit more than once and "
-				+ "cannot contain both 0 and 1 in the same codeword.<BR>"
-				+ "How many possible strings of "+ map.getLorwinCodeLength() +" digits are there?'");
+			currentPlayer.getCurrentRoom().setDescription("Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
+				+ "verso il lato a sud e sopra un'incisione ben definita recita: 'Nel codice Lorwin "
+				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
+				+ "e 0 e 1 non possono esserci entrambi.<BR>"
+				+ "Quante sequenze possibili ci sono in un codice lungo "+ map.getLorwinCodeLength() +" numeri?'");
 			
 
 			for (int i = 1; i < 8; i++) {

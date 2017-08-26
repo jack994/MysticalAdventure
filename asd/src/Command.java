@@ -4,14 +4,13 @@ public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
-	
-	private final static String[] articoli= {" il "," lo ", " la ", " i ", " gli ", " le "," col "," con "," a " };
+	private static final String[] ARTICLES = {" il "," lo ", " la ", " i ", " gli ", " le "," col "," con "," a ", " ad " };
 
 	public static ArrayList<String> commandWords = new ArrayList<String>(){
 		private static final long serialVersionUID = 1L;
 	{
-	    add("aiuto"); add("vai"); add("vai a"); add("lascia"); add("butta"); add("prendi"); add("esamina"); add("attacca");
-	    add("equipaggia"); add("parla"); add("pronuncia"); add("usa"); add("compra");
+		add("aiuto"); add("vai"); add("vai a"); add("lascia"); add("butta"); add("prendi"); add("esamina"); add("attacca");
+		add("equipaggia"); add("parla"); add("pronuncia"); add("usa"); add("compra");
 	}
 	};
 
@@ -84,14 +83,12 @@ public class Command{
 	 */
 	public static String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
-		for(int i = 0; i<articoli.length; ++i){
-			if(instruction.contains(articoli[i])){
-				instruction = instruction.replace(articoli[i], " ");
+		for (int i = 0; i < ARTICLES.length; i++){
+			if(instruction.contains(ARTICLES[i])){
+				instruction = instruction.replace(ARTICLES[i], " ");
 			}
 		}
 		for(String s : commandWords){
-			
-			
 		if(instruction.startsWith(s)){
 			ret[0] = s;
 			ret[1] = instruction.replace(s, "");

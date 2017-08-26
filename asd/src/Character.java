@@ -10,7 +10,6 @@ public abstract class Character implements Serializable{
 	protected String name;
 	protected boolean isAlive;
 	protected ArrayList<Tool> itemsHeld;
-	protected Ingredient[] ingredients;
 	protected Room currentRoom;
 	protected int money;
 	protected int HP; // initial life
@@ -26,7 +25,6 @@ public abstract class Character implements Serializable{
 		lifeRemaining = 100;
 		Weapon NN = new Weapon("nessuna", "nessun'arma", 0, 1, 0.95f);//Ciao
 		weapon = NN; // test commento
-		ingredients = new Ingredient[GameWindow.numOfIngredients];
 	}
 
 	//-------------abstract methods-------------//
@@ -61,7 +59,7 @@ public abstract class Character implements Serializable{
 		return currentRoom;
 	}
 	
-	public Weapon getWeapon() { //altro commento
+	public Weapon getWeapon() { 
 		return weapon;
 	}
 	
@@ -124,36 +122,7 @@ public abstract class Character implements Serializable{
 		}
 		return null;
 	}
-	
-	public Ingredient getIngredient(String name){
-		for(int i = 0; i < ingredients.length; i ++){
-			if(ingredients[i] != null)
-			if(ingredients[i].getName().equals(name)){
-				return ingredients[i];
-			}
-		}
-		return null;
-	}
-	
-	public String addIngredient(Ingredient ing){
-		for(int i = 0; i < ingredients.length; i ++){
-			if(ingredients[i] == null){
-				ingredients[i] = ing;
-				return "<BR><BR>" + ing.getName() + " aggiunto all'inventario di " + this.getName() + " <BR>";
-			}
-		}
-		return "non puoi trasportare più di 3 ingredienti";
-	}
-	
-	public void removeIngredient(Ingredient ing){
-		for(int i = 0; i < ingredients.length; i ++){
-			if(ingredients[i] != null){
-			if(ingredients[i].equals(ing)){
-				ingredients[i] = null;
-			}
-			}
-		}
-	}
+
 
 	/**
 	 * add an object to the ArrayList containing the items carried.
@@ -161,18 +130,19 @@ public abstract class Character implements Serializable{
 	 * @return a string describing the action.
 	 */
 	public String addObjCalled(String o) {
-		String b = "";
 		Item t;
 		if((t = currentRoom.getItemNamed(o))!= null){
 			itemsHeld.add((Tool) t);
-			b = o;
+			return t.getName() + " added to " + this.getName() + "'s inventory";
 		}
-	
-		if (b.equals("")) {
-			return null;
-		} else {
-			return this.getName() + " ha aggiuto all'inventario: " + b;
-		}
+
+		for(NPC npc : this.getCurrentRoom().getNPCArray()){
+			if((t = npc.getToolFromString(o)) != null){
+				itemsHeld.add((Tool) t);
+				return this.getName() + " ha aggiunto all'inbentario: " + t.getName();
+			}
+		}		
+		return null;
 	}
 
 	/**
@@ -205,7 +175,14 @@ public abstract class Character implements Serializable{
 		if(all.length() > 3){
 			all = all.substring(0, (all.length() -2));
 		}
-		return this.getName() + " dropped: " + all;//-----------------------------------------------------------------------------------------------
+
+		int mon;
+		this.removeMoney(mon = this.getMoneyAmount());
+		this.getCurrentRoom().addMoney(mon);
+		if(all.length() < 2){
+			return " non c'e' niente da poter raccogliere ";
+		}
+		return this.getName() + " lascia: " + all + "<BR>monete lasciate: "+ mon;
 	}
 	
 	/**

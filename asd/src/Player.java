@@ -16,7 +16,7 @@ public class Player extends Character implements Serializable{
 			else
 				items = items + itemsHeld.get(i).getName() + ". ";
 		}
-		return "you are carrying: " + items;//------------------------------------------------------------------------------------------------------
+		return "stai trasportando: " + items;
 	}
 
 	public String die() {

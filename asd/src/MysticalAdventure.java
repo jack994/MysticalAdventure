@@ -34,10 +34,10 @@ public class MysticalAdventure {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			GAME.setCurrentPlayer(new Player("Giacomo"));
-			GAME.setMap(new Map());
-			GAME.getMap().createRoom();
-			GAME.getCurrentPlayer().setCurrentRoom(GAME.getStartRoom());
+			GAME.setCurrentPlayer(new Player("Eldor"));
+			Map m = new Map();
+			GAME.setMap(m);
+			GAME.getCurrentPlayer().setCurrentRoom(m.createRoom());
 			GAME.frame.resetItemsCounter();
 			GameWindow.greenLabelsCounter = GAME.getCurrentPlayer().getLifeRemaining(); // reset correct life in life-bar
 			GAME.frame.resetLifelabel();

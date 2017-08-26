@@ -78,7 +78,7 @@ public abstract class NPC extends Character implements Serializable{
 			else
 				items = items + itemsHeld.get(i).getDescription() + ". ";
 		}
-		return name + " is carrying: " + items;//-------------------------------------------------------------------------------------------------
+		return name + " sta trasportando: " + items;
 	}
 
 	public boolean isFirstTimeMet() {
@@ -87,6 +87,10 @@ public abstract class NPC extends Character implements Serializable{
 
 	public void setFirstTimeMet(boolean firstTimeMet) {
 		this.firstTimeMet = firstTimeMet;
+	}
+	
+	public void setDescription(String description){
+		this.description = description;
 	}
 	
 	public Weapon getWeapon() {

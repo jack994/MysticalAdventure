@@ -62,7 +62,7 @@ public class Merchant extends NPC implements Serializable{
 				saleTable = saleTable.replace(rep, ""); 
 				saleMap.remove(o);
 			}			
-			return this.getName() + " dropped " + b;
+			return this.getName() + " ha lasciato: " + b;
 		}
 	}
 	
