@@ -1,7 +1,9 @@
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.apache.commons.lang3.*;
 import java.util.Random;
+import javax.swing.*;
 
 /**
  * the core class of the game, where all the instructions are processed 
@@ -86,7 +88,7 @@ public class Game {
 	/**
 	 * method used to process the given command, it has a method for each 'firstword' of the command
 	 * @param command: the 'String' passed
-	 * @return
+	 * @return the string to be returned and placed in the text-box
 	 */
 	public String processCommand(Command command) {
 		String firstWord = command.getFirstWord();
@@ -117,7 +119,9 @@ public class Game {
 			return useItem(command);
 		} else if (firstWord.equals("buy")){
 			return buyFromMerchant(command);
-		} else
+		}else if (firstWord.equals("map")){
+			return openMap(command);
+		}else
 			return "You can't use this command, either it does not exist or you don't have the correct tools/items"
 					+ " to use it.<BR>You can check your currently available commands writing 'help'.";
 	}
@@ -133,6 +137,34 @@ public class Game {
 		if (t.getName().equals("key")) {
 			Command.addCommand("open");
 		}
+		if(t.getName().equals("map piece") && (currentPlayer.getToolFromString("map piece") == null)){
+			Command.addCommand("map");
+		}
+	}
+	
+	/**
+	 * open the map in a new window, the image opened depends on how many pieces you gathered
+	 * @param command
+	 * @return the string to be returned and placed in the text-box
+	 */
+	public String openMap(Command command){
+		JFrame nf = new JFrame();
+		
+		if(frame.getMapPieces() == 1){
+			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece1.jpg")));
+			nf.setSize(new Dimension(260, 460));
+		}
+		else if(frame.getMapPieces() == 2){
+			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece2.jpg")));
+			nf.setSize(new Dimension(450, 400));
+		}
+		else if(frame.getMapPieces() == 3){
+			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece3.jpg")));
+			nf.setSize(new Dimension(600, 450));
+		}
+		nf.setVisible(true);
+		
+		return "map opened";
 	}
 	
 	/**
@@ -409,10 +441,10 @@ public class Game {
 							currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
 				}
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
+					checkNewCommand((Tool) temp);
 					currentPlayer.addObjCalled(temp.getName());
 					frame.addItemToMenu((Tool) temp);
 					currentPlayer.currentRoom.removeItemNamed(command.getSecondWord());
-					checkNewCommand((Tool) temp);
 					return "you picked up " + temp.getName() + beingattacked();
 				}
 				else if(temp.getClass() == Ingredient.class){
@@ -447,7 +479,9 @@ public class Game {
 				frame.removeItemFromMenu(remove = t.getName());
 				currentPlayer.removeObjCalled(command.getSecondWord());
 				currentPlayer.currentRoom.addTool(t);
-				if((remove.equals("key") || remove.equals("torch"))){ //remove the appropriate command if item dropped
+				if(remove.equals("key") || remove.equals("torch") || 
+						(remove.equals("map piece") && (currentPlayer.getToolFromString("map piece") == null))){ 
+					//remove the appropriate command if item dropped
 					Command.removeCommand(remove);
 				}
 				return "you dropped " + t.getName() + beingattacked();
@@ -631,6 +665,10 @@ public class Game {
 
 	}
 
+	/**
+	 * print the welcome message
+	 * @param dead
+	 */
 	public void printWelcome(boolean dead) {
 		String toChange = "<html><body>";
 		if(dead){
@@ -650,6 +688,11 @@ public class Game {
 		printWelcome(false);
 	}
 
+	/**
+	 * the active NpcBads attack the player whatever action he does, this method makes the enemy
+	 * attack the player
+	 * @return the string to be returned and placed in the text-box
+	 */
 	public String beingattacked() {
 		for (NPC attacker : currentPlayer.getCurrentRoom().getNPCArray()) {
 			if ((attacker.getClass() == NpcBad.class) && attacker.isActive() && attacker.isAlive()) {

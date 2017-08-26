@@ -68,6 +68,8 @@ public class Command{
 			com = "open";
 		else if(toRem.equals("torch") || toRem.equals("matches"))
 			com = "light up";
+		else if(toRem.equals("map piece"))
+			com = "map";
 		for(String s : commandWords){
 			if(s.equals(com)){
 				commandWords.remove(s);

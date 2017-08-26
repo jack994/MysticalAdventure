@@ -160,6 +160,10 @@ public class Map implements Serializable{
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
 		
+		Fixed chest8 = new Fixed("chest", null);
+		Tool mapPiece1 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
+		chest8.addTool(mapPiece1);
+		Rooms[4].addFixed(chest8);
 		Merchant merchant1 = new Merchant("merchant", "a little man almost looking like a gnome with a huge bag on his back",
 				100, 300, "Greetings traveller, would you like to buy anything?", 3);
 		Weapon whip = new Weapon("whip", "a long brown whip", 80, 12, 0.95f);
@@ -230,6 +234,8 @@ public class Map implements Serializable{
 		lorwin.addObj(plum);
 		Rooms[13].addnpcs(lorwin);
 		Fixed chest3 = new Fixed("chest", null);
+		Tool mapPiece2 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
+		chest3.addTool(mapPiece2);
 		chest3.addMoney(300);
 		chest3.addTool(new Weapon("demon-slayer", "an ancient sword used to defeat demons", 500, 10, 0.99f));
 		Rooms[13].addFixed(chest3);
@@ -268,6 +274,8 @@ public class Map implements Serializable{
 		Rooms[17].addTool(new Tool("hibiscus flower", "A beautiful red flower", 2));		
 		Fixed chest5 = new Fixed("chest", null);
 		chest5.addMoney(50);
+		Tool mapPiece3 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
+		chest5.addTool(mapPiece3);
 		chest5.addTool(new Tool("potion","A little flusk with a green liquid inside it", 50));
 		Rooms[17].addFixed(chest5);
 		Fixed cDoor = new Fixed("door", "a tiny door of the size of a gnome, the door is locked");
