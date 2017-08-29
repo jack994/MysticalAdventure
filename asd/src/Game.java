@@ -681,7 +681,7 @@ public class Game {
 
 	/**
 	 * print the welcome message
-	 * @param dead
+	 * @param dead : if false prints normal welcome message otherwise it adds 'YOU DIED'
 	 */
 	public void printWelcome(boolean dead) {
 		String toChange = "<html><body>";
@@ -691,12 +691,15 @@ public class Game {
 		toChange += "<h1>welcome to THE MYSTICAL ADVENTURE</h1>"
 		+ "<p>"	+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
 		toChange = toChange.replaceAll("<p>", "<p style=font-size:13px>");
+		if(!dead){
+			//TODO
+		}
 		frame.getPane().setText(toChange);
 
 	}
 	
 	/**
-	 * start the game
+	 * start the game printing the welcome message
 	 */
 	public void start() {
 		printWelcome(false);
