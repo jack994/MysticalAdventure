@@ -4,20 +4,25 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * class representing an area in the game, every Room can contain items, characters and money
+ * @author giacomobenso
+ *
+ */
 public class Room implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private String name;
 	private String description;
-	private ArrayList<Item> items;
-	private HashMap<String, Room> directions;
-	private ArrayList<NPC> npcs;
+	private ArrayList<Item> items; //items contained in the room
+	private HashMap<String, Room> directions; //directions from this room to another
+	private ArrayList<NPC> npcs; //NPCs contained in the room
 	private boolean dark;
 	protected int money;
 
 	public Room(String Name, String description, boolean dark) {
-		Name = "<b>" + Name + "</b>";
+		Name = "<b>" + Name + "</b>"; //bold
 		this.name = Name;
 		description = "<i>" + description + "</i>";
 		this.description = description;
@@ -41,9 +46,12 @@ public class Room implements Serializable{
 	}
 
 	public String getNameAndDescription() {
-		return name + "<BR><BR>" + description + "<BR><BR>" + getDirectionsString() + "<BR>" + getItemString() + "<BR>"
-				+ getNPCString();
-
+		return name + "<BR><BR>" + description + "<BR><BR>" + getDirectionsString() + 
+				"<BR>" + getItemString() + "<BR>" + getNPCString();
+	}
+	
+	public ArrayList<NPC> getNPCArray() {
+		return npcs;
 	}
 	
 	public void addMoney(int money){
@@ -61,6 +69,33 @@ public class Room implements Serializable{
 	
 	public int getMoney(){
 		return money;
+	}
+	
+	public void setDirection(String direction, Room neighbor) {
+		directions.put(direction, neighbor);
+	}
+
+	public Room getDirectionRoom(String direction) {
+		return directions.get(direction);
+	}
+	
+	boolean hasDirection(String o) {
+		if (directions.keySet().contains(o))
+			return true;
+		else
+			return false;
+	}
+
+	public boolean isDark() {
+		return dark;
+	}
+
+	public void setDark(boolean dark) {
+		this.dark = dark;
+	}
+	
+	public void setDescription(String description){
+		this.description = description;
 	}
 
 	public void addTool(Tool o) {
@@ -88,6 +123,11 @@ public class Room implements Serializable{
 		i++;
 	}
 
+	/**
+	 * get an item from the given string if it is either in the room or in an OPEN fixed within the room
+	 * @param Name
+	 * @return the item
+	 */
 	public Item getItemNamed(String Name){
 		int i = 0;
 		Fixed f;
@@ -108,6 +148,10 @@ public class Room implements Serializable{
 		return null;
 	}
 	
+	/**
+	 * remove the item corresponding to the given string from the room or from an OPEN fixed
+	 * @param Name
+	 */
 	public void removeItemNamed(String Name) {
 		Item it;
 		if((it = getItemNamed(Name)) != null)
@@ -125,6 +169,10 @@ public class Room implements Serializable{
 			}
 	}
 
+	/**
+	 * get a string containing the money end the items contained in the room
+	 * @return
+	 */
 	public String getItemString() {
 		String toReturn = "OGGETTI: ";
 		if(!dark){
@@ -138,6 +186,10 @@ public class Room implements Serializable{
 		return toReturn;
 	}
 
+	/**
+	 * get a string containing the characters contained in the room
+	 * @return
+	 */
 	public String getNPCString() {
 		String toReturn = "PERSONAGGI: ";
 		if(!dark){
@@ -148,10 +200,11 @@ public class Room implements Serializable{
 		return toReturn;
 	}
 	
-	public ArrayList<NPC> getNPCArray() {
-		return npcs;
-	}
-	
+	/**
+	 * given a string get the NPC in the room with that name, if it exists in the room
+	 * @param Name
+	 * @return the NPC
+	 */
 	public NPC getNPCNamed(String Name){		
 		if(!npcs.isEmpty()){
 			for(NPC pl : npcs){
@@ -164,6 +217,10 @@ public class Room implements Serializable{
 		return null;
 	}
 	
+	/**
+	 * get the merchant in the room if it exists
+	 * @return the merchant
+	 */
 	public Merchant getMerchant(){
 		for(NPC npc : npcs){
 			if(npc.getClass() == Merchant.class){
@@ -173,6 +230,10 @@ public class Room implements Serializable{
 		return null;
 	}
 	
+	/**
+	 * create a string containing the possible directions from the this room
+	 * @return the string with the directions
+	 */
 	public String getDirectionsString() {
 		String returnString = "POSSIBILI DIREZIONI: ";
 		Set<String> keys = directions.keySet();
@@ -181,34 +242,6 @@ public class Room implements Serializable{
 			returnString += " -" + iter.next();
 		}
 		return returnString;
-	}
-
-	public void setDirection(String direction, Room neighbor) {
-		directions.put(direction, neighbor);
-	}
-
-	public Room getDirectionRoom(String direction) {
-
-		return directions.get(direction);
-	}
-
-	boolean hasDirection(String o) {
-		if (directions.keySet().contains(o))
-			return true;
-		else
-			return false;
-	}
-
-	public boolean isDark() {
-		return dark;
-	}
-
-	public void setDark(boolean dark) {
-		this.dark = dark;
-	}
-	
-	public void setDescription(String description){
-		this.description = description;
 	}
 
 }

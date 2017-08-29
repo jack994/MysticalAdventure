@@ -1,13 +1,18 @@
 import java.io.Serializable;
 
+/**
+ * Player class 
+ * @author giacomobenso
+ */
 public class Player extends Character implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	public Player(String name) {
+	public Player(String name) { 
 		super(name, 100, 100);
 	}
 
+//<<<<<<< HEAD
 	public String getItems() {
 		String items = "";
 		for (int i = 0; i < itemsHeld.size(); i++) {
@@ -16,11 +21,13 @@ public class Player extends Character implements Serializable{
 			else
 				items = items + itemsHeld.get(i).getName() + ". ";
 		}
-		return "stai trasportando: " + items;
+		return "Stai trasportando: " + items;
 	}
 
+//=======
+//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 	public String die() {
-		MysticalAdventure.die();
+		MysticalAdventure.die(); //call the die method in the MysticalAdventure class
 		return "";
 	}
 
@@ -29,6 +36,12 @@ public class Player extends Character implements Serializable{
 			this.money -= money;
 	}
 	
+	/**
+	 * buy a tool from the merchant in the current room, if it exists
+	 * @param merchant
+	 * @param tool
+	 * @return the item to be bought
+	 */
 	public Tool buyToolFromMerchant(Merchant merchant, String tool){
 		Tool t;
 		if((t = merchant.getToolFromString(tool)) != null){
@@ -39,11 +52,16 @@ public class Player extends Character implements Serializable{
 		return null;
 	}
 
+	/**
+	 * equip a carried weapon so that it can be used
+	 * @param weapon
+	 * @return
+	 */
 	public String equipWeapon(Weapon weapon){
 		for(int i =0; i< itemsHeld.size(); i++){
 			if(weapon.equals(itemsHeld.get(i))){
 				this.setWeapon(weapon);
-				return "hai equipaggiato:" + weapon.getName();
+				return "Hai equipaggiato:" + weapon.getName();
 			}
 		}
 		return null;

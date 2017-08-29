@@ -3,6 +3,10 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+/**
+ * class to create the GUI of the entire program
+ * @author giacomobenso
+ */
 public class GameWindow extends JFrame{
 
 	private static final long serialVersionUID = 1L;
@@ -20,7 +24,7 @@ public class GameWindow extends JFrame{
 	Font f2 = new Font("sansSerif", Font.BOLD, 14);
 	private JScrollPane panelPane;
 	private JTextPane pane;
-	private JTextField input;
+	private JTextField input; //textbox
 	private JMenuBar menubar;
 	private JMenu menu;
 	public JMenuItem save;
@@ -51,6 +55,9 @@ public class GameWindow extends JFrame{
 
 	}
 
+	/**
+	 * create the GUI
+	 */
 	public void makeFrame() {
 
 		System.setProperty("apple.laf.useScreenMenuBar", "true"); //use the native menubar in OSX
@@ -102,7 +109,7 @@ public class GameWindow extends JFrame{
 		for (index = 0; index < 5; index++) {
 			if (index == 0) {
 				first4.add(labels[index * 2]);
-				JPanel pan = new JPanel(new GridLayout(1, 100));
+				JPanel pan = new JPanel(new GridLayout(1, 100)); //life bar
 				labss = new JLabel[100];
 				for (int z = 0; z < labss.length; z++) {
 					labss[z] = new JLabel("");
@@ -131,6 +138,7 @@ public class GameWindow extends JFrame{
 		statsPanel.add(first4, BorderLayout.WEST);
 		statsPanel.add(second4, BorderLayout.CENTER);
 		menuPanel.add(statsPanel);
+		//all the three loops needed for the items carried in the bag
 		while (index < 9) {
 			items1.add(labels[index * 2]);
 			items2.add(labels[(index * 2) + 1]);
@@ -200,6 +208,7 @@ public class GameWindow extends JFrame{
 				}
 			}
 		});
+		//create the save menu
 		menubar = new JMenuBar();
 		menu = new JMenu("menu");
 		save = new JMenuItem("salva");
@@ -235,10 +244,13 @@ public class GameWindow extends JFrame{
 		return labels[5];
 	}
 
-	public boolean BagFull() {
+	public boolean BagFull() { // check whether the bag is full
 		return fullBag;
 	}
 
+	/**
+	 * set all the labels of the bag to ''
+	 */
 	public void emptyBagLabels(){
 		for(int i = startItem; i < endItem; i+=2){
 			labels[i].setText("");
@@ -246,6 +258,9 @@ public class GameWindow extends JFrame{
 		}
 	}
 	
+	/**
+	 * set the lifebar to the actual life of the character
+	 */
 	public void resetLifelabel() {
 
 		int i = 0;
@@ -259,6 +274,9 @@ public class GameWindow extends JFrame{
 		}
 	}
 
+	/**
+	 * reset the item-counter ant then the labels of the bag
+	 */
 	public void resetItemsCounter() {
 		itemCounter = 10;
 		for (int k = itemCounter; k < endItem; k++) {
@@ -266,6 +284,10 @@ public class GameWindow extends JFrame{
 		}
 	}
 
+	/**
+	 * add an ingredient to the ingredient menu
+	 * @param ingr
+	 */
 	public void addIngredientToMenu(Ingredient ingr){
 		if (ingrCounter <= numOfIngredients) {
 			labels2[ingrCounter].setText(ingr.getName());
@@ -273,6 +295,10 @@ public class GameWindow extends JFrame{
 			}
 	}
 	
+	/**
+	 * add a tool to the correct label in the bag
+	 * @param tool
+	 */
 	public void addItemToMenu(Tool tool) {
 		if (itemCounter <= endItem) {
 			if (itemCounter == endItem) {
@@ -291,6 +317,10 @@ public class GameWindow extends JFrame{
 		}
 	}
 
+	/**
+	 * remove from the bag the given string
+	 * @param tool
+	 */
 	public void removeItemFromMenu(String tool) {
 		int qty;
 		for (int i = startItem; i < itemCounter; i+=2) {
@@ -310,6 +340,10 @@ public class GameWindow extends JFrame{
 		}
 	}
 
+	/**
+	 * decrease the life in the life-bar
+	 * @param life : life to be removed
+	 */
 	public void decreaseLife(int life) {
 		if (life < (greenLabelsCounter)) {
 			greenLabelsCounter -= life;
@@ -325,6 +359,10 @@ public class GameWindow extends JFrame{
 		}
 	}
 
+	/**
+	 * add life to the life-bar
+	 * @param life: life to be added
+	 */
 	public void increaseLife(int life) {
 		if ((life + greenLabelsCounter) < 100) {
 			greenLabelsCounter += life;

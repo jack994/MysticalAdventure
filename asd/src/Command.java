@@ -6,7 +6,7 @@ public class Command{
 	private String secondWord; //second part of the command
 	private static final String[] ARTICLES = {" il "," lo ", " la ", " i ", " gli ", " le "," col "," con "," a ", " ad " };
 
-	public static ArrayList<String> commandWords = new ArrayList<String>(){
+	public static ArrayList<String> commandWords = new ArrayList<String>(){ 
 		private static final long serialVersionUID = 1L;
 	{
 		add("aiuto"); add("vai"); add("vai a"); add("lascia"); add("butta"); add("prendi"); add("esamina"); add("attacca");
@@ -85,7 +85,7 @@ public class Command{
 		String[] ret = new String[2];
 		for (int i = 0; i < ARTICLES.length; i++){
 			if(instruction.contains(ARTICLES[i])){
-				instruction = instruction.replace(ARTICLES[i], " ");
+				instruction = instruction.replace(ARTICLES[i], " "); //remove articles
 			}
 		}
 		for(String s : commandWords){

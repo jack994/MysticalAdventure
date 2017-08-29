@@ -10,6 +10,14 @@ public class Map implements Serializable{
 	public Map() {
 		Rooms = new Room[50];
 	}
+	
+	public void setLorwinCode(int n) {
+		currentCode = n;
+	}
+	
+	public Room getRoom(int roomNumber){
+		return Rooms[roomNumber];
+	}
 
 	public Room createRoom() {
 		Room p = makeRoom();
@@ -52,19 +60,19 @@ public class Map implements Serializable{
 				+ "Quante sequenze possibili ci sono in un codice lungo "+ lorwinCode[currentCode][0] +" numeri?'", false);
 		Rooms[12] = new Room("SBAGLIATO", "Muori insetto!!!!", false);
 		Rooms[13] = new Room("CASA DI LORWIN", "La casa e' piccola e rdinata, nel mezzo della stanza c'e' un "
-				+ "grazioso letto e un piccolo tavolo affianco. Molti libri posti uno sopra l'altro"
+				+ "grazioso letto e accanto, su un piccolo tavolo, molti libri posti uno sopra l'altro"
 				+ " si trovano dall'altra parte della stanza, alcuni di questi assomigliano a tomi magici", false);
 		Rooms[14] = new Room("IL RIFUGIO DEL DEMOGORGONE","La zona e' buia ma non abbastanza per impedirti di vedere, c'e' anche un insolito"
 				+ " odore di morte... ",false);
-		Rooms[15] = new Room("IL BOSCO - Area tranquilla","Quest'area e' estremamente tranquilla e piacevole, alcuni uccelli cantano..."
-				+ "Ad ovest un'immensa parete rocciosa con al centro una porta",false);
+		Rooms[15] = new Room("IL BOSCO - Area tranquilla","Quest'area e' estremamente tranquilla e piacevole, alcuni uccellini cantano..."
+				+ " Ad ovest un'immensa parete rocciosa con al centro una porta",false);
 		Rooms[16] = new Room("IL BOSCO - Zona sporca","Quest'area e' circondata da alberi e c'e' tanta sporcizia"
 				+ " sparsa per terra. Ad ovest, una piccola capanna di legno",false);
 		Rooms[17] = new Room("LA GROTTA DIETRO LA CASCATA","Quest'area e' molto buia, non si vede niente!",true); 
 		Rooms[18] = new Room("LA PICCOLA CAPANNA","Sei in una piccola capanna di legno. Di fronte a te c'e' un uomo che sembra un mercante ",false);
 		Rooms[19] = new Room("LA GROTTA DIETRO LA CASCATA - Dietro la porta", "Il tetto e' cosi' basso che devi strisciare per entrare. "
 				+ "C'e' un forte odore di umido e il pavimento e' bagnato.", true);
-		Rooms[20] = new Room("L'OBLIVION","L'aria e' calda e pesante, sei in su un grande piano di roccia fluttuante"
+		Rooms[20] = new Room("L'OBLIVION","L'aria e' calda e pesante, sei su un grande piano di roccia fluttuante"
 				+ " nel mezzo del nulla, tutt'intorno a questa roccia le fiamme ardono come all'inferno.",false);
 
 		return Rooms[3];
@@ -105,18 +113,18 @@ public class Map implements Serializable{
 
 		Fixed wardrobe = new Fixed("guardaroba", null);
 		wardrobe.addMoney(100);
-		wardrobe.addTool(new Weapon("torcia", "una torcia di legno gia' usata da qualcuno. "
+		wardrobe.addTool(new Weapon("torcia", "Una torcia di legno gia' usata da qualcuno. "
 				+ "Dovrebbe ancora essere possibile accenderla", 5, 3, 0.90f));
 		Rooms[0].addFixed(wardrobe);
-		Fixed bed = new Fixed("letto", "qualcuno ha dormito qui");
+		Fixed bed = new Fixed("letto", "Qualcuno ha dormito qui");
 		Rooms[0].addFixed(bed);
 
-		NpcGood druid = new NpcGood("druido", "un druido indaffareto con delle corna enormi", 1000, 150, true, "Aaahh finalmente ti sei svegliato Eldor! Ti stavo aspettando");
+		NpcGood druid = new NpcGood("druido", "Un druido indaffareto con delle corna enormi", 1000, 150, true, "Aaahh finalmente ti sei svegliato Eldor! Ti stavo aspettando");
 		druid.setSecondSpeech("Guarda, la foresta sta morendo, ho bisogno del tuo aiuto! "
 				+ "Trova i tre ingredienti necesari a fare una pozione che la possa salvare, le creature della foresta ti indicheranno quali servono."
 				+ " Devi convincere il Lorwin a farti dare il primo, e' un mio amico."
 				+ " Mi dispiace non poterti essere piu' d'aiuto ma devo andare, torna qui quando avrai i tre ingredienti.<BR><BR>"
-				+ " Il Druido corre verso la porta d'uscita.<BR><BR><b>druid :</b> Ah, quasi dimenticavo, il treant ama gli indovinelli e il numero 7!");
+				+ " Il Druido corre verso la porta d'uscita.<BR><BR><b>druido :</b> Ah, quasi dimenticavo, il treant ama gli indovinelli e il numero 7!");
 		Rooms[1].addnpcs(druid);
 		Fixed chest1 = new Fixed("baule", null);
 		chest1.addMoney(150);
@@ -134,9 +142,9 @@ public class Map implements Serializable{
 		Rooms[3].addnpcs(treant);
 		
 		Merchant merchant1 = new Merchant("mercante", "Un piccolo uomo simile ad uno gnomo con una grande sacca sulla schiena",
-				100, 300, "Salve viaggiatore, vuoi comprare qualcosa?", 3);
-		Weapon whip = new Weapon("frusta", "una lunga frusta marrone", 80, 12, 0.95f);
-		Weapon gladius = new Weapon("gladio", "un'antico gladio d'oro. C**** e' affilatissimo!", 200, 16, 0.98f);
+				100, 300, " Salve viaggiatore, vuoi comprare qualcosa?", 3);
+		Weapon whip = new Weapon("frusta", "Una lunga frusta marrone", 80, 12, 0.95f);
+		Weapon gladius = new Weapon("gladio", "Un'antico gladio d'oro. C**** e' affilatissimo!", 200, 16, 0.98f);
 		Tool apple = new Tool("mela", "Una mela verde, sembra matura", 5);
 		merchant1.addObj(whip);
 		merchant1.addObj(gladius);
@@ -150,8 +158,10 @@ public class Map implements Serializable{
 		Fixed chest2 = new Fixed("baule", null);
 		chest2.addMoney(100);
 		chest2.addTool(new Tool("pozione", "Una piccola boccetta con del liquido verde dentro", 50));
-
 		Rooms[5].addFixed(chest2);
+		
+		Fixed ccp = new Fixed("corp","a pale dead man with blue eyes");
+		Rooms[8].addFixed(ccp);
 		
 		NpcBad goblin = new NpcBad("goblin piromane", "Un goblin rosso con un'ascia infuocata nelle sue"
 				+ " mani e delle boccette appese alla cintura", 45, 100, true, "Grwaaal", 5);
@@ -164,8 +174,8 @@ public class Map implements Serializable{
 		goblin.addObj(matches);
 		Rooms[9].addnpcs(goblin);
 		
-		Fixed corp = new Fixed("corpo galleggiante", "Un pallido corpo che galleggia dell'acqua");
-		corp.addTool(new Tool("chiave", "una chiave d'oro",0));
+		Fixed corp = new Fixed("corpo galleggiante", "Un pallido corpo che galleggia sull'acqua");
+		corp.addTool(new Tool("chiave", "Una chiave d'oro",0));
 		Rooms[10].addFixed(corp);
 		NpcBad imp = new NpcBad("demonietto putrido","Un'orrida creatura simile ad un goblin volante", 30, 25, true, 
 				"Grawam-Gragnam ahraaa", 9);
@@ -202,10 +212,10 @@ public class Map implements Serializable{
 		Rooms[13].addnpcs(lorwin);
 		Fixed chest3 = new Fixed("baule", null);
 		chest3.addMoney(300);
-		chest3.addTool(new Weapon("uccisore di demoni", "Un'antica spada usata per sconfiggere i demoni", 500, 10, 0.99f));
+		chest3.addTool(new Weapon("ammazza demoni", "Un'antica spada usata per sconfiggere i demoni", 500, 10, 0.99f));
 		Rooms[13].addFixed(chest3);
 		
-		NpcBad demogorgon = new NpcBad("demogorgone", "Uno spaventoso demone con due teste di mandrillo e dei linghi"
+		NpcBad demogorgon = new NpcBad("demogorgone", "Uno spaventoso demone con due teste di mandrillo e dei lunghi"
 				+ " tentacoli.", 500, 100, false, "Grwaaaaahhhlll", 50);
 		Tool demoTooth = new Tool("dente di demogorgone", "Un dente del leggendario demogorgone",0);
 		demogorgon.addObj(demoTooth);
@@ -213,7 +223,7 @@ public class Map implements Serializable{
 		Fixed chest6 = new Fixed("baule", null);
 		chest6.addMoney(350);
 		chest6.addTool(new Weapon("spada lunga", "Una lunga e affilata spada", 150, 20, 0.97f));
-		chest6.addTool(new Tool("mela", "una mela verde, sembra acerba", 5));
+		chest6.addTool(new Tool("mela", "Una mela verde, sembra acerba", 5));
 		Rooms[14].addFixed(chest6);
 		
 		NpcGood helper = new NpcGood("vecchio impaurito","Un uomo con la paura negli occhi", 100, 150, false, "Sono quasi morto"
@@ -229,8 +239,8 @@ public class Map implements Serializable{
 		Rooms[16].addnpcs(imp1);
 		Fixed chest4 = new Fixed("baule", null);
 		chest4.addMoney(150);
-		Tool scroll = new Tool("pergamena","Un'antica pergamena, qualcuno ci ha scritto: <BR><i>'dove l'acqua"
-				+ " scorre gli alberi adorano origliare, il loro numero preferito vogliono sentire.'</i>", 10);
+		Tool scroll = new Tool("pergamena","Un'antica pergamena, qualcuno ci ha scritto: <BR><i>'Dove l'acqua"
+				+ " scorre gli alberi adorano origliare, il loro numero preferito vogliono ascoltare.'</i>", 10);//sentire
 		chest4.addTool(scroll);
 		
 		Ingredient belladonna = new Ingredient("fiore di belladonna", "Un grazioso fiore bianco");
@@ -246,7 +256,7 @@ public class Map implements Serializable{
 		Rooms[17].addFixed(cDoor);
 		
 		Merchant merchant2 = new Merchant("mercante", "Un piccolo uomo simile ad uno gnomo con una grande sacca sulla schiena",
-				100, 300, "Salve viaggiatore, vuoi comprare qualcosa?", 2);
+				100, 300, " Salve viaggiatore, vuoi comprare qualcosa?", 2);
 		Weapon excalibur = new Weapon("excalibur", "La famosa spada di Re Artu'", 500, 30, 0.99f);
 		for(int i = 0; i< 10; i++){
 			Tool potion = new Tool("pozione", "Una piccola boccetta con del liquido verde dentro", 50);
@@ -262,8 +272,8 @@ public class Map implements Serializable{
 		Fixed gnome = new Fixed("gnomo morto", "Uno gnomo morto, dall'odore non sembra sia "
 				+ "morto tanto tempo fa.");
 		Tool message = new Tool("messaggio", "Una sorta di pergamena con qualcosa di scritto male, la persona che"
-				+ " l'ha fatto doveva essere di fretta:<BR><i>'Il Lord Dremora sta venendo ad uccidermi, vendicatemi, l'unico modo "
-				+ "per trovarlo e' pronunciare il numero successivo della succcessione numerica che il Demone ha scritto sul collare dove giace il suo corpo morto.'</i>",0);
+				+ " l'ha fatto doveva essere di fretta:<BR><i>'Il Lord Dremora sta venendo ad uccidermi, vendicatemi! L'unico modo "
+				+ "per trovarlo e' pronunciare il numero successivo della successione numerica che il Demone ha scritto sul collare dove giace il suo corpo morto.'</i>",0);
 		gnome.addMoney(50);
 		gnome.addTool(message);
 		Rooms[19].addFixed(gnome);
@@ -271,7 +281,7 @@ public class Map implements Serializable{
 		NpcBad dremora = new NpcBad("lord dremora", "Uno spaventoso demone dalle sembianze umane, con delle piccole corna nere e una gigantesca"
 				+ " spada",500,0,true,"Come osi venire nel mio regno, piccolo umano insolente! Morirai per la tua "
 						+ " arroganza!",5);
-		Ingredient heart = new Ingredient("cuore di dremora", "il cuore del re dei demoni, sta ancora battendo");
+		Ingredient heart = new Ingredient("cuore di dremora", "Il cuore del re dei demoni, sta ancora battendo");
 		dremora.addObj(heart);
 		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 15, 0.98f);
 		dremora.setWeapon(sw);
@@ -300,13 +310,5 @@ public class Map implements Serializable{
 	
 	public int getLorwinCodeLength(){
 		return lorwinCode[currentCode][0];
-	}
-
-	public void setLorwinCode(int n) {
-		currentCode = n;
-	}
-	
-	public Room getRoom(int roomNumber){
-		return Rooms[roomNumber];
 	}
 }

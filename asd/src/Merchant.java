@@ -1,13 +1,17 @@
 import java.io.Serializable;
 import java.util.HashMap;
 
+/**
+ * the NPC who sells tools and weapons
+ * @author giacomobenso
+ */
 public class Merchant extends NPC implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	private int priceModifier;
-	String saleTable;
-	HashMap<String,Integer> saleMap;
+	String saleTable; //html table containing all the items to sell
+	HashMap<String,Integer> saleMap; //containing item name and quantity
 	
 	public Merchant(String name, String description, int HP, int money, String speech, int priceModifier) {
 		super(name, description, HP, money, false, speech);		
@@ -18,12 +22,12 @@ public class Merchant extends NPC implements Serializable{
 		saleMap = new HashMap<String, Integer>();
 	}
 	
-	public String displayForSale(){ 
-		return saleTable;
-	}
-
 	public String interact(Character pl) {
-		return "";
+		return speech;
+	}
+	
+	public String displayForSale(){ //getSaleTable
+		return saleTable;
 	}
 	
 	public String getSpeech(){
@@ -38,6 +42,9 @@ public class Merchant extends NPC implements Serializable{
 		this.priceModifier = priceModifier;
 	}
 	
+	/**
+	 * remove the item from the merchant table and from the hashmap
+	 */
 	public String removeObjCalled(String o) {
 		
 		Tool b = null;
@@ -48,17 +55,17 @@ public class Merchant extends NPC implements Serializable{
 				break;
 			}
 		}
-		if (b == null) {
+		if (b == null) { // the item does not exist
 			return null;
-		} else {
+		} else { 
 			String rep = createStringForTable(b);
 			int num;
-			if((num = saleMap.get(o).intValue()) > 1){
+			if((num = saleMap.get(o).intValue()) > 1){ //quantity > 1
 				saleTable = saleTable.replace(rep, (rep.replaceAll("<td>" + saleMap.get(o) +
 						"</td>", "<td>" + ((Integer)(saleMap.get(o).intValue()) -1) + "</td>")));
 				saleMap.replace(o, num - 1);
 			}
-			else{
+			else{ 
 				saleTable = saleTable.replace(rep, ""); 
 				saleMap.remove(o);
 			}			
@@ -66,6 +73,9 @@ public class Merchant extends NPC implements Serializable{
 		}
 	}
 	
+	/**
+	 * add an item to the merchant table and to the hashmap
+	 */
 	public void addObj(Tool t) {
 		
 		boolean b = true;
@@ -79,15 +89,20 @@ public class Merchant extends NPC implements Serializable{
 		itemsHeld.add(t);
 		
 		if(!b){				
-			saleTable = saleTable.replace("</table>", (rep + "</table>"));
+			saleTable = saleTable.replace("</table>", (rep + "</table>")); // add it to the table if there wasn't yet
 		}
-		else{
+		else{ // change the quantity 
 			saleMap.replace(t.getName(), (Integer)(saleMap.get(t.getName()).intValue()) +1);
 			saleTable = saleTable.replace(rep, (rep.replaceAll("<td>" + ((Integer)(saleMap.get(t.getName()).intValue()) -1) +
 					"</td>", "<td>" + saleMap.get(t.getName()) + "</td>")));
 		}
 	}
 	
+	/**
+	 * create the html string for the table of the given tool
+	 * @param t: the tool
+	 * @return the html string
+	 */
 	public String createStringForTable(Tool t){
 		
 		String rep = "<tr><td>" + t.getName() + "</td>";	

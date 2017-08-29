@@ -1,4 +1,3 @@
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,16 +22,14 @@ public abstract class Character implements Serializable{
 		this.HP = HP;
 		this.money = money;
 		lifeRemaining = 100;
-		Weapon NN = new Weapon("nessuna", "nessun'arma", 0, 1, 0.95f);//Ciao
+		Weapon NN = new Weapon("nessuna", "nessuna arma", 0, 1, 0.95f);
 		weapon = NN; // test commento
 	}
 
 	//-------------abstract methods-------------//
 	
-	public abstract String getItems();
 	public abstract String die();
-	
-	
+		
 	//------------------getter methods-----------------//
 	
 	public String getName() {
@@ -123,7 +120,6 @@ public abstract class Character implements Serializable{
 		return null;
 	}
 
-
 	/**
 	 * add an object to the ArrayList containing the items carried.
 	 * @param o: String corresponding to the item.
@@ -133,13 +129,13 @@ public abstract class Character implements Serializable{
 		Item t;
 		if((t = currentRoom.getItemNamed(o))!= null){
 			itemsHeld.add((Tool) t);
-			return t.getName() + " added to " + this.getName() + "'s inventory";
+			return t.getName() + ": aggiunto all'invendario di " + this.getName();
 		}
-
 		for(NPC npc : this.getCurrentRoom().getNPCArray()){
 			if((t = npc.getToolFromString(o)) != null){
 				itemsHeld.add((Tool) t);
-				return this.getName() + " ha aggiunto all'inbentario: " + t.getName();
+				npc.removeObjCalled(t.getName());
+				return t.getName() + ": aggiunto all'inventario di " + this.getName();
 			}
 		}		
 		return null;
@@ -175,14 +171,13 @@ public abstract class Character implements Serializable{
 		if(all.length() > 3){
 			all = all.substring(0, (all.length() -2));
 		}
-
 		int mon;
 		this.removeMoney(mon = this.getMoneyAmount());
 		this.getCurrentRoom().addMoney(mon);
 		if(all.length() < 2){
-			return " non c'e' niente da poter raccogliere ";
+			return " Non c'e' niente da poter raccogliere ";
 		}
-		return this.getName() + " lascia: " + all + "<BR>monete lasciate: "+ mon;
+		return this.getName() + " lascia: " + all + "<BR>monete lasciate: "+ mon; 
 	}
 	
 	/**
@@ -210,10 +205,10 @@ public abstract class Character implements Serializable{
 				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar
 				return this.getName() + " attacca "+ target.getName();
 			}
-			return this.getName() + " attacca "+ target.getName() + "<BR>" + " vita restante " + target.getName() + ": " + target.getLifeRemaining() + "%";
+			return this.getName() + " attacca "+ target.getName() + "<BR>" + target.getName() + " vita restante: " + target.getLifeRemaining() + ": " + "%";
 		}
 		else{
-			return this.getName() + " attacca "+ target.getName() + "<BR>" + target.getName() + " mancato!";
+			return this.getName() + " attacca "+ target.getName() + "<BR>" + this.getName() + " mancato!";
 		}
 	}
 
