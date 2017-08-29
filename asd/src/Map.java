@@ -61,31 +61,32 @@ public class Map implements Serializable{
 						+ "can see a gorgeous waterfall. North, a dark entrance looks like a tunnel.", false);
 		Rooms[7] = new Room("THE TUNNEL",
 				"You can see nothing but the entrance of the tunnel behind you. it's really dark.", true);
-		Rooms[8] = new Room("THE WOOD - West", "This part of the wood looks more trashy compared to the others, you "
+		Rooms[8] = new Room("THE WOOD - West", "this part of the wood looks more trashy compared to the others, you "
 				+ "notice a burning smell and some trees around look completly burnt.", false);
 		Rooms[9] = new Room("THE CAVE", "You are in a small cave, the burning smell here is stronger.", false);
 		Rooms[10] = new Room("THE SWAMP","a stinky flooded swamp full of bugs, judging from the stink there could "
 				+ "be someone dead here", false); 
-		Rooms[11] = new Room("THE WOOD - South", "This area is surrounded by rock walls, seven doors are on the south "
+		Rooms[11] = new Room("THE WOOD - South", "this area is surrounded by rock walls, seven doors are on the south "
 				+ "side of the area, above them a well defined engraving says: <i>'In the Lorwin code a "
 				+ "valid codeword does not contain any digit more than once and "
 				+ "cannot contain both 0 and 1 in the same codeword.<BR> "
 				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'</i>", false);
 		Rooms[12] = new Room("INCORRECT", "Die Insect!!!!", false);
-		Rooms[13] = new Room("LORWIN's HOME", "The house is minimal and tidy, in the middle of the room there is a "
+		Rooms[13] = new Room("LORWIN's HOME", "the house is minimal and tidy, in the middle of the room there is a "
 				+ "cute little bed and a small table is placed beside it. A lot of books are piled up on the other"
 				+ " side of the room, some of them look like magic tomes", false);
 		Rooms[14] = new Room("DEMO's DEN","The area is quite dark but not enough to impede your sight, there is an unusual"
 				+ " smell of death... ",false);
-		Rooms[15] = new Room("THE WOOD - Quiet area","This area is extremely quiet and pleasant, some birds sing..."
+		Rooms[15] = new Room("THE WOOD - Quiet area","this area is extremely quiet and pleasant, some birds sing..."
 				+ " West, a massive rock wall with a door in the middle",false);
-		Rooms[16] = new Room("THE WOOD - Dirty spot","This area is surrounded by trees, a lot of trash is spreaded"
-				+ " on the floor. West, a wooden shed",false);
-		Rooms[17] = new Room("THE CAVE BEYOND THE WATERFALL","The area is quite dark",true); 
-		Rooms[18] = new Room("LITTLE SHED","You are in a tiny wooden shed",false);
-		Rooms[19] = new Room("THE CAVE BEYOND THE WATERFALL - behind the door", "the roof is so low you have to crawl to get in. "
-				+ "There is a strong smell of moist and the floor is wet.", true);
-		Rooms[20] = new Room("THE OBLIVION","The air is thick and warm, you are in a sort of plane rock floating in the middle"
+		Rooms[16] = new Room("THE WOOD - Dirty spot","this area is surrounded by trees, a lot of trash is spreaded"
+				+ " on the floor. West, you can see a wooden shed, some grey smoke comes out from its roof",false);
+		Rooms[17] = new Room("THE CAVE BEYOND THE WATERFALL","The area is quite dark."
+				+ "<BR>You hear a voice saying: 'ONLY ONE FLOWER CAN BE TAKEN IN THIS CAVE'",true); 
+		Rooms[18] = new Room("LITTLE SHED","You are in a tiny wooden shed, a small man that could be a merchant"
+				+ " sits on a wooden chair in front of a fireplace. East, there is the main door",false);
+		Rooms[19] = new Room("THE CAVE BEYOND THE WATERFALL - Behind the door", "The area is quite dark", true);
+		Rooms[20] = new Room("THE OBLIVION","The air is thick and warm, you are in a sort of flat rock floating in the middle"
 				+ " of nothing, all around this 'square' flames burn like in hell.",false);
 
 		return Rooms[3];
@@ -225,19 +226,19 @@ public class Map implements Serializable{
 		NpcGood lorwin = new NpcGood("lorwin", "a tall pale elf wearing a green vest", 100, 150, true, "Good job my friend, Good job, "
 				+ "I understimated you.<BR>My name is Lowrwin and I am the sorcerer of the wood. I am also a close friend of the druid and he"
 				+ " told me you would have came here for the plum, he also informed me about your "
-				+ "cleverness so I made that riddle complicated to make shure no one else but you could come to my house,"
+				+ "cleverness so I made that riddle complicated to make sure no one else but you could come to my house,"
 				+ " the wood it's filled with evil creatures.");
 		lorwin.setSecondSpeech("This one I am giving to you is a plum of the legendary phoenix"
-				+ " of the wood, it is really rare, don't lose it I only have one of those.<BR>"
-				+ "ah, thre is something you might need in the chest beside me, take it if you want.");
-		Ingredient plum = new Ingredient("phoenix plum","a fire red plum once appartaining to a phoenix");
+				+ " of the wood, it is really rare, don't lose it, I only have one of those.<BR>"
+				+ "ah, thre is something you might need in the chest beside me, take it if you wish.");
+		Ingredient plum = new Ingredient("phoenix plum","A fire red plum once appartaining to a phoenix");
 		lorwin.addObj(plum);
 		Rooms[13].addnpcs(lorwin);
 		Fixed chest3 = new Fixed("chest", null);
-		Tool mapPiece2 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
+		Tool mapPiece2 = new Tool("map piece","A piece of a map that looks more like a sketch made by a kid",0);
 		chest3.addTool(mapPiece2);
 		chest3.addMoney(300);
-		chest3.addTool(new Weapon("demon-slayer", "an ancient sword used to defeat demons", 500, 10, 0.99f));
+		chest3.addTool(new Weapon("demon-slayer", "An ancient sword used to defeat demons", 500, 10, 0.99f));
 		Rooms[13].addFixed(chest3);
 		
 		NpcBad demogorgon = new NpcBad("demogorgon", "A horrid massive reptilian Demon with two mandrill heads and long"
@@ -248,50 +249,51 @@ public class Map implements Serializable{
 		Fixed chest6 = new Fixed("chest", null);
 		chest6.addMoney(350);
 		chest6.addTool(new Weapon("long sword", "A long sharp shiny sword", 150, 20, 0.97f));
-		chest6.addTool(new Tool("apple", "a green apple, seems quite sour", 5));
+		chest6.addTool(new Tool("apple", "A green apple, seems quite sour", 5));
 		Rooms[14].addFixed(chest6);
 		
 		NpcGood helper = new NpcGood("scared man","a man with fear in his eyes", 100, 150, false, "I almost died down"
 				+ " there!! that demogorgon is so scary! I would give you a big prize if you defeat it and bring"
 				+ " a proof of his death to me!");
-		Tool passParTout = new Tool("passepartout","a key that could open any door",1000);
+		Tool passParTout = new Tool("passepartout","A key that could open any door",1000);
 		helper.addObj(passParTout);
 		Rooms[15].addnpcs(helper);
-		Fixed CDoor = new Fixed("door", "the door is locked");
+		Fixed CDoor = new Fixed("door", "The door is locked");
 		Rooms[15].addFixed(CDoor);
 		
-		NpcBad imp1 = new NpcBad("putrid imp","a horrid fetid creature looking like a flying goblin", 50, 25, true, 
+		NpcBad imp1 = new NpcBad("putrid imp","A horrid fetid creature looking like a flying goblin", 50, 25, true, 
 				"Grawam-Gragnam ahraaa", 10);
 		Rooms[16].addnpcs(imp1);
 		Fixed chest4 = new Fixed("chest", null);
 		chest4.addMoney(150);
-		Tool scroll = new Tool("scroll","an ancient scroll, on it someone wrote: <BR><i>'where the water"
+		Tool scroll = new Tool("scroll","An ancient scroll, on it someone wrote: <BR><i>'where the water"
 				+ " roars the trees have ears, their favourite number they want to hear.'</i>", 10);
 		chest4.addTool(scroll);
+		Rooms[16].addFixed(chest4);
 		
 		Ingredient belladonna = new Ingredient("belladonna flower", "A beautiful white flower");
 		Rooms[17].addIngredient(belladonna);
 		Rooms[17].addTool(new Tool("hibiscus flower", "A beautiful red flower", 2));		
 		Fixed chest5 = new Fixed("chest", null);
 		chest5.addMoney(50);
-		Tool mapPiece3 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
+		Tool mapPiece3 = new Tool("map piece","A piece of a map that looks more like a sketch made by a kid",0);
 		chest5.addTool(mapPiece3);
 		chest5.addTool(new Tool("potion","A little flusk with a green liquid inside it", 50));
 		Rooms[17].addFixed(chest5);
-		Fixed cDoor = new Fixed("door", "a tiny door of the size of a gnome, the door is locked");
+		Fixed cDoor = new Fixed("door", "A tiny door of the size of a gnome, the door is locked");
 		NpcBad ooze = new NpcBad("acidic ooze","a disgusting green gelly ooze", 40, 100, false, "mluuawaaa",5);
 		Rooms[17].addnpcs(ooze);
 		Rooms[17].addFixed(cDoor);
 		
-		Merchant merchant2 = new Merchant("merchant", "a little man almost looking like a gnome with a huge bag on his back",
+		Merchant merchant2 = new Merchant("merchant", "A little man almost looking like a gnome with a huge bag on his back",
 				100, 300, "Greetings traveller, would you like to buy anything?", 2);
 		Weapon excalibur = new Weapon("excalibur", "The famous legendary sword of king Arthur", 500, 30, 0.99f);
 		for(int i = 0; i< 10; i++){
 			Tool potion = new Tool("potion", "A little flusk with a green liquid inside it", 50);
 			merchant2.addObj(potion);
 		}
-		Tool apple1 = new Tool("apple", "a green apple, seems quite sour", 5);
-		Tool apple2 = new Tool("apple", "a green apple, seems quite sour", 5);
+		Tool apple1 = new Tool("apple", "A green apple, seems quite sour", 5);
+		Tool apple2 = new Tool("apple", "A green apple, seems quite sour", 5);
 		merchant2.addObj(excalibur);
 		merchant2.addObj(apple1);
 		merchant2.addObj(apple2);
@@ -306,12 +308,12 @@ public class Map implements Serializable{
 		gnome.addTool(message);
 		Rooms[19].addFixed(gnome);
 		
-		NpcBad dremora = new NpcBad("lord dremora", "a scary dark demon with human-ish shape, small black horns and a huge"
+		NpcBad dremora = new NpcBad("lord dremora", "A scary dark demon with human-ish shape, small black horns and a huge"
 				+ " sword",500,0,true,"How dare you to come to my kingdom, you insolent little human, you will die for your "
 						+ " arrogance!",5);
-		Ingredient heart = new Ingredient("dremora heart", "the hearth of the king of demons, it's still pulsing");
+		Ingredient heart = new Ingredient("dremora heart", "The hearth of the king of demons, it's still pulsing");
 		dremora.addObj(heart);
-		Weapon sw = new Weapon("demoniac sword","the sword of the king of demons, a unique and legendary piece", 1000, 15, 0.98f);
+		Weapon sw = new Weapon("demoniac sword","The sword of the king of demons, a unique and legendary piece", 1000, 15, 0.98f);
 		dremora.setWeapon(sw);
 		Rooms[20].addnpcs(dremora);
 	}

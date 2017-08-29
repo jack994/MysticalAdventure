@@ -1,7 +1,7 @@
 import java.util.Stack;
 
 /**
- * this class allows the use of the history in the textbox.
+ * this class allows the use of history in the textbox.
  * @author giacomobenso
  */
 public class EStack extends Stack<String>{
@@ -26,7 +26,14 @@ public class EStack extends Stack<String>{
 		if (this.size() > size){
 			this.clean();
 		}
-		return super.push(s);
+		if(!this.isEmpty()){
+			if(!super.peek().equals(s))
+				return super.push(s);
+			else
+				return "";
+		}else{
+			return super.push(s);
+		}		
 	}
 	
 	public Stack<String> getS2(){

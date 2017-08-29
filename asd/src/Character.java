@@ -72,7 +72,7 @@ public abstract class Character implements Serializable{
 	}
 	
 	public void removeMoney(int money){
-		if(this.money > money){
+		if(this.money >= money){
 		this.money -= money;
 		MysticalAdventure.GAME.frame.getMoneyLabel().setText(this.money + "");
 		}
@@ -175,10 +175,18 @@ public abstract class Character implements Serializable{
 		int mon;
 		this.removeMoney(mon = this.getMoneyAmount());
 		this.getCurrentRoom().addMoney(mon);
-		if(all.length() < 2){
-			return this.getName() + " has nothing to drop ";
+		if(all.equals("")){
+			if(mon < 1)
+				return this.getName() + " has nothing to drop ";
+			else
+				return "money dropped: "+ mon;
 		}
-		return this.getName() + " dropped: " + all + "<BR>money dropped: "+ mon; 
+		else{
+			if(mon < 1)
+				return this.getName() + " dropped: " + all;
+			else
+				return this.getName() + " dropped: " + all + "<BR>money dropped: "+ mon;
+		}
 	}
 	
 	/**

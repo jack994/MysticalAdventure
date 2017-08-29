@@ -24,8 +24,7 @@ public class Room implements Serializable{
 	public Room(String Name, String description, boolean dark) {
 		Name = "<b>" + Name + "</b>"; //bold
 		this.name = Name;
-		description = "<i>" + description + "</i>";
-		this.description = description;
+		this.description = "<i>" + description + "</i>";
 		items = new ArrayList<Item>();
 		directions = new HashMap<String, Room>();
 		npcs = new ArrayList<NPC>();
@@ -47,7 +46,7 @@ public class Room implements Serializable{
 
 	public String getNameAndDescription() {
 		return name + "<BR><BR>" + description + "<BR><BR>" + getDirectionsString() + 
-				"<BR>" + getItemString() + "<BR>" + getNPCString();
+				 getItemString() + getNPCString();
 	}
 	
 	public ArrayList<NPC> getNPCArray() {
@@ -174,7 +173,10 @@ public class Room implements Serializable{
 	 * @return
 	 */
 	public String getItemString() {
-		String toReturn = "ITEMS: ";
+		String toReturn = "<BR>ITEMS: ";
+		if(items.isEmpty() || dark){
+			return "";
+		}
 		if(!dark){
 		for (int i = 0; i < items.size(); i++) {
 			toReturn += " -" + items.get(i).getName();
@@ -191,10 +193,16 @@ public class Room implements Serializable{
 	 * @return
 	 */
 	public String getNPCString() {
-		String toReturn = "CHARACTERS: ";
+		String toReturn = "<BR>CHARACTERS: ";
+		if(npcs.isEmpty() || dark){
+			return "";
+		}
 		if(!dark){
 		for (int i = 0; i < npcs.size(); i++) {
 			toReturn += " -" + npcs.get(i).getName();
+			if(!npcs.get(i).isAlive()){
+				toReturn += " (Dead)";
+			}
 		}
 		}
 		return toReturn;
@@ -237,7 +245,9 @@ public class Room implements Serializable{
 	public String getDirectionsString() {
 		String returnString = "POSSIBLE DIRECTIONS: ";
 		Set<String> keys = directions.keySet();
-		if(!dark){
+		if(dark)
+			return "";
+		else{
 		for (Iterator<String> iter = keys.iterator(); iter.hasNext();)
 			returnString += " -" + iter.next();
 		}

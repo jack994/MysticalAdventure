@@ -79,7 +79,8 @@ public class Game {
 				toAdd = toAdd.replaceAll("<th>", "<th style='padding: 5px; border: 1px solid black; font-size: 15px;'>");
 				toAdd = toAdd.replaceAll("<td>", "<td style='padding: 5px; border: 1px solid black; font-size: 15px;'>");
 				frame.getPane().setText(toAdd);
-				if(currentPlayer.getCurrentRoom().getName().equals("INCORRECT") || currentPlayer.getLifeRemaining() <=0){
+				if(currentPlayer.getCurrentRoom().getName().equals("INCORRECT") || 
+				currentPlayer.getLifeRemaining() <=0){ // incorrect room at lorwin's or 0 life remaining means you are dead
 					currentPlayer.die();
 				}
 		}
@@ -254,7 +255,7 @@ public class Game {
 																// fire (also
 																// new
 																// functionality)
-						currentPlayer.getWeapon().setDescription("the torch flames shine bright");
+						currentPlayer.getWeapon().setDescription("the torch flames glow");
 						return "you light up the torch"+ beingattacked();
 					}
 					return "torch needs to be equiped first"+ beingattacked();
@@ -272,7 +273,8 @@ public class Game {
 	 */
 	public String openDoor(Command command) {
 		Tool ky;
-		if ((ky =currentPlayer.getToolFromString("key")) == null) {
+		if ((ky =currentPlayer.getToolFromString("key")) == null && 
+				(ky =currentPlayer.getToolFromString("passepartout")) == null) {
 			return "you cannot open anything without the appropriate key"+ beingattacked();
 		}
 		if (!command.hasSecondWord()) {
@@ -309,7 +311,8 @@ public class Game {
 				}
 				else if (currentPlayer.getCurrentRoom().getName().equals("THE CAVE BEYOND THE WATERFALL")) {
 					currentPlayer.getCurrentRoom().getItemNamed("door").setDescription("The Door is Open");
-					map.addPassage(19, 17, "east"); //create the passage
+					map.addPassage(17, 19, "east"); //create the passage
+					map.addPassage(19, 17, "west"); //create the passage
 					return "you opened the door, the passage is now open (east)";
 				}
 			}
@@ -324,13 +327,13 @@ public class Game {
 	 */
 	public String saySomething(Command command) {
 		NPC npc;
-		if ((command.getSecondWord().equals("moon") || command.getSecondWord().equals("the moon"))
+		if ((command.getSecondWord().equals("moon"))
 				&& currentPlayer.getCurrentRoom().getName().equals("THE MEADOW")) { // riddle solved
 			NPC treant;
 			if(!(treant = currentPlayer.getCurrentRoom().getNPCNamed("treant")).getSpeech().equals("Good job"
 					+ " with the riddle, now you can pass.")){
 				map.addPassage(3, 4, "south"); //create the passage 
-				treant.setSpeech("Good job with the riddle, now you can pass.");
+				treant.setSpeech("Good job with the riddle, you can now pass.");
 				return "the treant slowly moves left, there is now a passage where he sat (south).";
 			}else{
 				return "you already opened the passage";
@@ -352,9 +355,9 @@ public class Game {
 		}
 		else if((command.getSecondWord().equals("7") || command.getSecondWord().equals("seven"))
 				&& currentPlayer.getCurrentRoom().getName().equals("THE VALLEY")){
-			currentPlayer.getCurrentRoom().setDescription("in the middle of this area there is a river"
+			currentPlayer.getCurrentRoom().setDescription("<i>in the middle of this area there is a river"
 					+ " and all around flowers grow luxuriant. east you can see a waterfall with a small entrance beside it. "
-					+ "North, a dark entrance looks like a tunnel.");
+					+ "North, a dark entrance looks like a tunnel.</i>");
 				map.addPassage(6, 17, "east"); //create passage
 				map.addPassage(17, 6, "west"); //create passage
 				return "two of the trees over the waterfall move slightly and the flow of the waterfall canges,"
@@ -397,9 +400,6 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String pickTool(Command command) {
-		if (frame.BagFull()) {
-			return "Your bag is full";
-		}
 		Item temp;
 		if (!command.hasSecondWord()) {
 			return "what do you want to " + command.getFirstWord() + "?";
@@ -423,33 +423,40 @@ public class Game {
 		} else {
 			//if you take any of the two flowers in the cave the other one disappears
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) { 
-				if(temp.getName().equals("belladonna flower")){
-					currentPlayer.getCurrentRoom().removeItemNamed("hibiscus flower");
-				}
-				else if(temp.getName().equals("hibiscus flower")){
-					currentPlayer.getCurrentRoom().removeItemNamed("belladonna flower");
-				}
-				else if(temp.getName().equals("dremora hearth")){ //if you take the heart of the dremora
-					NpcGood druid = new NpcGood("druid","a druid with enormous horns", 1000, 150, true, currentPlayer.getName()
-							+ "!! you found all the ingredients! I always believed in you!<BR>there is something you have to know though,"
-							+ " you are not a real person, I summoned you to fulfil my mission to save the wood.<BR>And there is more, "
-							+ "my potion to heal the wood needs a fourth ingredient, which is the soul of the summoning who found the three"
-							+ " ingredients.<BR>I am sorry...");
-					map.getRoom(1).addnpcs(druid); //add the druid to his house
-					currentPlayer.setCurrentRoom(map.getRoom(14)); //get back to the wood
-					return "you start feeling dizzy and you suddenly lose senses...<BR><BR>" + 
-							currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
+				if (frame.BagFull() && (temp.getClass() == Tool.class)) {
+					return "Your bag is full";
 				}
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
+					if(temp.getName().equals("hibiscus flower")){
+						currentPlayer.getCurrentRoom().removeItemNamed("belladonna flower");
+					}
 					checkNewCommand((Tool) temp);
 					currentPlayer.addObjCalled(temp.getName());
 					frame.addItemToMenu((Tool) temp);
-					currentPlayer.currentRoom.removeItemNamed(command.getSecondWord());
+					currentPlayer.currentRoom.removeItemNamed(temp.getName());
 					return "you picked up " + temp.getName() + beingattacked();
 				}
 				else if(temp.getClass() == Ingredient.class){
+					if(temp.getName().equals("belladonna flower")){
+					currentPlayer.getCurrentRoom().removeItemNamed("hibiscus flower");
+				}
 					frame.addIngredientToMenu((Ingredient) temp); // add it to the ingredients 
-					return currentPlayer.addObjCalled(temp.getName());
+					currentPlayer.addObjCalled(temp.getName());
+					currentPlayer.currentRoom.removeItemNamed(temp.getName());
+					if(currentPlayer.ingredientsFound() == 3){
+						NpcGood druid = new NpcGood("druid","a druid with enormous horns", 999, 150, true, currentPlayer.getName()
+								+ "!! you found all the ingredients! I always believed in you!<BR>there is something you have to know though,"
+								+ " you are not a real person, I summoned you to fulfil my mission to save the wood.<BR>And there is more, "
+								+ "my potion to heal the wood needs a fourth ingredient, which is the soul of the summoning who found the three"
+								+ " ingredients.<BR>I am sorry...");
+						map.getRoom(1).addnpcs(druid); //add the druid to his house
+					}
+					else if(temp.getName().equals("dremora hearth")){ //if you take the heart of the dremora
+						currentPlayer.setCurrentRoom(map.getRoom(14)); //get back to the wood
+						return "you start feeling dizzy and you suddenly lose senses...<BR><BR>" + 
+								currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
+					}
+					return "you picked up " + temp.getName() + beingattacked();
 				}
 				else {
 					return "you can't pick up " + temp.getName() + " try the command 'examine " + temp.getName() + "'"
@@ -580,12 +587,14 @@ public class Game {
 		}
 		Tool t;
 		if ((t = currentPlayer.getToolFromString(command.getSecondWord())) != null) {
-			if (t.getClass() == Weapon.class) {
+			if (t.getClass() == Weapon.class && !currentPlayer.getWeapon().getName().equals(command.getSecondWord())){
 				frame.getWeaponLabel().setText(t.getName());
 				if (currentPlayer.getWeapon().getName().equals("torch")) { // put out the torch
 					currentPlayer.getWeapon().setDamage(3);
+					enlight(currentPlayer.getCurrentRoom());
 					currentPlayer.getWeapon().setDescription("a wooden torch, someone has already used it. "
 							+ "it should still be possible to light it up");
+					return "you put out the torch.<BR>" + currentPlayer.equipWeapon((Weapon) t) + beingattacked();
 				}
 				return currentPlayer.equipWeapon((Weapon) t) + beingattacked();
 			} else {
@@ -608,8 +617,13 @@ public class Game {
 		NPC npc;
 		if ((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null) {
 			if (npc.getClass() == NpcGood.class) {
-				if (npc.getName().equals("druid") && currentPlayer.getCurrentRoom().getName().equals("THE LIVING ROOM")){
+				if (npc.getName().equals("druid") && currentPlayer.getCurrentRoom().getName().equals("THE LIVING ROOM")
+						&& npc.getHP() == 1000){ // 1000 hp means first time you meet the druid (beginning)
 					currentPlayer.getCurrentRoom().removeNpcNamed("druid");
+				}
+				else if(npc.getName().equals("druid") && currentPlayer.getCurrentRoom().getName().equals("THE LIVING ROOM")
+						&& npc.getHP() == 999){ // 999 hp means second time you meet the druid (end)
+					//TODO game finished
 				}
 				else if (npc.getName().equals("lorwin")) { //if it's lorwin
 					Tool ing;
@@ -621,7 +635,7 @@ public class Game {
 					}
 				}
 				else if (npc.getName().equals("scared man") && 
-						(currentPlayer.getToolFromString("Demogorgon tooth")!= null)) {
+						(currentPlayer.getToolFromString("demogorgon tooth")!= null)) {
 					npc.setSecondSpeech("Holy Guacamole you have defeated the demogorgon, I can tell it"
 							+ " from the tooth you are carrying!<BR>here, take your prize, I will never be "
 							+ "grateful enough.<BR>Ah, I almost forgot to tell you that a weird druid passed here"
@@ -713,32 +727,41 @@ public class Game {
 		if (currentPlayer.getWeapon().getName().equals("torch") && currentPlayer.getWeapon().getDamage() == 5) {
 			if (currentR.getName().equals("THE WOOD - East")) {
 				currentR.setDark(false);
-				currentR.setDescription("the trees in this part of the wood are thicker"
-						+ " but the light of your torch heps you see better");
+				currentR.setDescription("<I>the trees in this part of the wood are thicker"
+						+ " but the light of your torch heps you see better</i>");
 			} else if (currentR.getName().equals("THE TUNNEL")) {
 				currentR.setDark(false);
-				currentPlayer.getCurrentRoom().setDescription("The light of your torch enlights the tunnel");
+				currentPlayer.getCurrentRoom().setDescription("<i>The light of your torch enlights the tunnel</i>");
 				map.addPassage(7, 10, "east"); //create passage
 				map.addPassage(10, 7, "west"); //create passage
 			}
 			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL")){
 				currentR.setDark(false);
-				currentR.setDescription("An empty cave with moist walls, some grass and flowers on the floor.<BR><BR>"
-						+ "You hear a voice saying: 'ONLY ONE FLOWER CAN BE TAKEN IN THIS CAVE'");
+				currentR.setDescription("<i>An empty cave with moist walls, some grass and flowers on the floor.<BR><BR>"
+						+ "You hear a voice saying: 'ONLY ONE FLOWER CAN BE TAKEN IN THIS CAVE'</i>");
+			}
+			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL - Behind the door")){
+				currentR.setDark(false);
+				currentR.setDescription("<i>the roof is so low you have to crawl to get in. "
+				+ "There is a strong smell of moist and the floor is wet.</i>");
 			}
 		} else {
 			if (currentR.getName().equals("THE WOOD - East")) {
 				currentR.setDark(true);
-				currentR.setDescription("the trees in this part of the wood are thicker and you struggle"
-						+ " to see anything in this area");
+				currentR.setDescription("<i>the trees in this part of the wood are thicker and you struggle"
+						+ " to see anything in this area</i>");
 			} else if (currentR.getName().equals("THE TUNNEL")) {
 				currentR.setDark(true);
 				currentPlayer.getCurrentRoom().setDescription(
-						"You can see nothing but the entrance" + " of the tunnel behind you. it's really dark");
+						"<i>You can see nothing but the entrance" + " of the tunnel behind you. it's really dark</i>");
 			}
-			else if(currentR.getName().equals("TTHE CAVE BEYOND THE WATERFALL")){
+			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL")){
 				currentR.setDark(true);
-				currentR.setDescription("The area is quite dark");
+				currentR.setDescription("<i>The area is quite dark</i>");
+			}
+			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL - Behind the door")){
+				currentR.setDark(true);
+				currentR.setDescription("<i>The area is quite dark</i>");
 			}
 		}
 
@@ -755,11 +778,11 @@ public class Game {
 			int code = rand.nextInt(4);
 			map.setLorwinCode(code);
 			String desc = "The door is locked, on it someone wrote the number ";
-			currentPlayer.getCurrentRoom().setDescription("This area is surrounded by rock walls, seven doors are on the south "
+			currentPlayer.getCurrentRoom().setDescription("<i>This area is surrounded by rock walls, seven doors are on the south "
 				+ "side of the area, above them a well defined engraving says: 'In the Lorwin code a "
 				+ "valid codeword does not contain any digit more than once and "
 				+ "cannot contain both 0 and 1 in the same codeword.<BR>"
-				+ "How many possible strings of "+ map.getLorwinCodeLength() +" digits are there?'");
+				+ "How many possible strings of "+ map.getLorwinCodeLength() +" digits are there?'</i>");
 			
 
 			for (int i = 1; i < 8; i++) { //for each door

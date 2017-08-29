@@ -340,9 +340,15 @@ public class GameWindow extends JFrame{
 			if (tool.equals(labels[i].getText())) {
 				if ((qty = Integer.parseInt(labels[i + 1].getText())) == 1) {
 					while(i<itemCounter){
-						labels[i].setText(labels[i+2].getText());
-						labels[i + 1].setText(labels[i+3].getText());
-						i+=2;
+						if(i == endItem){
+							labels[i].setText("");
+							labels[i + 1].setText("");
+							i+=2;
+						}else{
+							labels[i].setText(labels[i+2].getText());
+							labels[i + 1].setText(labels[i+3].getText());
+							i+=2;
+						}
 					}
 					itemCounter -= 2;
 				} else {
