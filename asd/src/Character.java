@@ -71,7 +71,7 @@ public abstract class Character implements Serializable{
 	}
 	
 	public void removeMoney(int money){
-		if(this.money > money){
+		if(this.money >= money){
 		this.money -= money;
 		MysticalAdventure.GAME.frame.getMoneyLabel().setText(this.money + "");
 		}
@@ -174,10 +174,18 @@ public abstract class Character implements Serializable{
 		int mon;
 		this.removeMoney(mon = this.getMoneyAmount());
 		this.getCurrentRoom().addMoney(mon);
-		if(all.length() < 2){
-			return " Non c'e' niente da poter raccogliere ";
+		if(all.equals("")){
+			if(mon < 1)
+				return " Non c'e' niente da poter raccogliere ";
+			else
+				return "monete lasciate: "+ mon;
 		}
-		return this.getName() + " lascia: " + all + "<BR>monete lasciate: "+ mon; 
+		else{
+			if(mon < 1)
+				return this.getName() + " lascia: " + all;
+			else
+				return this.getName() + " lascia: " + all + "<BR>monete lasciate: "+ mon;
+		}
 	}
 	
 	/**
@@ -208,7 +216,7 @@ public abstract class Character implements Serializable{
 			return this.getName() + " attacca "+ target.getName() + "<BR>" + target.getName() + " vita restante: " + target.getLifeRemaining() + ": " + "%";
 		}
 		else{
-			return this.getName() + " attacca "+ target.getName() + "<BR>" + this.getName() + " mancato!";
+			return this.getName() + " attacca "+ target.getName() + "<BR>" + target.getName() + " mancato!";
 		}
 	}
 

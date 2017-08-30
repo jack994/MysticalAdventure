@@ -23,7 +23,7 @@ public class Merchant extends NPC implements Serializable{
 	}
 	
 	public String interact(Character pl) {
-		return speech;
+		return "";
 	}
 	
 	public String displayForSale(){ //getSaleTable

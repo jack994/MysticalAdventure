@@ -66,8 +66,10 @@ public class Command{
 		String com = "";
 		if(toRem.equalsIgnoreCase("chiave") || toRem.equals("passepartout"))
 			com = "apri";
-		else if(toRem.equals("torcia"))
+		else if(toRem.equals("torcia") || toRem.equals("fiammiferi"))
 			com = "accendi";
+		else if(toRem.equals("pezzo di mappa"))
+			com = "mappa";
 		for(String s : commandWords){
 			if(s.equals(com)){
 				commandWords.remove(s);

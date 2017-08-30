@@ -81,7 +81,11 @@ public class MysticalAdventure {
 			GAME.frame.getWeaponLabel().setText(obj.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
 			GAME.frame.resetItemsCounter();
 			for (Tool t : obj.getCurrentPlayer().getItemsHeldArray()) {
-				GAME.frame.addItemToMenu(t);
+				if(t.getClass() == Ingredient.class){
+					GAME.frame.addIngredientToMenu((Ingredient)t);
+				}else{
+					GAME.frame.addItemToMenu(t);
+				}				
 			}
 			g.start();
 		} catch (IOException i) {

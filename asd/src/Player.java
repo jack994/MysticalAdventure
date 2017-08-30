@@ -66,6 +66,19 @@ public class Player extends Character implements Serializable{
 		}
 		return null;
 	}
+	
+	/**
+	 * check how many ingredients have been found
+	 * @return the number of ingredients found (in the arraylist)
+	 */
+	public int ingredientsFound(){
+		int ret = 0;
+		for(Tool t : itemsHeld){
+			if(t.getClass() == Ingredient.class)
+				ret ++;
+		}
+		return ret;
+	}
 
 
 }

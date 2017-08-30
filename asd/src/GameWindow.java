@@ -249,6 +249,19 @@ public class GameWindow extends JFrame{
 	}
 
 	/**
+	 * get the number of map pieces
+	 * @return an integer representing the number of map pieces
+	 */
+	public int getMapPieces(){
+		for(int i = startItem; i < endItem; i+=2){
+			if(labels[i].getText().equals("pezzo di mappa")){
+				return Integer.parseInt(labels[i+1].getText());
+			}
+		}
+		return 0;
+	}
+	
+	/**
 	 * set all the labels of the bag to ''
 	 */
 	public void emptyBagLabels(){
@@ -327,9 +340,15 @@ public class GameWindow extends JFrame{
 			if (tool.equals(labels[i].getText())) {
 				if ((qty = Integer.parseInt(labels[i + 1].getText())) == 1) {
 					while(i<itemCounter){
-						labels[i].setText(labels[i+2].getText());
-						labels[i + 1].setText(labels[i+3].getText());
-						i+=2;
+						if(i == endItem){
+							labels[i].setText("");
+							labels[i + 1].setText("");
+							i+=2;
+						}else{
+							labels[i].setText(labels[i+2].getText());
+							labels[i + 1].setText(labels[i+3].getText());
+							i+=2;
+						}
 					}
 					itemCounter -= 2;
 				} else {

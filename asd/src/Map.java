@@ -42,7 +42,7 @@ public class Map implements Serializable{
 		Rooms[4] = new Room("IL BOSCO - Entrata", "Sei in un'area del bosco vicino alla radura, la luce "
 				+ "passa attraverso le foglie e l'aria e' umida. Intorno a te ci sono solo alberi.", false);
 		Rooms[5] = new Room("IL BOSCO - Est",
-				"Gli alberi sono cosi' fitti che fai fatica a vedere qualcosa.", true);
+				"Gli alberi sono cosi' fitti che non vedi quasi nulla.", true);
 		Rooms[6] = new Room("LA VALLE",
 				"In mezzo a quest'area c'e' un fiume e la flora cresce rigoglioasa. Ad est "
 						+ "una cascata. A nord un'entrata buia, sembra un tunnel.", false);
@@ -141,6 +141,11 @@ public class Map implements Serializable{
 				false, "L’ PU NPYV KH TPSPVUP KP HUUP, TH UVU L’ WPB’ CLJJOPH KP BU TLZL?");
 		Rooms[3].addnpcs(treant);
 		
+		Fixed chest8 = new Fixed("baule", null);
+		Tool mapPiece1 = new Tool("pezzo di mappa","Un pezzo di mappa! Sembra un disegno fatto da un bambino",0);
+		chest8.addTool(mapPiece1);
+		Rooms[4].addFixed(chest8);
+		
 		Merchant merchant1 = new Merchant("mercante", "Un piccolo uomo simile ad uno gnomo con una grande sacca sulla schiena",
 				100, 300, " Salve viaggiatore, vuoi comprare qualcosa?", 3);
 		Weapon whip = new Weapon("frusta", "Una lunga frusta marrone", 80, 12, 0.95f);
@@ -160,7 +165,7 @@ public class Map implements Serializable{
 		chest2.addTool(new Tool("pozione", "Una piccola boccetta con del liquido verde dentro", 50));
 		Rooms[5].addFixed(chest2);
 		
-		Fixed ccp = new Fixed("corp","a pale dead man with blue eyes");
+		Fixed ccp = new Fixed("cadavere","Un cadavere umano con degli occhi azzurri");
 		Rooms[8].addFixed(ccp);
 		
 		NpcBad goblin = new NpcBad("goblin piromane", "Un goblin rosso con un'ascia infuocata nelle sue"
@@ -169,7 +174,7 @@ public class Map implements Serializable{
 		goblin.setWeapon(axe);
 		Tool eyeG = new Tool("occhio di goblin", "Un disgustoso occhio di goblin", 8);
 		Tool matches = new Tool("fiammiferi", "Alcuni fiammiferi in una scatoletta, il goblin deve averli usati per accendere il fuoco."
-				+ " Potrebbero portarti utili", 8);
+				+ " Potrebbero tornarti utili", 8);
 		goblin.addObj(eyeG);
 		goblin.addObj(matches);
 		Rooms[9].addnpcs(goblin);
@@ -211,6 +216,8 @@ public class Map implements Serializable{
 		lorwin.addObj(plum);
 		Rooms[13].addnpcs(lorwin);
 		Fixed chest3 = new Fixed("baule", null);
+		Tool mapPiece2 = new Tool("pezzo di mappa","Un pezzo di mappa! Sembra un disegno fatto da un bambino",0);
+		chest3.addTool(mapPiece2);
 		chest3.addMoney(300);
 		chest3.addTool(new Weapon("ammazza demoni", "Un'antica spada usata per sconfiggere i demoni", 500, 10, 0.99f));
 		Rooms[13].addFixed(chest3);
@@ -242,12 +249,15 @@ public class Map implements Serializable{
 		Tool scroll = new Tool("pergamena","Un'antica pergamena, qualcuno ci ha scritto: <BR><i>'Dove l'acqua"
 				+ " scorre gli alberi adorano origliare, il loro numero preferito vogliono ascoltare.'</i>", 10);//sentire
 		chest4.addTool(scroll);
+		Rooms[16].addFixed(chest4);
 		
 		Ingredient belladonna = new Ingredient("fiore di belladonna", "Un grazioso fiore bianco");
 		Rooms[17].addIngredient(belladonna);
-		Rooms[17].addTool(new Tool("fiore d'ibisco", "Un grazioso fiore rosso", 2));		
+		Rooms[17].addTool(new Tool("fiore di ibisco", "Un grazioso fiore rosso", 2));		
 		Fixed chest5 = new Fixed("baule", null);
 		chest5.addMoney(50);
+		Tool mapPiece3 = new Tool("pezzo di mappa","Un pezzo di mappa! Sembra un disegno fatto da un bambino",0);
+		chest5.addTool(mapPiece3);
 		chest5.addTool(new Tool("pozione", "Una piccola boccetta con del liquido verde dentro", 50));
 		Rooms[17].addFixed(chest5);
 		Fixed cDoor = new Fixed("porta", "Una piccolissima porta che sembra fatta apposta per gli gnomi. Oh, e' chiusa!");
@@ -288,17 +298,17 @@ public class Map implements Serializable{
 		Rooms[20].addnpcs(dremora);
 	}
 
-	public boolean hasRoomCalled(String des) {
-		int i = 0;
-
-		while (i <= Rooms.length) {
-			if (Rooms[i].getDescription().equals(des)) {
-				return true;
-			}
-			i++;
-		}
-		return false;
-	}
+//	public boolean hasRoomCalled(String des) {
+//		int i = 0;
+//
+//		while (i <= Rooms.length) {
+//			if (Rooms[i].getDescription().equals(des)) {
+//				return true;
+//			}
+//			i++;
+//		}
+//		return false;
+//	}
 
 	public void addPassage(int roomNumber, int roomConnection, String name) {
 		Rooms[roomNumber].setDirection(name, Rooms[roomConnection]);
