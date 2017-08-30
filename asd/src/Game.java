@@ -122,6 +122,8 @@ public class Game {
 			return buyFromMerchant(command);
 		}else if (firstWord.equals("map")){
 			return openMap(command);
+		}else if (firstWord.equals("eat")){
+			return eat(command);
 		}else
 			return "You can't use this command, either it does not exist or you don't have the correct tools/items"
 					+ " to use it.<BR>You can check your currently available commands writing 'help'.";
@@ -141,6 +143,23 @@ public class Game {
 		if(t.getName().equals("map piece") && (currentPlayer.getToolFromString("map piece") == null)){
 			Command.addCommand("map");
 		}
+	}
+	
+	public String eat(Command command){
+		if(!command.hasSecondWord()){
+			return "what do you want to eat? type 'eat -item-'";
+		}
+		if(currentPlayer.getToolFromString(command.getSecondWord()) == null){
+			return "you cannot eat " + command.getSecondWord();
+		}
+		if(currentPlayer.getToolFromString(command.getSecondWord()).getName().equals("raspberry") || 
+				currentPlayer.getToolFromString(command.getSecondWord()).getName().equals("carrot") ||
+				currentPlayer.getToolFromString(command.getSecondWord()).getName().equals("apple")){
+			currentPlayer.removeObjCalled(command.getSecondWord());
+			frame.removeItemFromMenu(command.getSecondWord());
+			return "you eat " + command.getSecondWord() + ", the perfect snack for a big boy like you!";
+		}
+			return "you cannot eat " + command.getSecondWord();
 	}
 	
 	/**
@@ -179,7 +198,7 @@ public class Game {
 			return "there is no merchant in this area";
 		}
 		if(!command.hasSecondWord()){
-			return "what do you want to buy? write 'buy -item-'";
+			return "what do you want to buy? type 'buy -item-'";
 		}
 		Tool t;
 		if((t = currentPlayer.buyToolFromMerchant(merchant, command.getSecondWord())) != null){
@@ -842,7 +861,7 @@ public class Game {
 			e.printStackTrace();
 		}
 		
-		JFrame nf = new JFrame();
+		JFrame nf = new JFrame(); //new window with congrats and code
 			
 		nf.getContentPane().add(new JLabel("Congratulations!!!"));
 		nf.getContentPane().add(new JLabel("you have completed 'The Mystical Adventure'"));

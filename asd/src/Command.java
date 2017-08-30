@@ -10,7 +10,7 @@ public class Command{
 		private static final long serialVersionUID = 1L;
 	{   // all the possible commands are stored here
 	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
-	    add("equip"); add("speak"); add("talk");  add("say"); add("use"); add("buy");
+	    add("equip"); add("speak"); add("talk");  add("say"); add("use"); add("buy"); add("eat");
 	}
 	};
 

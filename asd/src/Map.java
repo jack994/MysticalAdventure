@@ -67,10 +67,10 @@ public class Map implements Serializable{
 		Rooms[10] = new Room("THE SWAMP","a stinky flooded swamp full of bugs, judging from the stink there could "
 				+ "be someone dead here", false); 
 		Rooms[11] = new Room("THE WOOD - South", "this area is surrounded by rock walls, seven doors are on the south "
-				+ "side of the area, above them a well defined engraving says: <i>'In the Lorwin code a "
+				+ "side of the area, above them a well defined engraving says: 'In the Lorwin code a "
 				+ "valid codeword does not contain any digit more than once and "
 				+ "cannot contain both 0 and 1 in the same codeword.<BR> "
-				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'</i>", false);
+				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'", false);
 		Rooms[12] = new Room("INCORRECT", "Die Insect!!!!", false);
 		Rooms[13] = new Room("LORWIN's HOME", "the house is minimal and tidy, in the middle of the room there is a "
 				+ "cute little bed and a small table is placed beside it. A lot of books are piled up on the other"
@@ -88,6 +88,8 @@ public class Map implements Serializable{
 		Rooms[19] = new Room("THE CAVE BEYOND THE WATERFALL - Behind the door", "The area is quite dark", true);
 		Rooms[20] = new Room("THE OBLIVION","The air is thick and warm, you are in a sort of flat rock floating in the middle"
 				+ " of nothing, all around this 'square' flames burn like in hell.",false);
+		Rooms[21] = new Room("LORWIN's BACK YARD","A small garden with light green grass and a small vegetable garden on the "
+				+ "right corner. A huge three headed dog sits in the middle of the garden",false);
 
 		return Rooms[3];
 	}
@@ -113,6 +115,8 @@ public class Map implements Serializable{
 		Rooms[8].setDirection("east", Rooms[4]);
 		Rooms[8].setDirection("west", Rooms[9]);
 		Rooms[9].setDirection("east", Rooms[8]);
+		Rooms[13].setDirection("south", Rooms[21]);
+		Rooms[21].setDirection("north", Rooms[13]);
 		Rooms[4].setDirection("south", Rooms[11]);
 		Rooms[11].setDirection("north", Rooms[4]);
 		Rooms[8].setDirection("south", Rooms[14]);
@@ -317,6 +321,18 @@ public class Map implements Serializable{
 		Weapon sw = new Weapon("demoniac sword","The sword of the king of demons, a unique and legendary piece", 1000, 15, 0.98f);
 		dremora.setWeapon(sw);
 		Rooms[20].addnpcs(dremora);
+		
+		NpcBad hound = new NpcBad("lorwin's hound","A massive three headed black dog, it must be lorwin's",500,1000,true,
+				"Grrrrrrrhhhh...",15);
+		Fixed vegGarden = new Fixed("vegetable garden","A cute small vegetable garden, Lorwin must have the green thumb");
+		for(int i = 0; i< 3; i++){
+			Tool car = new Tool("carrot","An orange small carrot",5);
+			Tool rasp = new Tool("raspberry", "A juicy red strawberry",5);
+			vegGarden.addTool(car);
+			vegGarden.addTool(rasp);
+		}
+		Rooms[21].addFixed(vegGarden);
+		Rooms[21].addnpcs(hound);	
 	}
 
 	/**
