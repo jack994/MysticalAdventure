@@ -43,7 +43,7 @@ public abstract class NPC extends Character implements Serializable{
 
 	public String die() {
 		isAlive = false;
-		return this.dropAllItems();
+		return this.getName() + " died";
 	}
 	
 	public void setSecondSpeech(String Nspeech){ 
@@ -78,16 +78,4 @@ public abstract class NPC extends Character implements Serializable{
 		this.weapon = weapon;
 	}
 	
-	/**
-	 * drop weapon if carying + super
-	 */
-	public String dropAllItems() {
-		Weapon wp = weapon;
-		if (!weapon.getName().equals("none")) {
-			currentRoom.addTool((Tool) weapon);
-			return wp.getName() + ", " + super.dropAllItems();
-		}
-		weapon = null;
-		return super.dropAllItems();
-	}
 }

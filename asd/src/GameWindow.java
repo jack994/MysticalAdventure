@@ -16,7 +16,7 @@ public class GameWindow extends JFrame{
 	private static int itemCounter = 10;
 	private static int ingrCounter = 0;
 	private static final int startItem = 10;
-	private static final int endItem = 34;
+	private static final int endItem = 32;
 	private static boolean fullBag = false;
 	public static int numOfIngredients = 3;
 
@@ -72,7 +72,7 @@ public class GameWindow extends JFrame{
 		pane.setContentType("text/html");
 		input = new JTextField();
 		input.setPreferredSize(new Dimension(1000, 50));
-		labels = new JLabel[endItem];
+		labels = new JLabel[endItem + 2];
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
 		}
@@ -317,7 +317,7 @@ public class GameWindow extends JFrame{
 			if (itemCounter == endItem) {
 				fullBag = true;
 			}
-			for (int j = startItem; j < endItem; j = j + 2) {
+			for (int j = startItem; j <= endItem; j = j + 2) {
 				if (labels[j].getText().equals(tool.getName())) {
 					int tmp = Integer.parseInt(labels[j + 1].getText());
 					labels[j + 1].setText((tmp + 1) + "");
@@ -344,6 +344,7 @@ public class GameWindow extends JFrame{
 							labels[i].setText("");
 							labels[i + 1].setText("");
 							i+=2;
+							fullBag = false;
 						}else{
 							labels[i].setText(labels[i+2].getText());
 							labels[i + 1].setText(labels[i+3].getText());

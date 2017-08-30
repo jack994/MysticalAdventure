@@ -39,7 +39,40 @@ public class NpcBad extends NPC implements Serializable{
 			return "";
 		}
 	}
-
 	
+	/**
+	 * drop all items carried from the character and add them to the current room.
+	 * @return a string describing the action.
+	 */
+	public String dropAllItems() {
+		String all = "";
+		for (Tool x : itemsHeld) {
+			this.currentRoom.addTool(x);
+			all = all + x.getName() + ", ";
+		}
+		Weapon wp = weapon;
+		if (!weapon.getName().equals("none")) {
+			currentRoom.addTool((Tool) weapon);
+			all += wp.getName() + ", ";
+		}
+		itemsHeld.clear();
+		if (all.length() > 3) {
+			all = all.substring(0, (all.length() - 2));
+		}
+		int mon;
+		this.removeMoney(mon = this.getMoneyAmount());
+		this.getCurrentRoom().addMoney(mon);
+		if (all.equals("")) {
+			if (mon < 1)
+				return this.getName() + " has nothing to drop ";
+			else
+				return "money dropped: " + mon;
+		} else {
+			if (mon < 1)
+				return this.getName() + " dropped: " + all;
+			else
+				return this.getName() + " dropped: " + all + "<BR>money dropped: " + mon;
+		}
+	}
 }
 

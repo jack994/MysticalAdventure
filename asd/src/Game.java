@@ -623,7 +623,7 @@ public class Game {
 				}
 				else if(npc.getName().equals("druid") && currentPlayer.getCurrentRoom().getName().equals("THE LIVING ROOM")
 						&& npc.getHP() == 999){ // 999 hp means second time you meet the druid (end)
-					//TODO game finished
+					return npc.getSpeech() + "<BR><BR><p style='font-size: 25px;'>YOU DIED!</p>" + createEndCode();
 				}
 				else if (npc.getName().equals("lorwin")) { //if it's lorwin
 					Tool ing;
@@ -688,14 +688,14 @@ public class Game {
 		if(dead){
 			toChange += "<p style='font-size: 40px'>YOU DIED!</p>";
 		}
-		toChange += "<h1>welcome to THE MYSTICAL ADVENTURE</h1>"
-		+ "<p>"	+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
-		toChange = toChange.replaceAll("<p>", "<p style=font-size:13px>");
+		toChange += "<h1>welcome to THE MYSTICAL ADVENTURE</h1>";
 		if(!dead){
-			//TODO
+			toChange += "<p>This is a text based game, this means you will read some description and type some commands"
+					+ " to perform some actions.<BR>If you neen help with the commands write 'help'</p>";
 		}
+		toChange += "<p>"	+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
+		toChange = toChange.replaceAll("<p>", "<p style=font-size:13px>");
 		frame.getPane().setText(toChange);
-
 	}
 	
 	/**
@@ -775,7 +775,7 @@ public class Game {
 	 * in the riddle so that the result changes.
 	 * The numbers on the doors are randomized and change every time you enter the room.
 	 */
-	public void changeDoors() {
+	private void changeDoors() {
 		if (currentPlayer.getCurrentRoom().getName().equals("THE WOOD - South")) {
 			Random rand = new Random();
 			int code = rand.nextInt(4);
@@ -804,5 +804,54 @@ public class Game {
 			((Fixed) currentPlayer.getCurrentRoom().getItemNamed("door " + n))
 					.setDescription(desc + map.getLorwinCodeSolution());
 		}
+	}
+	
+	private String createEndCode(){
+//------generate code---------------------
+		Random rand = new Random();
+		String code = "";
+		code += (rand.nextInt(7) + 1) + "k";
+		if(rand.nextBoolean()){
+			code += "t";
+		}
+		else{
+			code += "w";
+		}
+		code += "35bb"+ (rand.nextInt(4) + 3);
+		if(rand.nextBoolean()){
+			if(rand.nextBoolean()){
+				code += "rd";
+			}
+			else{
+				code += "sa";
+			}
+		}
+		else{
+			if(rand.nextBoolean()){
+				code += "gp";
+			}
+			else{
+				code += "tx";
+			}
+		}
+		code += (rand.nextInt(4) + 3);
+//------------------------------------------
+		try {
+			Thread.sleep(3000);     //pause (sleep)
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		JFrame nf = new JFrame();
+			
+		nf.getContentPane().add(new JLabel("Congratulations!!!"));
+		nf.getContentPane().add(new JLabel("you have completed 'The Mystical Adventure'"));
+		nf.getContentPane().add(new JLabel("You can send the following code by E-mail to giacomobenso94@gmail.com"));
+		nf.getContentPane().add(new JLabel(code));
+		nf.getContentPane().add(new JLabel("if you are among the first 10 people to complete the game your name will be added to the official 'The Mystical Adventure' page"));
+		nf.setSize(new Dimension(600, 600));
+		
+		return "";
+		
 	}
 }

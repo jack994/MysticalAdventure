@@ -184,7 +184,7 @@ public class Map implements Serializable{
 		chest2.addTool(new Tool("potion", "A little flusk with a green liquid inside it", 50));
 		Rooms[5].addFixed(chest2);
 		
-		Fixed ccp = new Fixed("corp","a pale dead man with blue eyes");
+		Fixed ccp = new Fixed("corpse","a pale dead man with blue eyes");
 		Rooms[8].addFixed(ccp);
 		
 		NpcBad goblin = new NpcBad("goblin pyromaniac", "a red goblin with an axe in fire in his"
@@ -198,7 +198,8 @@ public class Map implements Serializable{
 		goblin.addObj(matches);
 		Rooms[9].addnpcs(goblin);
 		
-		Fixed corp = new Fixed("floating corp", "a pale corp floating on the water");
+		Fixed corp = new Fixed("floating corpse", "a pale corp floating on the water, his eyes are"
+				+ " completely blue");
 		corp.addTool(new Tool("key", "a golden key",0));
 		Rooms[10].addFixed(corp);
 		NpcBad imp = new NpcBad("putrid imp","a horrid fetid creature looking like a flying goblin", 30, 25, true, 

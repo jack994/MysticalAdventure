@@ -159,37 +159,6 @@ public abstract class Character implements Serializable{
 	}
 	
 	/**
-	 * drop all items carried from the character and add them to the current room.
-	 * @return a string describing the action.
-	 */
-	public String dropAllItems(){
-		String all = "";
-		for(Tool x: itemsHeld){
-			this.currentRoom.addTool(x);
-			all = all + x.getName() + ", " ;
-		}
-		itemsHeld.clear();
-		if(all.length() > 3){
-			all = all.substring(0, (all.length() -2));
-		}
-		int mon;
-		this.removeMoney(mon = this.getMoneyAmount());
-		this.getCurrentRoom().addMoney(mon);
-		if(all.equals("")){
-			if(mon < 1)
-				return this.getName() + " has nothing to drop ";
-			else
-				return "money dropped: "+ mon;
-		}
-		else{
-			if(mon < 1)
-				return this.getName() + " dropped: " + all;
-			else
-				return this.getName() + " dropped: " + all + "<BR>money dropped: "+ mon;
-		}
-	}
-	
-	/**
 	 * the target is attacked with the equipped weapon, if the target has no remaining life it is set as dead.
 	 * @param target: character to be attacked
 	 * @return a string describing the action.
