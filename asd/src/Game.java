@@ -585,7 +585,7 @@ public class Game {
 					else if(enemy.getName().equals("lord dremora") && currentPlayer.getWeapon().getName().equals("demon-slayer")){
 						enemy.setLifeRemaining(enemy.getLifeRemaining() - 100);
 						if(enemy.getLifeRemaining() < 150){
-							return "your sword shines, "+ enemy.getName() + " start burning form the inside and dies."+ "<BR>" + enemy.die();
+							return "your sword shines, "+ enemy.getName() + " start burning form the inside and dies."+ "<BR>" + ((NpcBad)enemy).die();
 						}
 					}
 				return currentPlayer.attackTarget((NpcBad)enemy) + "<BR><BR>" + ((NpcBad)enemy).attackTarget(currentPlayer);
