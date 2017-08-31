@@ -177,7 +177,7 @@ public abstract class Character implements Serializable{
 				damage += ((NpcBad) this).getBonusAttack();
 			target.setLifeRemaining(target.getLifeRemaining() - damage);
 			if(target.getLifeRemaining() <= 0 && target.getClass() != Player.class){
-				return target.getName() + " is dead<BR>" + target.die();
+				return target.die();
 			}
 			if(target.getClass() == Player.class){
 				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar

@@ -43,7 +43,7 @@ public abstract class NPC extends Character implements Serializable{
 
 	public String die() {
 		isAlive = false;
-		return this.getName() + " died";
+		return this.getName() + " dies";
 	}
 	
 	public void setSecondSpeech(String Nspeech){ 

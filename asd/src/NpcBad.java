@@ -23,6 +23,11 @@ public class NpcBad extends NPC implements Serializable{
 		this.bonusAttack = bonusAttack;
 	}
 	
+	public String die() {
+		isAlive = false;
+		return this.getName() + " died" + "<BR>" + dropAllItems();
+	}
+	
 	/**
 	 * attack target is active, else talk
 	 */
