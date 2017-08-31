@@ -579,7 +579,8 @@ public class Game {
 					if(enemy.getName().equals("demogorgon") && currentPlayer.getWeapon().getName().equals("demon-slayer")){
 						enemy.setLifeRemaining(0);
 						enemy.setDescription("The Demogorgon has a collar with some numbers written on it: 6, 66, 426, 2586");
-						return "your sword shines, "+ enemy.getName() + " start burning form the inside and dies."+ "<BR>" + enemy.die();
+						return "your sword shines, "+ enemy.getName() + " start burning form the inside and dies."+
+						"<BR>" + ((NpcBad)enemy).die();
 					}
 					else if(enemy.getName().equals("lord dremora") && currentPlayer.getWeapon().getName().equals("demon-slayer")){
 						enemy.setLifeRemaining(enemy.getLifeRemaining() - 100);
@@ -587,7 +588,7 @@ public class Game {
 							return "your sword shines, "+ enemy.getName() + " start burning form the inside and dies."+ "<BR>" + enemy.die();
 						}
 					}
-				return currentPlayer.attackTarget(enemy) + "<BR><BR>" + enemy.attackTarget(currentPlayer);
+				return currentPlayer.attackTarget((NpcBad)enemy) + "<BR><BR>" + ((NpcBad)enemy).attackTarget(currentPlayer);
 			}
 			else
 				return "you cannot attack " + command.getSecondWord();
