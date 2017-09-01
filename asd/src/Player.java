@@ -17,9 +17,11 @@ public class Player extends Character implements Serializable{
 		return "";
 	}
 
-	public void spend(int money) {
-		if (this.money >= money)
-			this.money -= money;
+	public void removeMoney(int money){
+		if(this.money >= money){
+		this.money -= money;
+		MysticalAdventure.GAME.frame.getMoneyLabel().setText(this.money + "");
+		}
 	}
 	
 	/**

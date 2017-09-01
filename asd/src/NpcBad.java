@@ -52,7 +52,7 @@ public class NpcBad extends NPC implements Serializable{
 	public String dropAllItems() {
 		String all = "";
 		for (Tool x : itemsHeld) {
-			this.currentRoom.addTool(x);
+			currentRoom.addTool(x);
 			all = all + x.getName() + ", ";
 		}
 		Weapon wp = weapon;
@@ -65,18 +65,18 @@ public class NpcBad extends NPC implements Serializable{
 			all = all.substring(0, (all.length() - 2));
 		}
 		int mon;
-		this.removeMoney(mon = this.getMoneyAmount());
-		this.getCurrentRoom().addMoney(mon);
+		removeMoney(mon = money);
+		currentRoom.addMoney(mon);
 		if (all.equals("")) {
 			if (mon < 1)
-				return this.getName() + " has nothing to drop ";
+				return name + " has nothing to drop ";
 			else
 				return "money dropped: " + mon;
 		} else {
 			if (mon < 1)
-				return this.getName() + " dropped: " + all;
+				return name + " dropped: " + all;
 			else
-				return this.getName() + " dropped: " + all + "<BR>money dropped: " + mon;
+				return name + " dropped: " + all + "<BR>money dropped: " + mon;
 		}
 	}
 }
