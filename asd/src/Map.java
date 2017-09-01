@@ -160,15 +160,44 @@ public class Map implements Serializable{
 		cupboard.addMoney(50);
 		cupboard.addTool(new Tool("apple", "A green apple, it seems still sour", 2));
 		Rooms[2].addFixed(cupboard);
-
+		
 		NpcGood treant = new NpcGood("treant", "an enormous alive tree that blocks the passage to the wood", 100, 130,
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
 		
-		Fixed chest8 = new Fixed("chest", null);
-		Tool mapPiece1 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
-		chest8.addTool(mapPiece1);
-		Rooms[4].addFixed(chest8);
+//		Tool apples = new Tool("a", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apples);
+//		Tool apple1r = new Tool("b", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple1r);
+//		Tool apple2r = new Tool("c", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple2r);
+//		Tool apple3 = new Tool("d", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple3);
+//		Tool apple4 = new Tool("e", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple4);
+//		Tool apple44 = new Tool("f", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple44);
+//		Tool apple24 = new Tool("g", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple24);
+//		Tool apple34 = new Tool("h", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple34);
+//		Tool applee = new Tool("i", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(applee);
+//		Tool apple1e = new Tool("l", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple1e);
+//		Tool apple2e = new Tool("m", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple2e);
+//		Tool apple3e = new Tool("n", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple3e);
+//		Tool apple4e = new Tool("o", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple4e);
+//		Tool apple44e = new Tool("p", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple44e);
+//		Tool apple24e = new Tool("q", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple24e);
+//		Tool apple34e = new Tool("a", "a green apple, seems quite sour", 5);
+//		Rooms[3].addTool(apple34e);
+		
 		Merchant merchant1 = new Merchant("merchant", "a little man almost looking like a gnome with a huge bag on his back",
 				100, 300, "Greetings traveller, would you like to buy anything?", 3);
 		Weapon whip = new Weapon("whip", "a long brown whip", 80, 12, 0.95f);
@@ -184,6 +213,8 @@ public class Map implements Serializable{
 		Rooms[4].addnpcs(merchant1);
 		
 		Fixed chest2 = new Fixed("chest", null);
+		Tool mapPiece1 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
+		chest2.addTool(mapPiece1);
 		chest2.addMoney(100);
 		chest2.addTool(new Tool("potion", "A little flusk with a green liquid inside it", 50));
 		Rooms[5].addFixed(chest2);
