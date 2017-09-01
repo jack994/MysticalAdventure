@@ -173,15 +173,15 @@ public class Game {
 		
 		if(frame.getMapPieces() == 1){
 			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece1.jpg")));
-			nf.setSize(new Dimension(260, 460));
+			nf.setSize(new Dimension(266, 500));
 		}
 		else if(frame.getMapPieces() == 2){
 			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece2.jpg")));
-			nf.setSize(new Dimension(450, 400));
+			nf.setSize(new Dimension(455, 500));
 		}
 		else if(frame.getMapPieces() == 3){
 			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece3.jpg")));
-			nf.setSize(new Dimension(600, 450));
+			nf.setSize(new Dimension(667, 500));
 		}
 		nf.setVisible(true);
 		
@@ -445,9 +445,9 @@ public class Game {
 		} else {
 			//if you take any of the two flowers in the cave the other one disappears
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) { 
-				if (frame.BagFull() && (temp.getClass() == Tool.class)) {
+				if (frame.BagFull() && currentPlayer.getToolFromString(command.getSecondWord()) == null) {
 					return "Lo zaino e' pieno";
-				}
+					}
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
 					if(temp.getName().equals("fiore di ibisco")){
 						currentPlayer.getCurrentRoom().removeItemNamed("fiore di belladonna");
@@ -865,8 +865,7 @@ public class Game {
 			e.printStackTrace();
 		}
 		
-		
-		JFrame nf = new JFrame();
+		JFrame nf = new JFrame(); //new window with congrats and code
 			
 		nf.getContentPane().add(new JLabel("Congratulazioni!!!"));
 		nf.getContentPane().add(new JLabel("Hai completato 'L'Avventura Mistica'"));

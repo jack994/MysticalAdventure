@@ -313,10 +313,7 @@ public class GameWindow extends JFrame{
 	 * @param tool
 	 */
 	public void addItemToMenu(Tool tool) {
-		if (itemCounter <= endItem) {
-			if (itemCounter == endItem) {
-				fullBag = true;
-			}
+		if (itemCounter <= endItem + 2) {
 			for (int j = startItem; j <= endItem; j = j + 2) {
 				if (labels[j].getText().equals(tool.getName())) {
 					int tmp = Integer.parseInt(labels[j + 1].getText());
@@ -326,6 +323,9 @@ public class GameWindow extends JFrame{
 			}
 			labels[itemCounter].setText(tool.getName());
 			labels[itemCounter + 1].setText(1 + "");
+			if (itemCounter == endItem) {
+				fullBag = true;
+			}
 			itemCounter += 2;
 		}
 	}

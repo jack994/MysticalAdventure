@@ -145,11 +145,6 @@ public class Map implements Serializable{
 				false, "L’ PU NPYV KH TPSPVUP KP HUUP, TH UVU L’ WPB’ CLJJOPH KP BU TLZL?");
 		Rooms[3].addnpcs(treant);
 		
-		Fixed chest8 = new Fixed("baule", null);
-		Tool mapPiece1 = new Tool("pezzo di mappa","Un pezzo di mappa! Sembra un disegno fatto da un bambino",0);
-		chest8.addTool(mapPiece1);
-		Rooms[4].addFixed(chest8);
-		
 		Merchant merchant1 = new Merchant("mercante", "Un piccolo uomo simile ad uno gnomo con una grande sacca sulla schiena",
 				100, 300, " Salve viaggiatore, vuoi comprare qualcosa?", 3);
 		Weapon whip = new Weapon("frusta", "Una lunga frusta marrone", 80, 12, 0.95f);
@@ -165,6 +160,8 @@ public class Map implements Serializable{
 		Rooms[4].addnpcs(merchant1);
 		
 		Fixed chest2 = new Fixed("baule", null);
+		Tool mapPiece1 = new Tool("pezzo di mappa","Un pezzo di mappa! Sembra un disegno fatto da un bambino",0);
+		chest2.addTool(mapPiece1);
 		chest2.addMoney(100);
 		chest2.addTool(new Tool("pozione", "Una piccola boccetta con del liquido verde dentro", 50));
 		Rooms[5].addFixed(chest2);
