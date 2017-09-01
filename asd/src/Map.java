@@ -74,6 +74,8 @@ public class Map implements Serializable{
 				+ "C'e' un forte odore di umido e il pavimento e' bagnato.", true);
 		Rooms[20] = new Room("L'OBLIVION","L'aria e' calda e pesante, sei su un grande piano di roccia fluttuante"
 				+ " nel mezzo del nulla, tutt'intorno a questa roccia le fiamme ardono come all'inferno.",false);
+		Rooms[21] = new Room("GIARDINO DIETRO CASA DI LORWIN","Un piccolo giardino con erba verde ed un piccolo orto nell'angolo "
+				+ "a destra; mentre in mezzo e' seduto un enorme cane a tre teste",false);
 
 		return Rooms[3];
 	}
@@ -96,6 +98,8 @@ public class Map implements Serializable{
 		Rooms[8].setDirection("est", Rooms[4]);
 		Rooms[8].setDirection("ovest", Rooms[9]);
 		Rooms[9].setDirection("est", Rooms[8]);
+		Rooms[13].setDirection("south", Rooms[21]);
+		Rooms[21].setDirection("north", Rooms[13]);
 		Rooms[4].setDirection("sud", Rooms[11]);
 		Rooms[11].setDirection("nord", Rooms[4]);
 		Rooms[8].setDirection("sud", Rooms[14]);
@@ -179,7 +183,7 @@ public class Map implements Serializable{
 		goblin.addObj(matches);
 		Rooms[9].addnpcs(goblin);
 		
-		Fixed corp = new Fixed("corpo galleggiante", "Un pallido corpo che galleggia sull'acqua");
+		Fixed corp = new Fixed("cadavere galleggiante", "Un cadavere che galleggia sull'acqua");
 		corp.addTool(new Tool("chiave", "Una chiave d'oro",0));
 		Rooms[10].addFixed(corp);
 		NpcBad imp = new NpcBad("demonietto putrido","Un'orrida creatura simile ad un goblin volante", 30, 25, true, 
@@ -296,19 +300,19 @@ public class Map implements Serializable{
 		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 15, 0.98f);
 		dremora.setWeapon(sw);
 		Rooms[20].addnpcs(dremora);
+		
+		NpcBad hound = new NpcBad("segugio di Lorwin","Un imponente cane nero con tre teste, dev'essere del Lorwin",500,1000,true,
+				 				"Grrrrrrrhhhh...",15);
+				 		Fixed vegGarden = new Fixed("Orto","Un piccolo orto ben curaato, il Lorwin deve avere il pollice verde");
+				 		for(int i = 0; i< 3; i++){
+				 			Tool car = new Tool("carota","Una piccola carota arancione",5);
+				 			Tool rasp = new Tool("lampone", "Un succoso lampone rosso",5);
+				 			vegGarden.addTool(car);
+				 			vegGarden.addTool(rasp);
+				 		}
+				 		Rooms[21].addFixed(vegGarden);
+				 		Rooms[21].addnpcs(hound);
 	}
-
-//	public boolean hasRoomCalled(String des) {
-//		int i = 0;
-//
-//		while (i <= Rooms.length) {
-//			if (Rooms[i].getDescription().equals(des)) {
-//				return true;
-//			}
-//			i++;
-//		}
-//		return false;
-//	}
 
 	public void addPassage(int roomNumber, int roomConnection, String name) {
 		Rooms[roomNumber].setDirection(name, Rooms[roomConnection]);

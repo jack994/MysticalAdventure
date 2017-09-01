@@ -122,7 +122,10 @@ public class Game {
 			return buyFromMerchant(command);
 		}else if (firstWord.equals("mappa")){
 			return openMap(command);
+		}else if(firstWord.equals("mangia")){
+			return eat(command);
 		}else
+			
 			return "Non puoi usare questo comando, o non esiste o non e' quello appropriato"
 			+ " da usare.<BR>Puoi vedere i comandi utilizzabili scrivendo 'aiuto'.";
 	}
@@ -142,6 +145,23 @@ public class Game {
 			Command.addCommand("mappa");
 		}
 	}
+	
+		public String eat(Command command){
+		 		if(!command.hasSecondWord()){
+		 			return "Cosa vorresti mangiare? Scrivi 'mangia -oggetto-'";
+		 		}
+		 		if(currentPlayer.getToolFromString(command.getSecondWord()) == null){
+		 			return "Impossibile mangiare: " + command.getSecondWord();
+		 		}
+		 		if(currentPlayer.getToolFromString(command.getSecondWord()).getName().equals("lampone") || 
+		 				currentPlayer.getToolFromString(command.getSecondWord()).getName().equals("carota") ||
+		 				currentPlayer.getToolFromString(command.getSecondWord()).getName().equals("mela")){
+		 			currentPlayer.removeObjCalled(command.getSecondWord());
+		 			frame.removeItemFromMenu(command.getSecondWord());
+		 			return "Hai mangiato: " + command.getSecondWord() + ", la merenda perfetta per un ragazzone come te!";
+		 		}
+		 			return "Impossibile mangiare: " + command.getSecondWord();
+		 	}
 	
 	/**
 	 * open the map in a new window, the image opened depends on how many pieces you gathered
@@ -179,7 +199,7 @@ public class Game {
 			return "In questa zona non e' presente il mercante";
 		}
 		if(!command.hasSecondWord()){
-			return "Cosa vorresti comprare? scrivi 'compra -oggetto-'";
+			return "Cosa vorresti comprare? scrivi 'Compra -oggetto-'";
 		}
 		Tool t;
 		if((t = currentPlayer.buyToolFromMerchant(merchant, command.getSecondWord())) != null){
@@ -201,7 +221,7 @@ public class Game {
 	 */
 	public String useItem(Command command){
 		if(!command.hasSecondWord()){
-			return "Cosa vorresti usare? scrivi 'usa -oggetto-'";
+			return "Cosa vorresti usare? Scrivi 'usa -oggetto-'";
 		}
 		
 		//if the item used is a potion:
@@ -239,7 +259,7 @@ public class Game {
 			return "Non puoi accendere niente senza l'oggetto appropriato" + beingattacked();
 		}
 		if (!command.hasSecondWord()) {
-			return "Cosa vuoi accendere? <BR>scrivi 'accendi -oggetto-'"+ beingattacked();
+			return "Cosa vorresti accendere? <BR>Scrivi 'accendi -oggetto-'"+ beingattacked();
 		}
 		if (currentPlayer.getWeapon().getName().equals("torcia") && currentPlayer.getWeapon().getDamage() == 5) {
 			return "La torcia e' gia' stata accesa"+ beingattacked();
@@ -279,11 +299,11 @@ public class Game {
 			return "Non puoi aprire niente senza la chiave appropriata"+ beingattacked();
 		}
 		if (!command.hasSecondWord()) {
-			return "Cosa vuoi aprire? <BR>scrivi 'apri -oggetto-'"+ beingattacked();
+			return "Cosa vorresti aprire? <BR>Scrivi 'apri -oggetto-'"+ beingattacked();
 		}
 		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
 			if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta"))
-				return "Quale vuoi aprire? scrivi 'apri porta -numero-'";
+				return "Quale vorresti aprire? Scrivi 'apri porta -numero-'";
 			String[] tmp = command.getSecondWord().split(" ");
 			if (tmp[0].equals("porta") && StringUtils.isNumeric(tmp[1])) {
 				if (Integer.parseInt(tmp[1]) < 8 && Integer.parseInt(tmp[1]) > 0) {
@@ -382,7 +402,7 @@ public class Game {
 		if (currentPlayer.getCurrentRoom().hasDirection(command.getSecondWord())) { //if the direction exists
 			Room next = currentPlayer.getCurrentRoom().getDirectionRoom(command.getSecondWord());
 			currentPlayer.setCurrentRoom(next);			
-			enlight(currentPlayer.getCurrentRoom()); // enlight the room if you are carying a torch
+			enlight(currentPlayer.getCurrentRoom()); // enlight the room if you are carrying a torch
 			changeDoors(); // change results on the doors for lorwin's riddle
 			toReturn = currentPlayer.getCurrentRoom().getNameAndDescription();
 			if (!(currentPlayer.getCurrentRoom().getNPCArray()).isEmpty()) {
@@ -402,15 +422,9 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String pickTool(Command command) {
-//<<<<<<< HEAD
-//		if (frame.BagFull()) {
-//			return "Lo zaino e' pieno";
-//		}
-//=======
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 		Item temp;
 		if (!command.hasSecondWord()) {
-			return "Cosa vuoi prendere? " + command.getFirstWord();
+			return "Cosa vorresti prendere? " + command.getFirstWord();
 		} else if (command.getSecondWord().equals("monete")) {
 			int mon;
 			if((mon = currentPlayer.getCurrentRoom().getMoney()) > 0){
@@ -430,29 +444,9 @@ public class Game {
 			return "Non ci sono monete da prendere";
 		} else {
 			//if you take any of the two flowers in the cave the other one disappears
-//<<<<<<< HEAD
-//			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) {
-//				if(temp.getName().equals("fiore di belladonna")){
-//					currentPlayer.getCurrentRoom().removeItemNamed("fiore d'ibisco");
-//				}
-//				else if(temp.getName().equals("fiore d'ibisco")){
-//					currentPlayer.getCurrentRoom().removeItemNamed("fiore di belladonna");
-//				}
-//				else if(temp.getName().equals("cuore di dremora")){
-//					NpcGood druid = new NpcGood("druido","Un druido con delle corna enormi", 1000, 150, true, currentPlayer.getName()
-//							+ "!! hai trvato tutti gli ingredienti! Ho sempre creduto in te!<BR>C'e' una cosa che dovresti sapere,"
-//							+ " tu non sei una persona reale, ti ho evocato per portare a termine la mia missione di salvare il bosco.<BR>E c'e' di piu'... "
-//							+ "la pozione per curare il bosco ha bisogno di quattro ingredienti, e l'ultimo di questi e' l'anima dell'evocazione che ha trvato gli altri tre"
-//							+ " <BR>Mi dispiace...");
-//					map.getRoom(1).addnpcs(druid);//add the druid to his house
-//					currentPlayer.setCurrentRoom(map.getRoom(14));//get back to the wood
-//					return "Letti i numeri inizi a sentirti debole eperdi i sensi...<BR><BR>" + 
-//							currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
-//=======
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) { 
 				if (frame.BagFull() && (temp.getClass() == Tool.class)) {
 					return "Lo zaino e' pieno";
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 				}
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
 					if(temp.getName().equals("fiore di ibisco")){
@@ -461,14 +455,8 @@ public class Game {
 					checkNewCommand((Tool) temp);
 					currentPlayer.addObjCalled(temp.getName());
 					frame.addItemToMenu((Tool) temp);
-//<<<<<<< HEAD
-//					currentPlayer.currentRoom.removeItemNamed(command.getSecondWord());
-//					checkNewCommand((Tool) temp);
-//					return "hai raccolto: " + temp.getName() + beingattacked();
-//=======
 					currentPlayer.currentRoom.removeItemNamed(temp.getName());
 					return "hai raccolto: " + temp.getName() + beingattacked();
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 				}
 				else if(temp.getClass() == Ingredient.class){
 					if(temp.getName().equals("fiore di belladonna")){
@@ -479,7 +467,7 @@ public class Game {
 					currentPlayer.currentRoom.removeItemNamed(temp.getName());
 					if(currentPlayer.ingredientsFound() == 3){
 						NpcGood druid = new NpcGood("druido","Un druido dalle corna enormi", 999, 150, true, currentPlayer.getName()
-								+ "!! Hai trovato tutti gli ingredienti! Ho sempre creduto in te!<BR>C'e' una cosa che dovresti sapere,"
+								+ "Hai trovato tutti gli ingredienti! Ho sempre creduto in te!<BR>C'e' una cosa che dovresti sapere,"
 								+ " tu non sei una persona reale, ti ho evocato per portare a termine la mia missione di salvare il bosco.<BR>E c'e' di piu'... "
 								+ "la pozione per curare il bosco ha bisogno di quattro ingredienti, e l'ultimo di questi e' l'anima dell'evocazione che ha trvato gli altri tre"
 								+ " <BR>Mi dispiace...");
@@ -509,7 +497,7 @@ public class Game {
 	public String dropTool(Command command) {
 		Tool t = currentPlayer.getToolFromString(command.getSecondWord());
 		if (!command.hasSecondWord())
-			return "Cosa vuoi buttare?" + beingattacked();
+			return "Cosa vorresti buttare?" + beingattacked();
 		else {
 			if (t != null) {
 				String remove;
@@ -520,13 +508,9 @@ public class Game {
 				frame.removeItemFromMenu(remove = t.getName());
 				currentPlayer.removeObjCalled(command.getSecondWord());
 				currentPlayer.currentRoom.addTool(t);
-//<<<<<<< HEAD
-//				if((remove.equals("chiave") || remove.equals("torcia"))){//remove the appropriate command if item dropped
-//=======
 				if(remove.equals("chiave") || remove.equals("torcia") || 
 						(remove.equals("pezzo di mappa") && (currentPlayer.getToolFromString("pezzo di mappa") == null))){ 
 					//remove the appropriate command if item dropped
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 					Command.removeCommand(remove);
 				}
 				return "Hai lasciato cadere: " + t.getName() + beingattacked();
@@ -588,7 +572,7 @@ public class Game {
 	 */
 	public String attack(Command command) {
 		if (!command.hasSecondWord()) {
-			return "Chi vuoi attaccare? scrivi 'attacca -obiettivo-'";
+			return "Chi vorresti attaccare? Scrivi 'attacca -obiettivo-'";
 		}
 		NPC enemy;
 		if ((enemy = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null) {
@@ -598,15 +582,17 @@ public class Game {
 					if(enemy.getName().equals("demogorgone") && currentPlayer.getWeapon().getName().equals("ammazza demoni")){
 						enemy.setLifeRemaining(0);
 						enemy.setDescription("Il Demogorgone ha un collare con scritti alcuni numeri: 6, 66, 426, 2586");
-						return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e muore."+ "<BR>" + enemy.die();
+						return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e muore."+
+						"<BR>" + ((NpcBad)enemy).die();
 					}
 					else if(enemy.getName().equals("lord dremora") && currentPlayer.getWeapon().getName().equals("ammazza demoni")){
 						enemy.setLifeRemaining(enemy.getLifeRemaining() - 100);
 						if(enemy.getLifeRemaining() < 150){
-							return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e muore."+ "<BR>" + enemy.die();
+							return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e muore."+
+						"<BR>" + ((NpcBad)enemy).die();
 						}
 					}
-				return currentPlayer.attackTarget(enemy) + "<BR><BR>" + enemy.attackTarget(currentPlayer);
+				return currentPlayer.attackTarget(((NpcBad)enemy)) + "<BR><BR>" + ((NpcBad)enemy).attackTarget(currentPlayer);
 			}
 			else
 				return "Impossibile attaccare: " + command.getSecondWord();
@@ -621,7 +607,7 @@ public class Game {
 	 */
 	public String equip(Command command) {
 		if (!command.hasSecondWord()) {
-			return "Cosa vuoi equipaggiare?";
+			return "Cosa vorresti equipaggiare?";
 		}
 		Tool t;
 		if ((t = currentPlayer.getToolFromString(command.getSecondWord())) != null) {
@@ -629,15 +615,10 @@ public class Game {
 				frame.getWeaponLabel().setText(t.getName());
 				if (currentPlayer.getWeapon().getName().equals("torcia")) { // put out the torch
 					currentPlayer.getWeapon().setDamage(3);
-//<<<<<<< HEAD
-//					currentPlayer.getWeapon().setDescription("Una torcia di legno, qualcuno l'ha gia' usata "
-//							+ "ma dovrebbe essere ancora possibile accenderla");
-//=======
 					enlight(currentPlayer.getCurrentRoom());
 					currentPlayer.getWeapon().setDescription("Una torcia di legno, qualcuno l'ha gia' usata "
 							+ "ma dovrebbe essere ancora possibile accenderla");
 					return "Spegni la torcia.<BR>" + currentPlayer.equipWeapon((Weapon) t) + beingattacked();
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 				}
 				return currentPlayer.equipWeapon((Weapon) t) + beingattacked();
 			} else {
@@ -660,18 +641,13 @@ public class Game {
 		NPC npc;
 		if ((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null) {
 			if (npc.getClass() == NpcGood.class) {
-//<<<<<<< HEAD
-//				if (npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")){
-//					currentPlayer.getCurrentRoom().removeNpcNamed("druido");
-//=======
 				if (npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")
 						&& npc.getHP() == 1000){ // 1000 hp means first time you meet the druid (beginning)
 					currentPlayer.getCurrentRoom().removeNpcNamed("druido");
 				}
 				else if(npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")
 						&& npc.getHP() == 999){ // 999 hp means second time you meet the druid (end)
-					//TODO game finished
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
+					return npc.getSpeech() + "<BR><BR><p style='font-size: 25px;'>SEI MORTO!</p>" + createEndCode();
 				}
 				else if (npc.getName().equals("lorwin")) { //if it's lorwin
 					Tool ing;
@@ -682,17 +658,6 @@ public class Game {
 						return speech + "<BR><BR>" + currentPlayer.addObjCalled(ing.getName());
 					}
 				}
-//<<<<<<< HEAD
-//				else if (npc.getName().equals("vecchio impaurito") && 
-//						(currentPlayer.getToolFromString("dente di demogorgone")!= null)) {
-//					npc.setSecondSpeech("Accipicchia! Hai sconfitto il demogorgone,"
-//							+ " lo si vede dal dente che stai portando!<BR>Tieni, prendi questo regalo, "
-//							+ "non sarò mai abbastanza grato.<BR>Ah, dimenticavo, ho visto passare di qui uno strano druido"
-//							+ "che ti stava cercando e ha detto qualcosa come <b>fiore di belladonna</b>"
-//							+ " e <b>cuore del re dell'oblivion</b>,"
-//							+ " Non so proprio cosa volesse dire.<BR>Ora devo andare,buona fortuna!");
-//					Tool k = npc.getToolFromString("passepartout");//a key that opens any door
-//=======
 				else if (npc.getName().equals("vecchio impaurito") && 
 						(currentPlayer.getToolFromString("dente di demogorgone")!= null)) {
 					npc.setSecondSpeech("Accipicchia! Hai sconfitto il demogorgone,"
@@ -702,7 +667,6 @@ public class Game {
 							+ " e <b>cuore del re dell'oblivion</b>."
 							+ " Non so proprio cosa volesse dire.<BR>Ora devo andare,buona fortuna!");
 					Tool k = npc.getToolFromString("passepartout"); //a key that opens any door
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 					npc.removeObjCalled("passepartout");
 					currentPlayer.addObj(k);
 					frame.addItemToMenu(k);
@@ -726,37 +690,40 @@ public class Game {
 	}
 
 	/**
-	 * print the help message containing the possible commands and insructions
+	 * print the help message containing the possible commands and instructions
 	 * @param command
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String printHelp(Command command) {
 		
 		return "<b>I comandi utilizzabili sono:</b> <i>" + command.listCommands() + "</i><BR>"
-				+ "i comandi possono essere combinati con altre parole o oggetti (di solito oggetti presi dentro le stanze)."
-				+ " Alcuni esempi sono : <b>'vai a nord', 'esamina', ' esamina baule', 'prendi la chiave', 'attacca il goblin',"
-				+ " 'equipaggia coltello'.</b> <BR>P.S.: I comandi possono variare durante il corso della storia";
+				+ "I comandi possono essere combinati con altre parole o oggetti (di solito oggetti presi dentro le stanze)."
+				+ " Alcuni esempi sono: <b>'attacca il goblin', 'equipaggia coltello', 'esamina', ' esamina baule', 'prendi la chiave',"
+				+ " 'vai a nord'.</b> <BR>P.S.: I comandi possono variare durante il corso della storia";
 
 	}
 
 	/**
 	 * print the welcome message
-	 * @param dead
+	 * @param dead : if false prints normal welcome message otherwise it adds 'YOU DIED'
 	 */
 	public void printWelcome(boolean dead) {
 		String toChange = "<html><body>";
 		if(dead){
 			toChange += "<p style='font-size: 40px'>SEI MORTO!</p>";
 		}
-		toChange += "<h1>Benvenuto ne 'L'AVVENTURA MISTICA'</h1>" + "<p>"
-				+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
+		toChange += "<h1>Benvenuto ne 'L'AVVENTURA MISTICA'</h1>";
+		if(!dead){
+			toChange += "<p>Questa e' un'avventura testuale, significa che bisogna usare comandi testuali per istruire il personaggio"
+					+ " della storia a interagire con l'ambiente in cui si trova.<BR>Se hai bisogno di aiuto scrivi 'aiuto'.</p>";
+		}
+		toChange += "<p>"	+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
 		toChange = toChange.replaceAll("<p>", "<p style=font-size:13px>");
 		frame.getPane().setText(toChange);
-
 	}
 	
 	/**
-	 * start the game
+	 * start the game printing the welcome message
 	 */
 	public void start() {
 		printWelcome(false);
@@ -787,32 +754,16 @@ public class Game {
 		if (currentPlayer.getWeapon().getName().equals("torcia") && currentPlayer.getWeapon().getDamage() == 5) {
 			if (currentR.getName().equals("IL BOSCO - Est")) {
 				currentR.setDark(false);
-//<<<<<<< HEAD
-//				currentR.setDescription("Gli alberi in questa parte del bosco sono fitti"
-//						+ " ma la luce della torcia ti aiuta a vedere meglio");
-//			} else if (currentR.getName().equals("IL TUNNEL")) {
-//=======
 				currentR.setDescription("<I>Gli alberi in questa parte del bosco sono fitti"
 						+ " ma la luce della torcia ti aiuta a vedere meglio</i>");
 			} else if (currentR.getName().equals("IL TUNNEL")) {
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 				currentR.setDark(false);
-//<<<<<<< HEAD
-//				currentPlayer.getCurrentRoom().setDescription("La luce della torcia illumina il tunnel");
-//				map.addPassage(7, 10, "est"); //create passage
-//				map.addPassage(10, 7, "ovest"); //create passage
-//=======
 				currentPlayer.getCurrentRoom().setDescription("<i>La luce della torcia illumina il tunnel</i>");
 				map.addPassage(7, 10, "est"); //create passage
 				map.addPassage(10, 7, "ovest"); //create passage
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 			}
 			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
 				currentR.setDark(false);
-//<<<<<<< HEAD
-//				currentR.setDescription("Una caverna fredda ed umida con dell'erba e dei fiori.<BR><BR>"
-//						+ "Senti una voce che dice: 'SOLO UN FIORE POTRAI RACCOGLIERE'");
-//=======
 				currentR.setDescription("<i>Una caverna fredda ed umida con dell'erba e dei fiori.<BR><BR>"
 						+ "Senti una voce che dice: 'SOLO UN FIORE POTRAI RACCOGLIERE'</i>");
 			}
@@ -820,43 +771,23 @@ public class Game {
 				currentR.setDark(false);
 				currentR.setDescription("<i>Il tetto e' cosi' basso che devi strisciare per poter entrare. "
 				+ "C'e' un forte odore di muffa e il pavimento e' bagnato.</i>");
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 			}
 		} else {
 			if (currentR.getName().equals("IL BOSCO - Est")) {
 				currentR.setDark(true);
-//<<<<<<< HEAD
-//				currentR.setDescription("Gli alberi in questa parte del bosco sono fitti e fai fatica"
-//						+ " a vedere qualcosa");
-//			} else if (currentR.getName().equals("IL TUNNEL")) {
-//=======
 				currentR.setDescription("<i>Gli alberi in questa parte del bosco sono fitti e fai fatica"
 						+ " a vedere qualcosa</i>");
 			} else if (currentR.getName().equals("IL TUNNEL")) {
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 				currentR.setDark(true);
-				currentPlayer.getCurrentRoom().setDescription(
-//<<<<<<< HEAD
-//						"Non puoi vedere altro che l'ingresso" + " del tunnel dietro di te. E' davvero buio!");
-//=======
-						"<i>Non puoi vedere altro che l'ingresso" + " del tunnel dietro di te. E' davvero buio!</i>");
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
+				currentPlayer.getCurrentRoom().setDescription("<i>Non puoi vedere altro che l'ingresso" + " del tunnel dietro di te. E' davvero buio!</i>");
 			}
-//<<<<<<< HEAD
-//			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
-//=======
 			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 				currentR.setDark(true);
-//<<<<<<< HEAD
-//				currentR.setDescription("La grotta e' piuttosto buia");
-//=======
 				currentR.setDescription("<i>La grotta e' piuttosto buia</i>");
 			}
 			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA - Dietro la porta")){
 				currentR.setDark(true);
 				currentR.setDescription("<i>Quest'area e' piuttosto buia</i>");
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 			}
 		}
 
@@ -867,26 +798,17 @@ public class Game {
 	 * in the riddle so that the result changes.
 	 * The numbers on the doors are randomized and change every time you enter the room.
 	 */
-	public void changeDoors() {
-		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
+	private void changeDoors() {
+		if (currentPlayer.getCurrentRoom().getName().equals("TIL BOSCO - Sud")) {
 			Random rand = new Random();
 			int code = rand.nextInt(4);
 			map.setLorwinCode(code);
-//<<<<<<< HEAD
-//			String desc = "La porta e' chiusa, qualcuno ci ha scritto un numero sopra ";
-//			currentPlayer.getCurrentRoom().setDescription("Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
-//				+ "verso il lato a sud e sopra un'incisione ben definita recita: 'Nel codice Lorwin "
-//				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
-//				+ "e 0 e 1 non possono esserci entrambi.<BR>"
-//				+ "Quante sequenze possibili ci sono in un codice lungo "+ map.getLorwinCodeLength() +" numeri?'");
-//=======
 			String desc = "La porta e' chiusa, qualcuno ci ha scritto un numero sopra ";
 			currentPlayer.getCurrentRoom().setDescription("<i>Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
 				+ "verso il lato a sud e sopra un'incisione ben definita recita: 'Nel codice Lorwin "
 				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
 				+ "e 0 e 1 non possono esserci entrambi.<BR>"
 				+ "Quante sequenze possibili ci sono in un codice lungo "+ map.getLorwinCodeLength() +" numeri?'</i>");
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 			
 
 			for (int i = 1; i < 8; i++) { //for each door
@@ -905,5 +827,55 @@ public class Game {
 			((Fixed) currentPlayer.getCurrentRoom().getItemNamed("porta " + n))
 					.setDescription(desc + map.getLorwinCodeSolution());
 		}
+	}
+	
+	private String createEndCode(){
+//------generate code---------------------
+		Random rand = new Random();
+		String code = "";
+		code += (rand.nextInt(7) + 1) + "k";
+		if(rand.nextBoolean()){
+			code += "t";
+		}
+		else{
+			code += "w";
+		}
+		code += "35bb"+ (rand.nextInt(4) + 3);
+		if(rand.nextBoolean()){
+			if(rand.nextBoolean()){
+				code += "rd";
+			}
+			else{
+				code += "sa";
+			}
+		}
+		else{
+			if(rand.nextBoolean()){
+				code += "gp";
+			}
+			else{
+				code += "tx";
+			}
+		}
+		code += (rand.nextInt(4) + 3);
+//------------------------------------------
+		try {
+			Thread.sleep(3000);     //pause (sleep)
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		
+		JFrame nf = new JFrame();
+			
+		nf.getContentPane().add(new JLabel("Congratulazioni!!!"));
+		nf.getContentPane().add(new JLabel("Hai completato 'L'Avventura Mistica'"));
+		nf.getContentPane().add(new JLabel("Puoi inviare in seguente codice all'e-mail giacomobenso94@gmail.com"));
+		nf.getContentPane().add(new JLabel(code));
+		nf.getContentPane().add(new JLabel("Se sarai tra le prime 10 persone a completare il gioco, il tuo nome sara' aggiunto alla pagina ufficiale de 'L'Avventura Mistica'"));
+		nf.setSize(new Dimension(600, 600));
+		
+		return "";
+		
 	}
 }

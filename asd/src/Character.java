@@ -23,7 +23,7 @@ public abstract class Character implements Serializable{
 		this.money = money;
 		lifeRemaining = 100;
 		Weapon NN = new Weapon("nessuna", "nessuna arma", 0, 1, 0.95f);
-		weapon = NN; // test commento
+		weapon = NN;
 	}
 
 	//-------------abstract methods-------------//
@@ -157,37 +157,7 @@ public abstract class Character implements Serializable{
 		return null;
 	}
 	
-	/**
-	 * drop all items carried from the character and add them to the current room.
-	 * @return a string describing the action.
-	 */
-	public String dropAllItems(){
-		String all = "";
-		for(Tool x: itemsHeld){
-			this.currentRoom.addTool(x);
-			all = all + x.getName() + ", " ;
-		}
-		itemsHeld.clear();
-		if(all.length() > 3){
-			all = all.substring(0, (all.length() -2));
-		}
-		int mon;
-		this.removeMoney(mon = this.getMoneyAmount());
-		this.getCurrentRoom().addMoney(mon);
-		if(all.equals("")){
-			if(mon < 1)
-				return " Non c'e' niente da poter raccogliere ";
-			else
-				return "monete lasciate: "+ mon;
-		}
-		else{
-			if(mon < 1)
-				return this.getName() + " lascia: " + all;
-			else
-				return this.getName() + " lascia: " + all + "<BR>monete lasciate: "+ mon;
-		}
-	}
-	
+
 	/**
 	 * the target is attacked with the equipped weapon, if the target has no remaining life it is set as dead.
 	 * @param target: character to be attacked
@@ -207,13 +177,13 @@ public abstract class Character implements Serializable{
 				damage += ((NpcBad) this).getBonusAttack();
 			target.setLifeRemaining(target.getLifeRemaining() - damage);
 			if(target.getLifeRemaining() <= 0 && target.getClass() != Player.class){
-				return target.getName() + " e' morto<BR>" + target.die();
+				return target.die();
 			}
 			if(target.getClass() == Player.class){
 				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar
 				return this.getName() + " attacca "+ target.getName();
 			}
-			return this.getName() + " attacca "+ target.getName() + "<BR>" + target.getName() + " vita restante: " + target.getLifeRemaining() + ": " + "%";
+			return this.getName() + " attacca "+ target.getName() + ". Vita restante: " + target.getLifeRemaining() + "%";
 		}
 		else{
 			return this.getName() + " attacca "+ target.getName() + "<BR>" + target.getName() + " mancato!";

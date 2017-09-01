@@ -22,31 +22,6 @@ public abstract class NPC extends Character implements Serializable{
 		setFirstTimeMet(true);
 	}
 	
-//<<<<<<< HEAD
-	public abstract String interact(Character pl);
-
-	public String die() {
-		isAlive = false;
-		return this.dropAllItems();
-	}
-
-	public String dropAllItems() {
-
-		Weapon wp = weapon;
-		if (!weapon.getName().equals("nessuna")) {
-			currentRoom.addTool((Tool) weapon);
-			return super.dropAllItems() + ", " + wp.getName();
-		}
-		weapon = null;
-		return super.dropAllItems();
-	}
-	
-	public void setSpeech(String newSpeech){
-		speech = newSpeech;
-	}
-
-//=======
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 	public String getSpeech(){
 		if(firstTimeMet && (speech != null)){
 			firstTimeMet = false;
@@ -60,16 +35,16 @@ public abstract class NPC extends Character implements Serializable{
 		}
 	}
 	
-//	public void setSpeech(String newSpeech){
-//		speech = newSpeech;
-//	}
+	public void setSpeech(String newSpeech){
+		speech = newSpeech;
+	}
 	
-//	public abstract String interact(Character pl);
+	public abstract String interact(Character pl);
 
-//	public String die() {
-//		isAlive = false;
-//		return this.dropAllItems();
-//	}
+	public String die() {
+		isAlive = false;
+		return this.getName() + " e' morto";
+	}
 	
 	public void setSecondSpeech(String Nspeech){ 
 		secondSpeech = Nspeech; 
@@ -81,20 +56,6 @@ public abstract class NPC extends Character implements Serializable{
 
 	public String getDescription() {
 		return description;
-//<<<<<<< HEAD
-	}
-
-	public String getItems() {
-		String items = "";
-		for (int i = 0; i < itemsHeld.size(); i++) {
-			if (!itemsHeld.get(i).equals(itemsHeld.get(itemsHeld.size() - 1)))
-				items = items + itemsHeld.get(i).getDescription() + ", ";
-			else
-				items = items + itemsHeld.get(i).getDescription() + ". ";
-		}
-		return name + " sta trasportando: " + items;
-//=======
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 	}
 
 	public boolean isFirstTimeMet() {
@@ -117,16 +78,4 @@ public abstract class NPC extends Character implements Serializable{
 		this.weapon = weapon;
 	}
 	
-	/**
-	 * drop weapon if carying + super
-	 */
-//	public String dropAllItems() {
-//		Weapon wp = weapon;
-//		if (!weapon.getName().equals("none")) {
-//			currentRoom.addTool((Tool) weapon);
-//			return wp.getName() + ", " + super.dropAllItems();
-//		}
-//		weapon = null;
-//		return super.dropAllItems();
-//	}
 }

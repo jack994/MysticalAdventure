@@ -12,20 +12,6 @@ public class Player extends Character implements Serializable{
 		super(name, 100, 100);
 	}
 
-//<<<<<<< HEAD
-	public String getItems() {
-		String items = "";
-		for (int i = 0; i < itemsHeld.size(); i++) {
-			if (!itemsHeld.get(i).equals(itemsHeld.get(itemsHeld.size() - 1)))
-				items = items + itemsHeld.get(i).getName() + ", ";
-			else
-				items = items + itemsHeld.get(i).getName() + ". ";
-		}
-		return "Stai trasportando: " + items;
-	}
-
-//=======
-//>>>>>>> branch 'master' of https://github.com/jack994/MysticalAdventure.git
 	public String die() {
 		MysticalAdventure.die(); //call the die method in the MysticalAdventure class
 		return "";
@@ -61,7 +47,7 @@ public class Player extends Character implements Serializable{
 		for(int i =0; i< itemsHeld.size(); i++){
 			if(weapon.equals(itemsHeld.get(i))){
 				this.setWeapon(weapon);
-				return "Hai equipaggiato:" + weapon.getName();
+				return weapon.getName() + " equipaggiata";
 			}
 		}
 		return null;

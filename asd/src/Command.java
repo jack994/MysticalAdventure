@@ -9,8 +9,8 @@ public class Command{
 	public static ArrayList<String> commandWords = new ArrayList<String>(){ 
 		private static final long serialVersionUID = 1L;
 	{
-		add("aiuto"); add("vai"); add("vai a"); add("lascia"); add("butta"); add("prendi"); add("esamina"); add("attacca");
-		add("equipaggia"); add("parla"); add("pronuncia"); add("usa"); add("compra");
+		add("aiuto"); add("attacca"); add("butta"); add("compra"); add("equipaggia"); add("esamina"); add("lascia");
+		add("mangia"); add("parla"); add("prendi"); add("pronuncia"); add("usa"); add("vai a"); add("vai");
 	}
 	};
 
