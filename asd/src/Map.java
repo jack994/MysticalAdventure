@@ -1,5 +1,9 @@
 import java.io.Serializable;
 
+/**
+ * class holding the whole map with all the rooms, items and characters in it
+ * @author giacomobenso
+ */
 public class Map implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -19,6 +23,10 @@ public class Map implements Serializable{
 		return Rooms[roomNumber];
 	}
 
+	/**
+	 * method needed in the class game, it sets up all the rooms
+	 * @return
+	 */
 	public Room createRoom() {
 		Room p = makeRoom();
 		setRoomDirections();
@@ -26,6 +34,10 @@ public class Map implements Serializable{
 		return p;
 	}
 
+	/**
+	 * create all the rooms in the map with roomname, description and a boolean representing the darkness
+	 * @return
+	 */
 	public Room makeRoom() {
 		Rooms[0] = new Room("LA CAMERA", "Sei in una stanza che sembra una camera da letto, alcune scale portano "
 				+ "indietro nel salotto", false);
@@ -79,6 +91,10 @@ public class Map implements Serializable{
 
 		return Rooms[3];
 	}
+	
+	/**
+	 * connect the rooms among them with directions.
+	 */
 
 	public void setRoomDirections() {
 		Rooms[0].setDirection("sotto", Rooms[1]);
@@ -300,17 +316,23 @@ public class Map implements Serializable{
 		
 		NpcBad hound = new NpcBad("segugio di Lorwin","Un imponente cane nero con tre teste, dev'essere del Lorwin",500,1000,true,
 				 				"Grrrrrrrhhhh...",15);
-				 		Fixed vegGarden = new Fixed("Orto","Un piccolo orto ben curaato, il Lorwin deve avere il pollice verde");
-				 		for(int i = 0; i< 3; i++){
-				 			Tool car = new Tool("carota","Una piccola carota arancione",5);
-				 			Tool rasp = new Tool("lampone", "Un succoso lampone rosso",5);
-				 			vegGarden.addTool(car);
-				 			vegGarden.addTool(rasp);
-				 		}
-				 		Rooms[21].addFixed(vegGarden);
-				 		Rooms[21].addnpcs(hound);
+		Fixed vegGarden = new Fixed("Orto","Un piccolo orto ben curaato, il Lorwin deve avere il pollice verde");
+		for(int i = 0; i< 3; i++){
+			Tool car = new Tool("carota","Una piccola carota arancione",5);
+			Tool rasp = new Tool("lampone", "Un succoso lampone rosso",5);
+			vegGarden.addTool(car);
+			vegGarden.addTool(rasp);
+		}
+		Rooms[21].addFixed(vegGarden);
+		Rooms[21].addnpcs(hound);
 	}
 
+	/**
+	 * create a new connection between two rooms
+	 * @param roomNumber: from 
+	 * @param roomConnection: to
+	 * @param name: name of the connection (direction)
+	 */
 	public void addPassage(int roomNumber, int roomConnection, String name) {
 		Rooms[roomNumber].setDirection(name, Rooms[roomConnection]);
 	}

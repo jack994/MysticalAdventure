@@ -444,11 +444,11 @@ public class Game {
 			return "Non ci sono monete da prendere";
 		} else {
 			//if you take any of the two flowers in the cave the other one disappears
-			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) { 
-				if (frame.BagFull() && currentPlayer.getToolFromString(command.getSecondWord()) == null) {
-					return "Lo zaino e' pieno";
-					}
+			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) {
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
+					if (frame.BagFull() && currentPlayer.getToolFromString(command.getSecondWord()) == null) {
+						return "Lo zaino e' pieno";
+					}
 					if(temp.getName().equals("fiore di ibisco")){
 						currentPlayer.getCurrentRoom().removeItemNamed("fiore di belladonna");
 					}
@@ -799,7 +799,7 @@ public class Game {
 	 * The numbers on the doors are randomized and change every time you enter the room.
 	 */
 	private void changeDoors() {
-		if (currentPlayer.getCurrentRoom().getName().equals("TIL BOSCO - Sud")) {
+		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
 			Random rand = new Random();
 			int code = rand.nextInt(4);
 			map.setLorwinCode(code);

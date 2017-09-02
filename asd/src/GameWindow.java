@@ -307,7 +307,7 @@ public class GameWindow extends JFrame{
 			ingrCounter ++;
 			}
 	}
-	
+
 	/**
 	 * add a tool to the correct label in the bag
 	 * @param tool
