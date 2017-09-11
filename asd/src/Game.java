@@ -137,7 +137,7 @@ public class Game {
 		if (t.getName().equals("matches")) {
 			Command.addCommand("light up");
 		}
-		if (t.getName().equals("key")) {
+		if (t.getName().equals("key") || t.getName().equals("passepartout")) {
 			Command.addCommand("open");
 		}
 		if(t.getName().equals("map piece") && (currentPlayer.getToolFromString("map piece") == null)){
@@ -199,6 +199,9 @@ public class Game {
 		}
 		if(!command.hasSecondWord()){
 			return "what do you want to buy? type 'buy -item-'";
+		}
+		if (frame.BagFull() && currentPlayer.getToolFromString(command.getSecondWord()) == null) {
+			return "Your bag is full";
 		}
 		Tool t;
 		if((t = currentPlayer.buyToolFromMerchant(merchant, command.getSecondWord())) != null){
@@ -300,6 +303,9 @@ public class Game {
 			return "What do you want to open? <BR>Write 'open -object-'"+ beingattacked();
 		}
 		if (currentPlayer.getCurrentRoom().getName().equals("THE WOOD - South")) {
+			if(currentPlayer.getToolFromString("key") == null){
+				return "you need the appropriate key to open the door";
+			}
 			if (command.getSecondWord().equals("door"))
 				return "which one of them? write 'open door -number-'";
 			String[] tmp = command.getSecondWord().split(" ");
@@ -321,7 +327,10 @@ public class Game {
 					return "that door does not exist";
 			}
 		}		
-			if (command.getSecondWord().equals("door") && currentPlayer.getToolFromString("passepartout") != null){
+			if (command.getSecondWord().equals("door")){
+				if(currentPlayer.getToolFromString("passepartout") == null){
+					return "you need the appropriate key to open the door";
+				}
 				if (currentPlayer.getCurrentRoom().getName().equals("THE WOOD - Quiet area")) {
 					currentPlayer.getCurrentRoom().getItemNamed("door").setDescription("The Door is Open");
 					map.addPassage(15, 16, "west"); //create the passage
@@ -360,7 +369,8 @@ public class Game {
 		}
 		else if((npc = currentPlayer.getCurrentRoom().getNPCNamed("demogorgon")) != null){
 			if(!npc.isAlive){
-				if(command.getSecondWord().equals("15546")){
+				if(command.getSecondWord().equals("15546") && !currentPlayer.isGoneOblivion()){
+					currentPlayer.setGoneOblivion(true);
 					currentPlayer.setCurrentRoom(map.getRoom(20)); //go to the oblivion
 					return "you start feeling dizzy and you suddenly lose senses...<BR><BR>" + 
 							currentPlayer.getCurrentRoom().getNameAndDescription();
@@ -440,13 +450,14 @@ public class Game {
 			}
 			return "there is no money to take";
 		} else {
-			//if you take any of the two flowers in the cave the other one disappears
+			
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) { 
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
 					if (frame.BagFull() && currentPlayer.getToolFromString(command.getSecondWord()) == null) {
 						return "Your bag is full";
 					}
-					if(temp.getName().equals("hibiscus flower")){
+					//if you take any of the two flowers in the cave the other one disappears
+					if(temp.getName().equals("hibiscus flower")){ 
 						currentPlayer.getCurrentRoom().removeItemNamed("belladonna flower");
 					}
 					checkNewCommand((Tool) temp);
@@ -655,7 +666,10 @@ public class Game {
 					}
 				}
 				else if (npc.getName().equals("scared man") && 
-						(currentPlayer.getToolFromString("demogorgon tooth")!= null)) {
+						(currentPlayer.getToolFromString("demogorgon tooth")!= null)) {		
+					if (frame.BagFull()) {
+						return "Your bag is full, drop something and come back!";
+					}
 					npc.setSecondSpeech("Holy Guacamole you have defeated the demogorgon, I can tell it"
 							+ " from the tooth you are carrying!<BR>here, take your prize, I will never be "
 							+ "grateful enough.<BR>Ah, I almost forgot to tell you that a weird druid passed here"
@@ -672,8 +686,7 @@ public class Game {
 					NpcBad goblin = new NpcBad("goblin","a red goblin",50,100,true,"arghaaaaaalllhhh",7);
 					goblin.addObj(new Tool("apple", "a green apple, seems quite sour", 5));
 					map.getRoom(8).addnpcs(goblin);
-					map.getRoom(14).addnpcs(new NpcBad("wolf","a huge grey wolf with yellow eyes",50,40,true,"grrrrrrrrhhhh",5));
-					
+					map.getRoom(14).addnpcs(new NpcBad("wolf","a huge grey wolf with yellow eyes",50,40,true,"grrrrrrrrhhhh",5));				
 					return npc.getSpeech() + "<BR><BR>" + k.getName() + " added to " + 
 					currentPlayer.getName() + "'s inventory";
 				}
@@ -695,7 +708,8 @@ public class Game {
 		return "<b>Your commands are:</b> <i>" + command.listCommands() + "</i><BR>"
 				+ "commands can be combined with other words or objects (usually charachters or items in the room),"
 				+ " some examples are : <b>'go north', 'examine', 'examine chest', 'pick up key', 'attack goblin',"
-				+ " 'say hello'.</b> <BR>P.S. : Commands can change during the course of the story.";
+				+ " 'say hello'.</b> <BR>P.S. : Commands can change during the course of the story.<BR>"
+				+ "You can save your progress clicking on 'menu' > 'save'.<BR>If you die your progresses will be lost.";
 
 	}
 

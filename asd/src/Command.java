@@ -44,9 +44,9 @@ public class Command{
 	public String listCommands(){
 		String ret = "";
 		for(String com : commandWords){
-			ret = ret + com + ",&nbsp;";
+			ret = ret + com + ",&nbsp; ";
 		}
-		ret = ret.substring(0, ret.length()-7) + ".";
+		ret = ret.substring(0, ret.length()-8) + ".";
 		return ret;
 	}
 	

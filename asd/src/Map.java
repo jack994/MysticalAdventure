@@ -148,7 +148,8 @@ public class Map implements Serializable{
 				+ "find three ingredients to make a potion that will heal it, the creatures of the forest will tell you which ingredients I need."
 				+ " You should be able to get Lorwin to give you the first one, he's a friend of mine."
 				+ " Sorry if i can't tell you anything more but I have to go, come back to me when you have the three ingredients.<BR><BR>"
-				+ " The Druid runs towards the exit door.<BR><BR><b>druid :</b> ah, I almost forgot, treants like riddles and the number 7!");
+				+ " The Druid runs towards the exit door.<BR><BR><b>druid :</b> ah, I almost forgot... Treants are nice alive trees who like"
+				+ " riddles and the <b>number 7</b>!");
 		Rooms[1].addnpcs(druid);
 		Fixed chest1 = new Fixed("chest", null);
 		chest1.addMoney(150);
@@ -164,45 +165,12 @@ public class Map implements Serializable{
 		NpcGood treant = new NpcGood("treant", "an enormous alive tree that blocks the passage to the wood", 100, 130,
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
-		
-//		Tool apples = new Tool("a", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apples);
-//		Tool apple1r = new Tool("b", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple1r);
-//		Tool apple2r = new Tool("c", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple2r);
-//		Tool apple3 = new Tool("d", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple3);
-//		Tool apple4 = new Tool("e", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple4);
-//		Tool apple44 = new Tool("f", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple44);
-//		Tool apple24 = new Tool("g", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple24);
-//		Tool apple34 = new Tool("h", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple34);
-//		Tool applee = new Tool("i", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(applee);
-//		Tool apple1e = new Tool("l", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple1e);
-//		Tool apple2e = new Tool("m", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple2e);
-//		Tool apple3e = new Tool("n", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple3e);
-//		Tool apple4e = new Tool("o", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple4e);
-//		Tool apple44e = new Tool("p", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple44e);
-//		Tool apple24e = new Tool("q", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple24e);
-//		Tool apple34e = new Tool("a", "a green apple, seems quite sour", 5);
-//		Rooms[3].addTool(apple34e);
-		
-		Merchant merchant1 = new Merchant("merchant", "a little man almost looking like a gnome with a huge bag on his back",
+
+		Merchant merchant1 = new Merchant("merchant", "A little man almost looking like a gnome with a huge bag on his back",
 				100, 300, "Greetings traveller, would you like to buy anything?", 3);
-		Weapon whip = new Weapon("whip", "a long brown whip", 80, 12, 0.95f);
-		Weapon gladius = new Weapon("gladius", "a golden ancient gladius, f****** sharp", 200, 16, 0.98f);
-		Tool apple = new Tool("apple", "a green apple, seems quite sour", 5);
+		Weapon whip = new Weapon("whip", "A long brown whip", 80, 12, 0.95f);
+		Weapon gladius = new Weapon("gladius", "A golden ancient gladius, f****** sharp", 200, 16, 0.98f);
+		Tool apple = new Tool("apple", "A green apple, seems quite sour", 5);
 		merchant1.addObj(whip);
 		merchant1.addObj(gladius);
 		for(int i = 0; i< 5; i++){
@@ -213,31 +181,31 @@ public class Map implements Serializable{
 		Rooms[4].addnpcs(merchant1);
 		
 		Fixed chest2 = new Fixed("chest", null);
-		Tool mapPiece1 = new Tool("map piece","a piece of a map that looks more like a sketch made by a kid",0);
+		Tool mapPiece1 = new Tool("map piece","A piece of a map that looks more like a sketch made by a kid",0);
 		chest2.addTool(mapPiece1);
 		chest2.addMoney(100);
 		chest2.addTool(new Tool("potion", "A little flusk with a green liquid inside it", 50));
 		Rooms[5].addFixed(chest2);
 		
-		Fixed ccp = new Fixed("corpse","a pale dead man with blue eyes");
+		Fixed ccp = new Fixed("corpse","A pale dead man with blue eyes");
 		Rooms[8].addFixed(ccp);
 		
-		NpcBad goblin = new NpcBad("goblin pyromaniac", "a red goblin with an axe in fire in his"
+		NpcBad goblin = new NpcBad("goblin pyromaniac", "A red goblin with an axe in fire in his"
 				+ " hands and some flasks hanging from his belt", 45, 100, true, "Grwaaal", 5);
-		Weapon axe = new Weapon("pyromaniac axe", "a dirty axe, it smells like smoke", 50, 6, 0.97f);
+		Weapon axe = new Weapon("pyromaniac axe", "A dirty axe, it smells like smoke", 50, 6, 0.97f);
 		goblin.setWeapon(axe);
-		Tool eyeG = new Tool("goblin eye", "a disgusting goblin eye", 8);
-		Tool matches = new Tool("matches", "few matches in a box, the goblin might have used this to light up his fires,"
+		Tool eyeG = new Tool("goblin eye", "A disgusting goblin eye", 8);
+		Tool matches = new Tool("matches", "Few matches in a box, the goblin might have used this to light up his fires,"
 				+ " they can be helpful", 8);
 		goblin.addObj(eyeG);
 		goblin.addObj(matches);
 		Rooms[9].addnpcs(goblin);
 		
-		Fixed corp = new Fixed("floating corpse", "a pale corp floating on the water, his eyes are"
+		Fixed corp = new Fixed("floating corpse", "A pale corp floating on the water, his eyes are"
 				+ " completely blue");
-		corp.addTool(new Tool("key", "a golden key",0));
+		corp.addTool(new Tool("key", "A golden key, seems made for a special type of door",0));
 		Rooms[10].addFixed(corp);
-		NpcBad imp = new NpcBad("putrid imp","a horrid fetid creature looking like a flying goblin", 30, 25, true, 
+		NpcBad imp = new NpcBad("putrid imp","A horrid fetid creature looking like a flying goblin", 30, 25, true, 
 				"Grawam-Gragnam ahraaa", 9);
 		Rooms[10].addnpcs(imp);
 		
@@ -259,15 +227,15 @@ public class Map implements Serializable{
 		Rooms[11].addFixed(Door6);
 		Rooms[11].addFixed(Door7);
 		
-		NpcGood lorwin = new NpcGood("lorwin", "a tall pale elf wearing a green vest", 100, 150, true, "Good job my friend, Good job, "
+		NpcGood lorwin = new NpcGood("lorwin", "A tall pale elf wearing a green vest", 100, 150, true, "Good job my friend, Good job, "
 				+ "I understimated you.<BR>My name is Lowrwin and I am the sorcerer of the wood. I am also a close friend of the druid and he"
-				+ " told me you would have came here for the plum, he also informed me about your "
+				+ " told me you would have came here for the plume, he also informed me about your "
 				+ "cleverness so I made that riddle complicated to make sure no one else but you could come to my house,"
 				+ " the wood it's filled with evil creatures.");
-		lorwin.setSecondSpeech("This one I am giving to you is a plum of the legendary phoenix"
+		lorwin.setSecondSpeech("This one I am giving to you is a plume of the legendary phoenix"
 				+ " of the wood, it is really rare, don't lose it, I only have one of those.<BR>"
 				+ "ah, thre is something you might need in the chest beside me, take it if you wish.");
-		Ingredient plum = new Ingredient("phoenix plum","A fire red plum once appartaining to a phoenix");
+		Ingredient plum = new Ingredient("phoenix plume","A fire red plume once appartaining to a phoenix");
 		lorwin.addObj(plum);
 		Rooms[13].addnpcs(lorwin);
 		Fixed chest3 = new Fixed("chest", null);
@@ -278,7 +246,7 @@ public class Map implements Serializable{
 		Rooms[13].addFixed(chest3);
 		
 		NpcBad demogorgon = new NpcBad("demogorgon", "A horrid massive reptilian Demon with two mandrill heads and long"
-				+ " tentacles.", 500, 100, false, "Grwaaaaahhhlll", 50);
+				+ " tentacles.", 1500, 100, true, "Grwaaaaahhhlll", 50);
 		Tool demoTooth = new Tool("demogorgon tooth", "A tooth of the legendary Demogorgon",0);
 		demogorgon.addObj(demoTooth);
 		Rooms[14].addnpcs(demogorgon);
@@ -291,7 +259,7 @@ public class Map implements Serializable{
 		NpcGood helper = new NpcGood("scared man","a man with fear in his eyes", 100, 150, false, "I almost died down"
 				+ " there!! that demogorgon is so scary! I would give you a big prize if you defeat it and bring"
 				+ " a proof of his death to me!");
-		Tool passParTout = new Tool("passepartout","A key that could open any door",1000);
+		Tool passParTout = new Tool("passepartout","A key that could open any standard door",1000);
 		helper.addObj(passParTout);
 		Rooms[15].addnpcs(helper);
 		Fixed CDoor = new Fixed("door", "The door is locked");
@@ -356,12 +324,10 @@ public class Map implements Serializable{
 		NpcBad hound = new NpcBad("lorwin's hound","A massive three headed black dog, it must be lorwin's",500,1000,true,
 				"Grrrrrrrhhhh...",15);
 		Fixed vegGarden = new Fixed("vegetable garden","A cute small vegetable garden, Lorwin must have the green thumb");
-		for(int i = 0; i< 3; i++){
-			Tool car = new Tool("carrot","An orange small carrot",5);
-			Tool rasp = new Tool("raspberry", "A juicy red strawberry",5);
-			vegGarden.addTool(car);
-			vegGarden.addTool(rasp);
-		}
+		Tool car = new Tool("carrot","An orange small carrot",5);
+		Tool rasp = new Tool("raspberry", "A juicy red strawberry",5);
+		vegGarden.addTool(car);
+		vegGarden.addTool(rasp);
 		Rooms[21].addFixed(vegGarden);
 		Rooms[21].addnpcs(hound);	
 	}

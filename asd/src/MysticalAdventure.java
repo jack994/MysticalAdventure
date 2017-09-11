@@ -54,6 +54,7 @@ public class MysticalAdventure {
 			GameWindow.greenLabelsCounter = GAME.getCurrentPlayer().getLifeRemaining(); // reset correct life in life-bar
 			GAME.frame.resetLifelabel();
 			GAME.frame.emptyBagLabels();
+			GAME.frame.emptyIngredientsLabels();
 			GAME.frame.getMoneyLabel().setText(GAME.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(GAME.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
 			GAME.frame.resetItemsCounter();

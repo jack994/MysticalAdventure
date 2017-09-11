@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class Player extends Character implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private boolean goneOblivion = false;
 
 	public Player(String name) { 
 		super(name, 100, 100);
@@ -66,6 +67,14 @@ public class Player extends Character implements Serializable{
 				ret ++;
 		}
 		return ret;
+	}
+
+	public boolean isGoneOblivion() {
+		return goneOblivion;
+	}
+
+	public void setGoneOblivion(boolean goneOblivion) {
+		this.goneOblivion = goneOblivion;
 	}
 
 
