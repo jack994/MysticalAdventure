@@ -307,17 +307,6 @@ public class GameWindow extends JFrame{
 	}
 
 	/**
-	 * add an ingredient to the ingredient menu
-	 * @param ingr
-	 */
-	public void addIngredientToMenu(Ingredient ingr){
-		if (ingrCounter <= numOfIngredients) {
-			labels2[ingrCounter].setText(ingr.getName());
-			ingrCounter ++;
-			}
-	}
-
-	/**
 	 * add a tool to the correct label in the bag
 	 * @param tool
 	 */
@@ -326,6 +315,7 @@ public class GameWindow extends JFrame{
 			for(int k = 0; k< numOfIngredients; k++){
 				if(labels2[k].getText().equals("")){
 					labels2[k].setText(tool.getName());
+					return;
 				}
 			}
 			return;	

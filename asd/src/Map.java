@@ -165,6 +165,14 @@ public class Map implements Serializable{
 		NpcGood treant = new NpcGood("treant", "an enormous alive tree that blocks the passage to the wood", 100, 130,
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
+		
+//		/////////////////////////////////////////////////////////////
+//		Ingredient plume = new Ingredient("phoenix plume","A fire red plume once appartaining to a phoenix");
+//		Ingredient belladonnae = new Ingredient("belladonna flower", "A beautiful white flower");
+//		Rooms[3].addTool(new Weapon("demon-slayer", "An ancient sword used to defeat demons", 500, 10, 0.99f));
+//		Rooms[3].addTool(belladonnae);
+//		Rooms[3].addTool(plume);
+//		/////////////////////////////////////////////////////////////		
 
 		Merchant merchant1 = new Merchant("merchant", "A little man almost looking like a gnome with a huge bag on his back",
 				100, 300, "Greetings traveller, would you like to buy anything?", 3);
@@ -191,7 +199,7 @@ public class Map implements Serializable{
 		Rooms[8].addFixed(ccp);
 		
 		NpcBad goblin = new NpcBad("goblin pyromaniac", "A red goblin with an axe in fire in his"
-				+ " hands and some flasks hanging from his belt", 45, 100, true, "Grwaaal", 5);
+				+ " hands and some flasks hanging from his belt", 80, 100, true, "Grwaaal", 5);
 		Weapon axe = new Weapon("pyromaniac axe", "A dirty axe, it smells like smoke", 50, 6, 0.97f);
 		goblin.setWeapon(axe);
 		Tool eyeG = new Tool("goblin eye", "A disgusting goblin eye", 8);
@@ -205,7 +213,7 @@ public class Map implements Serializable{
 				+ " completely blue");
 		corp.addTool(new Tool("key", "A golden key, seems made for a special type of door",0));
 		Rooms[10].addFixed(corp);
-		NpcBad imp = new NpcBad("putrid imp","A horrid fetid creature looking like a flying goblin", 30, 25, true, 
+		NpcBad imp = new NpcBad("putrid imp","A horrid fetid creature looking like a flying goblin", 70, 25, true, 
 				"Grawam-Gragnam ahraaa", 9);
 		Rooms[10].addnpcs(imp);
 		
@@ -246,7 +254,7 @@ public class Map implements Serializable{
 		Rooms[13].addFixed(chest3);
 		
 		NpcBad demogorgon = new NpcBad("demogorgon", "A horrid massive reptilian Demon with two mandrill heads and long"
-				+ " tentacles.", 1500, 100, true, "Grwaaaaahhhlll", 50);
+				+ " tentacles.", 1000, 100, true, "Grwaaaaahhhlll", 20);
 		Tool demoTooth = new Tool("demogorgon tooth", "A tooth of the legendary Demogorgon",0);
 		demogorgon.addObj(demoTooth);
 		Rooms[14].addnpcs(demogorgon);
@@ -265,7 +273,7 @@ public class Map implements Serializable{
 		Fixed CDoor = new Fixed("door", "The door is locked");
 		Rooms[15].addFixed(CDoor);
 		
-		NpcBad imp1 = new NpcBad("putrid imp","A horrid fetid creature looking like a flying goblin", 50, 25, true, 
+		NpcBad imp1 = new NpcBad("putrid imp","A horrid fetid creature looking like a flying goblin", 70, 25, true, 
 				"Grawam-Gragnam ahraaa", 10);
 		Rooms[16].addnpcs(imp1);
 		Fixed chest4 = new Fixed("chest", null);
@@ -285,7 +293,7 @@ public class Map implements Serializable{
 		chest5.addTool(new Tool("potion","A little flusk with a green liquid inside it", 50));
 		Rooms[17].addFixed(chest5);
 		Fixed cDoor = new Fixed("door", "A tiny door of the size of a gnome, the door is locked");
-		NpcBad ooze = new NpcBad("acidic ooze","a disgusting green gelly ooze", 40, 100, false, "mluuawaaa",5);
+		NpcBad ooze = new NpcBad("acidic ooze","a disgusting green gelly ooze", 100, 500, false, "mluuawaaa",8);
 		Rooms[17].addnpcs(ooze);
 		Rooms[17].addFixed(cDoor);
 		
@@ -313,11 +321,11 @@ public class Map implements Serializable{
 		Rooms[19].addFixed(gnome);
 		
 		NpcBad dremora = new NpcBad("lord dremora", "A scary dark demon with human-ish shape, small black horns and a huge"
-				+ " sword",500,0,true,"How dare you to come to my kingdom, you insolent little human, you will die for your "
+				+ " sword",1500,0,true,"How dare you to come to my kingdom, you insolent little human, you will die for your "
 						+ " arrogance!",5);
 		Ingredient heart = new Ingredient("dremora heart", "The hearth of the king of demons, it's still pulsing");
 		dremora.addObj(heart);
-		Weapon sw = new Weapon("demoniac sword","The sword of the king of demons, a unique and legendary piece", 1000, 15, 0.98f);
+		Weapon sw = new Weapon("demoniac sword","The sword of the king of demons, a unique and legendary piece", 1000, 16, 0.98f);
 		dremora.setWeapon(sw);
 		Rooms[20].addnpcs(dremora);
 		

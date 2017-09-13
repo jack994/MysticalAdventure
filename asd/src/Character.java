@@ -13,7 +13,7 @@ public abstract class Character implements Serializable{
 	protected Room currentRoom;
 	protected int money;
 	protected int HP; // initial life
-	protected int lifeRemaining;
+	protected int lifeRemaning;
 	protected Weapon weapon;
 
 	public Character(String name, int HP, int money) {
@@ -22,7 +22,7 @@ public abstract class Character implements Serializable{
 		this.name = name;
 		this.HP = HP;
 		this.money = money;
-		lifeRemaining = 100;
+		lifeRemaning = HP;
 		Weapon NN = new Weapon("none", "no weapon", 0, 1, 0.95f);
 		weapon = NN; // test commento
 	}
@@ -45,8 +45,8 @@ public abstract class Character implements Serializable{
 		return HP;
 	}
 	
-	public int getLifeRemaining(){
-		return lifeRemaining;
+	public int getLifeRemaning(){
+		return lifeRemaning;
 	}
 	
 	public int getMoneyAmount() {
@@ -86,7 +86,7 @@ public abstract class Character implements Serializable{
 	}
 
 	public void setLifeRemaining(int life){
-		this.lifeRemaining = life;
+		this.lifeRemaning = life;
 	}
 	
 	public void setHP(int hP) {
@@ -129,13 +129,13 @@ public abstract class Character implements Serializable{
 		Item t;
 		if((t = currentRoom.getItemNamed(o))!= null){
 			itemsHeld.add((Tool) t);
-			return t.getName() + " added to " + this.getName() + "'s inventory";
+			return t.getName() + " added to " + this.name + "'s inventory";
 		}
 		for(NPC npc : this.getCurrentRoom().getNPCArray()){
 			if((t = npc.getToolFromString(o)) != null){
 				itemsHeld.add((Tool) t);
 				npc.removeObjCalled(t.getName());
-				return t.getName() + " added to " + this.getName() + "'s inventory";
+				return t.getName() + " added to " + this.name + "'s inventory";
 			}
 		}		
 		return null;
@@ -151,7 +151,7 @@ public abstract class Character implements Serializable{
 		for(Tool t : itemsHeld){
 			if (t.getName().equals(o)){
 				itemsHeld.remove(t);
-				return this.getName() + "dropped" + o;
+				return this.name + "dropped" + o;
 			}
 		}
 		return null;
@@ -174,18 +174,19 @@ public abstract class Character implements Serializable{
 			damage = this.weapon.getDamage();
 			if(this.getClass() == NpcBad.class)
 				damage += ((NpcBad) this).getBonusAttack();
-			target.setLifeRemaining(target.getLifeRemaining() - damage);
-			if(target.getLifeRemaining() <= 0 && target.getClass() != Player.class){
+			target.setLifeRemaining(target.lifeRemaning - damage);
+			if(target.lifeRemaning <= 0 && target.getClass() != Player.class){
 				return target.die();
 			}
 			if(target.getClass() == Player.class){
 				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar
-				return this.getName() + " attacks "+ target.getName();
+				return this.name + " attacks "+ target.name;
 			}
-			return this.getName() + " attacks "+ target.getName() + "<BR>" + target.getName() + " remaining life: " + target.getLifeRemaining() + "%";
+			return this.name + " attacks "+ target.name + "<BR>" + target.name + " remaining life: " + 
+			(int)((double)target.lifeRemaning / target.HP * 100) + "%";
 		}
 		else{
-			return this.getName() + " attacks "+ target.getName() + "<BR>" + this.getName() + " misses!";
+			return this.name + " attacks "+ target.name + "<BR>" + this.name + " misses!";
 		}
 	}
 

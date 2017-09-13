@@ -179,7 +179,12 @@ public class Room implements Serializable{
 		}
 		if(!dark){
 		for (int i = 0; i < items.size(); i++) {
-			toReturn += " -" + items.get(i).getName();
+			Item it;
+			toReturn += " -" + (it = items.get(i)).getName();
+			if(it.getName().equals("chest") && ((Fixed)it).getToolsArrayList().isEmpty() &&
+					((Fixed) it).getMoney() == 0){ //check if the item is a chest and if it is empty
+				toReturn += " (Empty)";
+			}
 		}
 		}
 		if(money > 0){
@@ -200,7 +205,7 @@ public class Room implements Serializable{
 		if(!dark){
 		for (int i = 0; i < npcs.size(); i++) {
 			toReturn += " -" + npcs.get(i).getName();
-			if(!npcs.get(i).isAlive()){
+			if(!npcs.get(i).isAlive()){ //if the NPC is dead
 				toReturn += " (Dead)";
 			}
 		}
