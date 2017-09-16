@@ -114,8 +114,8 @@ public class Map implements Serializable{
 		Rooms[8].setDirection("est", Rooms[4]);
 		Rooms[8].setDirection("ovest", Rooms[9]);
 		Rooms[9].setDirection("est", Rooms[8]);
-		Rooms[13].setDirection("south", Rooms[21]);
-		Rooms[21].setDirection("north", Rooms[13]);
+		Rooms[13].setDirection("sud", Rooms[21]);
+		Rooms[21].setDirection("nord", Rooms[13]);
 		Rooms[4].setDirection("sud", Rooms[11]);
 		Rooms[11].setDirection("nord", Rooms[4]);
 		Rooms[8].setDirection("sud", Rooms[14]);
@@ -144,7 +144,7 @@ public class Map implements Serializable{
 				+ "Trova i tre ingredienti necesari a fare una pozione che la possa salvare, le creature della foresta ti indicheranno quali servono."
 				+ " Devi convincere il Lorwin a farti dare il primo, e' un mio amico."
 				+ " Mi dispiace non poterti essere piu' d'aiuto ma devo andare, torna qui quando avrai i tre ingredienti.<BR><BR>"
-				+ " Il Druido corre verso la porta d'uscita.<BR><BR><b>druido :</b> Ah, quasi dimenticavo, il treant ama gli indovinelli e il numero 7!");
+				+ " Il Druido corre verso la porta d'uscita.<BR><BR><b>druido :</b> Ah, quasi dimenticavo... I treant sono alberi vivi che amano gli indovinelli e il numero 7!");
 		Rooms[1].addnpcs(druid);
 		Fixed chest1 = new Fixed("baule", null);
 		chest1.addMoney(150);
@@ -186,7 +186,7 @@ public class Map implements Serializable{
 		Rooms[8].addFixed(ccp);
 		
 		NpcBad goblin = new NpcBad("goblin piromane", "Un goblin rosso con un'ascia infuocata nelle sue"
-				+ " mani e delle boccette appese alla cintura", 45, 100, true, "Grwaaal", 5);
+				+ " mani e delle boccette appese alla cintura", 80, 100, true, "Grwaaal", 5);
 		Weapon axe = new Weapon("ascia infuocata", "Un'ascia sporca che puzza di fumo", 50, 6, 0.97f);
 		goblin.setWeapon(axe);
 		Tool eyeG = new Tool("occhio di goblin", "Un disgustoso occhio di goblin", 8);
@@ -199,7 +199,7 @@ public class Map implements Serializable{
 		Fixed corp = new Fixed("cadavere galleggiante", "Un cadavere che galleggia sull'acqua");
 		corp.addTool(new Tool("chiave", "Una chiave d'oro",0));
 		Rooms[10].addFixed(corp);
-		NpcBad imp = new NpcBad("demonietto putrido","Un'orrida creatura simile ad un goblin volante", 30, 25, true, 
+		NpcBad imp = new NpcBad("demonietto putrido","Un'orrida creatura simile ad un goblin volante", 70, 25, true, 
 				"Grawam-Gragnam ahraaa", 9);
 		Rooms[10].addnpcs(imp);
 		
@@ -240,7 +240,7 @@ public class Map implements Serializable{
 		Rooms[13].addFixed(chest3);
 		
 		NpcBad demogorgon = new NpcBad("demogorgone", "Uno spaventoso demone con due teste di mandrillo e dei lunghi"
-				+ " tentacoli.", 500, 100, false, "Grwaaaaahhhlll", 50);
+				+ " tentacoli.", 1000, 100, true, "Grwaaaaahhhlll", 20);
 		Tool demoTooth = new Tool("dente di demogorgone", "Un dente del leggendario demogorgone",0);
 		demogorgon.addObj(demoTooth);
 		Rooms[14].addnpcs(demogorgon);
@@ -252,13 +252,13 @@ public class Map implements Serializable{
 		
 		NpcGood helper = new NpcGood("vecchio impaurito","Un uomo con la paura negli occhi", 100, 150, false, "Sono quasi morto"
 				+ " laggiu'!! Quel demogorgone e' cosi' spaventoso! Ti daro' una grande ricompensa se lo ucciderai per me!");
-		Tool passParTout = new Tool("passepartout","Una chiave che puo' aprire qualsiasi porta",1000);
+		Tool passParTout = new Tool("passepartout","Una chiave che puo' aprire qualsiasi porta comune",1000);
 		helper.addObj(passParTout);
 		Rooms[15].addnpcs(helper);
 		Fixed CDoor = new Fixed("porta", "La porta e' chiusa");
 		Rooms[15].addFixed(CDoor);
 		
-		NpcBad imp1 = new NpcBad("demonietto putrido","Un'orrida creatura simile ad un goblin volante", 50, 25, true, 
+		NpcBad imp1 = new NpcBad("demonietto putrido","Un'orrida creatura simile ad un goblin volante", 70, 25, true, 
 				"Grawam-Gragnam ahraaa", 10);
 		Rooms[16].addnpcs(imp1);
 		Fixed chest4 = new Fixed("baule", null);
@@ -278,7 +278,7 @@ public class Map implements Serializable{
 		chest5.addTool(new Tool("pozione", "Una piccola boccetta con del liquido verde dentro", 50));
 		Rooms[17].addFixed(chest5);
 		Fixed cDoor = new Fixed("porta", "Una piccolissima porta che sembra fatta apposta per gli gnomi. Oh, e' chiusa!");
-		NpcBad ooze = new NpcBad("melma acida","Una disgustosa e gelatinosa melma verde che emana un odore nauseabondo", 40, 100, false, "mluuawaaa",5);
+		NpcBad ooze = new NpcBad("melma acida","Una disgustosa e gelatinosa melma verde che emana un odore nauseabondo", 100, 500, false, "mluuawaaa",8);
 		Rooms[17].addnpcs(ooze);
 		Rooms[17].addFixed(cDoor);
 		
@@ -306,23 +306,21 @@ public class Map implements Serializable{
 		Rooms[19].addFixed(gnome);
 		
 		NpcBad dremora = new NpcBad("lord dremora", "Uno spaventoso demone dalle sembianze umane, con delle piccole corna nere e una gigantesca"
-				+ " spada",500,0,true,"Come osi venire nel mio regno, piccolo umano insolente! Morirai per la tua "
+				+ " spada",1500,0,true,"Come osi venire nel mio regno, piccolo umano insolente! Morirai per la tua "
 						+ " arroganza!",5);
 		Ingredient heart = new Ingredient("cuore di dremora", "Il cuore del re dei demoni, sta ancora battendo");
 		dremora.addObj(heart);
-		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 15, 0.98f);
+		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 16, 0.98f);
 		dremora.setWeapon(sw);
 		Rooms[20].addnpcs(dremora);
 		
 		NpcBad hound = new NpcBad("segugio di Lorwin","Un imponente cane nero con tre teste, dev'essere del Lorwin",500,1000,true,
 				 				"Grrrrrrrhhhh...",15);
-		Fixed vegGarden = new Fixed("Orto","Un piccolo orto ben curaato, il Lorwin deve avere il pollice verde");
-		for(int i = 0; i< 3; i++){
+		Fixed vegGarden = new Fixed("orto","Un piccolo orto ben curaato, il Lorwin deve avere il pollice verde");
 			Tool car = new Tool("carota","Una piccola carota arancione",5);
 			Tool rasp = new Tool("lampone", "Un succoso lampone rosso",5);
 			vegGarden.addTool(car);
 			vegGarden.addTool(rasp);
-		}
 		Rooms[21].addFixed(vegGarden);
 		Rooms[21].addnpcs(hound);
 	}

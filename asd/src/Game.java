@@ -19,6 +19,10 @@ public class Game {
 	public static EStack THESTACK = new EStack(10); //stack needed for the commands history
 	public final Weapon NN = new Weapon("nessuna", "nessuna arma", 0, 1, 0.95f); //no weapon
 	private int correctDoor = 1;
+	private boolean end = false; //end of the game
+		
+	private Timer timer; //timer needed for the end of the game
+	private int counter = 5; //counter used in the timer (seconds of delay)
 
 	public Game() { // constructor
 		frame = new GameWindow();
@@ -28,6 +32,7 @@ public class Game {
 				write();
 			}
 		});
+		
 		map = new Map();
 		StartRoom = map.createRoom();
 		currentPlayer = new Player("Eldor");
@@ -80,8 +85,11 @@ public class Game {
 				toAdd = toAdd.replaceAll("<td>", "<td style='padding: 5px; border: 1px solid black; font-size: 15px;'>");
 				frame.getPane().setText(toAdd);
 				if(currentPlayer.getCurrentRoom().getName().equals("SBAGLIATO") || 
-				currentPlayer.getLifeRemaining() <=0){ // incorrect room at lorwin's or 0 life remaining means you are dead
+				currentPlayer.getLifeRemaning() <=0){ // incorrect room at lorwin's or 0 life remaining means you are dead
 					currentPlayer.die();
+				}
+				if(end){
+					createEndCode();
 				}
 		}
 	}
@@ -134,16 +142,20 @@ public class Game {
 	 * checks if the tool picked up creates a new commandWord
 	 * @param t : tool to be checked
 	 */
-	public void checkNewCommand(Tool t) {
+	public String checkNewCommand(Tool t) {
 		if (t.getName().equals("fiammiferi")) {
 			Command.addCommand("accendi");
+			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'accendi'";
 		}
-		if (t.getName().equals("chiave")) {
+		if (t.getName().equals("chiave") || t.getName().equals("passepartout")) {
 			Command.addCommand("apri");
+			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'apri'";
 		}
 		if(t.getName().equals("pezzo di mappa") && (currentPlayer.getToolFromString("pezzo di mappa") == null)){
 			Command.addCommand("mappa");
+			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'mappa'";
 		}
+		return "";
 	}
 	
 		public String eat(Command command){
@@ -169,6 +181,10 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String openMap(Command command){
+		if(currentPlayer.getCurrentRoom().isDark()){
+			return "E' troppo buio per compiere quest'azione.";
+		}
+		
 		JFrame nf = new JFrame();
 		
 		if(frame.getMapPieces() == 1){
@@ -201,6 +217,9 @@ public class Game {
 		if(!command.hasSecondWord()){
 			return "Cosa vorresti comprare? scrivi 'Compra -oggetto-'";
 		}
+		if (frame.BagFull() && currentPlayer.getToolFromString(command.getSecondWord()) == null) {
+			 return "Lo zaino e' pieno";
+		}
 		Tool t;
 		if((t = currentPlayer.buyToolFromMerchant(merchant, command.getSecondWord())) != null){
 			currentPlayer.removeMoney(t.getValue() * merchant.getPriceModifier());
@@ -227,8 +246,8 @@ public class Game {
 		//if the item used is a potion:
 		if(command.getSecondWord().equals("pozione") && currentPlayer.getToolFromString("pozione") != null){
 			int life;
-			if((currentPlayer.getHP() - currentPlayer.getLifeRemaining()) > 50){
-				currentPlayer.setLifeRemaining(life = currentPlayer.getLifeRemaining() + 50);
+			if((currentPlayer.getHP() - currentPlayer.getLifeRemaning()) > (currentPlayer.getHP() -50)){
+				currentPlayer.setLifeRemaining(life = currentPlayer.getLifeRemaning() + 50);
 				GameWindow.greenLabelsCounter = life;
 				frame.resetLifelabel();
 				currentPlayer.removeObjCalled("pozione");
@@ -236,7 +255,7 @@ public class Game {
 				return "50 HP recuperati";
 			}	
 			else{
-				int healed = currentPlayer.getHP() - currentPlayer.getLifeRemaining();
+				int healed = currentPlayer.getHP() - currentPlayer.getLifeRemaning();
 				currentPlayer.setLifeRemaining(life = currentPlayer.getHP());
 				GameWindow.greenLabelsCounter = life;
 				frame.resetLifelabel();
@@ -266,8 +285,9 @@ public class Game {
 		}
 		if (command.getSecondWord().equals("torcia") || command.getSecondWord().equals("la torcia")) {
 			if (currentPlayer.getToolFromString("torcia") != null) {
-				if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Est")
-						|| currentPlayer.getCurrentRoom().getName().equals("IL TUNNEL")) {
+				if (currentPlayer.getCurrentRoom().isDark()) {
+//				if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Est")
+//						|| currentPlayer.getCurrentRoom().getName().equals("IL TUNNEL")) {
 					return "Non si vede niente! prova a farlo dove c'e' un po' di luce"+ beingattacked();
 				} else {
 					if (currentPlayer.getWeapon().getName().equals("torcia")) {
@@ -293,15 +313,22 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String openDoor(Command command) {
+		if(currentPlayer.getCurrentRoom().isDark()){
+			return "E' troppo buio per compiere quest'azione.";
+		}
+		
 		Tool ky;
 		if ((ky =currentPlayer.getToolFromString("chiave")) == null && 
 				(ky =currentPlayer.getToolFromString("passepartout")) == null) {
-			return "Non puoi aprire niente senza la chiave appropriata"+ beingattacked();
+			return "Hai bisogno della chiave appropriata per aprire la porta"+ beingattacked();
 		}
 		if (!command.hasSecondWord()) {
 			return "Cosa vorresti aprire? <BR>Scrivi 'apri -oggetto-'"+ beingattacked();
 		}
 		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
+			if(currentPlayer.getToolFromString("key") == null){
+				return "Hai bisogno della chiave appropriata per aprire la porta";
+			}
 			if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta"))
 				return "Quale vorresti aprire? Scrivi 'apri porta -numero-'";
 			String[] tmp = command.getSecondWord().split(" ");
@@ -323,15 +350,23 @@ public class Game {
 					return "La porta non esiste";
 			}
 		}		
-			if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta") 
-					&& currentPlayer.getToolFromString("passepartout") != null){
+		if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta")){
+			if(currentPlayer.getToolFromString("passepartout") == null){
+				return "Hai bisogno della chiave appropriata per aprire la porta";
+			}
 				if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Area tranquilla")) {
+					if(currentPlayer.getCurrentRoom().getItemNamed("porta").getDescription().equals("La porta e' aperta")){
+						return "La porta e' gia' aperta";
+					}
 					currentPlayer.getCurrentRoom().getItemNamed("porta").setDescription("La porta e' aperta");
 					map.addPassage(15, 16, "ovest"); //create the passage
 					map.addPassage(16, 15, "est"); //create the passage
 					return "Hai aperto la porta, il passaggio e' ora aperto (ovest)";
 				}
 				else if (currentPlayer.getCurrentRoom().getName().equals("LA GROTTA DIETRO LA CASCATA")) {
+					if(currentPlayer.getCurrentRoom().getItemNamed("porta").getDescription().equals("La porta e' aperta")){
+						return "La porta e' gia' aperta";
+					}
 					currentPlayer.getCurrentRoom().getItemNamed("porta").setDescription("La porta e' aperta");
 					map.addPassage(17, 19, "est"); //create the passage
 					map.addPassage(19, 17, "ovest"); //create the passage
@@ -356,17 +391,29 @@ public class Game {
 					+ " con l'indovinello, ora puoi passare.")){
 				map.addPassage(3, 4, "sud"); //create the passage 
 				treant.setSpeech("Bel lavoro con l'indovinello, ora puoi passare.");
-				return "Il treant si muove lentamente verso sinistra liberando il passaggio davanti al quale era seduto (sud).";
+				if(map.getRoom(3).getNPCNamed("druid")!= null){
+					map.getRoom(3).removeNpcNamed("druid");
+				}
+				return "<B>treant:</b> <i>SETTE</i> E' un buon numero..."
+				+ "<BR><BR>Il treant si muove lentamente verso sinistra liberando il passaggio davanti al quale era seduto (sud).";
 			}else{
 				return "Hai gia' aperto il passaggio";
 			}
 		}
 		else if((npc = currentPlayer.getCurrentRoom().getNPCNamed("demogorgone")) != null){
 			if(!npc.isAlive){
-				if(command.getSecondWord().equals("15546")){
-					currentPlayer.setCurrentRoom(map.getRoom(20));//go to the oblivion
-					return "Letti i numeri inizi a sentirti debole eperdi i sensi...<BR><BR>" + 
+				String toReturn;
+				if(command.getSecondWord().equals("15546") && !currentPlayer.isGoneOblivion()){
+					currentPlayer.setGoneOblivion(true);
+					currentPlayer.setCurrentRoom(map.getRoom(20));
+					toReturn = "Letti i numeri inizi a sentirti debole eperdi i sensi...<BR><BR>" + 
 							currentPlayer.getCurrentRoom().getNameAndDescription();
+					if (!(currentPlayer.getCurrentRoom().getNPCArray()).isEmpty()) {
+						for (NPC npc1 : currentPlayer.getCurrentRoom().getNPCArray()) {
+							toReturn += npc1.interact(currentPlayer);
+							}
+						}
+					return toReturn;
 				}
 				else{
 					return "Non succede niente";
@@ -405,6 +452,12 @@ public class Game {
 			enlight(currentPlayer.getCurrentRoom()); // enlight the room if you are carrying a torch
 			changeDoors(); // change results on the doors for lorwin's riddle
 			toReturn = currentPlayer.getCurrentRoom().getNameAndDescription();
+			if(currentPlayer.getCurrentRoom().getNPCNamed("druid") != null && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")
+					&& currentPlayer.getCurrentRoom().getNPCNamed("druid").getHP() == 999){ // 999 hp means second time you meet the druid (end)
+				end = true;
+				return toReturn + "<BR><BR>" +currentPlayer.getCurrentRoom().getNPCNamed("druid").getSpeech() +
+						"<BR><BR><p style='font-size: 40px'>SEI MORTO!</p>" + currentPlayer.die();
+				}
 			if (!(currentPlayer.getCurrentRoom().getNPCArray()).isEmpty()) {
 				for (NPC npc : currentPlayer.getCurrentRoom().getNPCArray()) {
 					toReturn += npc.interact(currentPlayer);
@@ -422,6 +475,9 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String pickTool(Command command) {
+		if(currentPlayer.getCurrentRoom().isDark()){
+			return "E' troppo buio per compiere quest'azione.";
+		}
 		Item temp;
 		if (!command.hasSecondWord()) {
 			return "Cosa vorresti prendere? " + command.getFirstWord();
@@ -443,7 +499,7 @@ public class Game {
 			}
 			return "Non ci sono monete da prendere";
 		} else {
-			//if you take any of the two flowers in the cave the other one disappears
+			
 			if ((temp = currentPlayer.getCurrentRoom().getItemNamed(command.getSecondWord())) != null) {
 				if (temp.getClass() == Tool.class || temp.getClass() == Weapon.class) {
 					if (frame.BagFull() && currentPlayer.getToolFromString(command.getSecondWord()) == null) {
@@ -452,17 +508,16 @@ public class Game {
 					if(temp.getName().equals("fiore di ibisco")){
 						currentPlayer.getCurrentRoom().removeItemNamed("fiore di belladonna");
 					}
-					checkNewCommand((Tool) temp);
 					currentPlayer.addObjCalled(temp.getName());
 					frame.addItemToMenu((Tool) temp);
 					currentPlayer.currentRoom.removeItemNamed(temp.getName());
-					return "hai raccolto: " + temp.getName() + beingattacked();
+					return "hai raccolto: " + temp.getName() + checkNewCommand((Tool) temp) + beingattacked();
 				}
 				else if(temp.getClass() == Ingredient.class){
 					if(temp.getName().equals("fiore di belladonna")){
 					currentPlayer.getCurrentRoom().removeItemNamed("fiore di ibisco");
 				}
-					frame.addIngredientToMenu((Ingredient) temp); // add it to the ingredients 
+					frame.addItemToMenu((Ingredient) temp); // add it to the ingredients 
 					currentPlayer.addObjCalled(temp.getName());
 					currentPlayer.currentRoom.removeItemNamed(temp.getName());
 					if(currentPlayer.ingredientsFound() == 3){
@@ -473,9 +528,9 @@ public class Game {
 								+ " <BR>Mi dispiace...");
 						map.getRoom(1).addnpcs(druid); //add the druid to his house
 					}
-					else if(temp.getName().equals("cuore di dremora")){ //if you take the heart of the dremora
+					else if(temp.getName().equals("cuore di dremora") && currentPlayer.getCurrentRoom().getName().equals("L'OBLIVION")){ //if you take the heart of the dremora
 						currentPlayer.setCurrentRoom(map.getRoom(14)); //get back to the wood
-						return "Inizi a sentirti debole eperdi i sensi..." + 
+						return "Inizi a sentirti debole eperdi i sensi...<BR><BR>" + 
 								currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
 					}
 					return "Oggetto raccolto: " + temp.getName() + beingattacked();
@@ -528,6 +583,11 @@ public class Game {
 		if (!command.hasSecondWord() || command.getSecondWord().equals("stanza")) {
 			return currentPlayer.currentRoom.getNameAndDescription() + beingattacked();
 		}
+		
+		if(currentPlayer.getCurrentRoom().isDark()){
+			return "E' troppo buio per compiere quest'azione.";
+		}
+		
 		Item tmp;
 		NPC npc;
 		String ret = "";
@@ -571,6 +631,10 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String attack(Command command) {
+		if(currentPlayer.getCurrentRoom().isDark()){
+			return "E' troppo buio per compiere quest'azione.";
+		}
+		
 		if (!command.hasSecondWord()) {
 			return "Chi vorresti attaccare? Scrivi 'attacca -obiettivo-'";
 		}
@@ -586,8 +650,8 @@ public class Game {
 						"<BR>" + ((NpcBad)enemy).die();
 					}
 					else if(enemy.getName().equals("lord dremora") && currentPlayer.getWeapon().getName().equals("ammazza demoni")){
-						enemy.setLifeRemaining(enemy.getLifeRemaining() - 100);
-						if(enemy.getLifeRemaining() < 150){
+						enemy.setLifeRemaining(enemy.getLifeRemaning() - 100);
+						if(enemy.getLifeRemaning() < 150){
 							return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e muore."+
 						"<BR>" + ((NpcBad)enemy).die();
 						}
@@ -645,21 +709,27 @@ public class Game {
 						&& npc.getHP() == 1000){ // 1000 hp means first time you meet the druid (beginning)
 					currentPlayer.getCurrentRoom().removeNpcNamed("druido");
 				}
-				else if(npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")
-						&& npc.getHP() == 999){ // 999 hp means second time you meet the druid (end)
-					return npc.getSpeech() + "<BR><BR><p style='font-size: 25px;'>SEI MORTO!</p>" + createEndCode();
-				}
+//				else if(npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")
+//						&& npc.getHP() == 999){ // 999 hp means second time you meet the druid (end)
+//					return npc.getSpeech() + "<BR><BR><p style='font-size: 25px;'>SEI MORTO!</p>" + createEndCode();
+//				}
 				else if (npc.getName().equals("lorwin")) { //if it's lorwin
 					Tool ing;
 					if((ing = npc.getToolFromString("piuma di fenice")) != null){
-						frame.addIngredientToMenu((Ingredient)ing);
+						frame.addItemToMenu((Ingredient)ing);
 						String speech = npc.getSpeech();
 						npc.setSecondSpeech("Ciao mio piccolo amico, sai, non smetti mai di imparare.");
 						return speech + "<BR><BR>" + currentPlayer.addObjCalled(ing.getName());
 					}
 				}
 				else if (npc.getName().equals("vecchio impaurito") && 
-						(currentPlayer.getToolFromString("dente di demogorgone")!= null)) {
+						(currentPlayer.getToolFromString("dente di demogorgone")!= null)){
+					if (frame.BagFull()) {
+						return "Lo zaino e' pieno, lascia qualcosa e ritorna!";
+					}
+					if(npc.isFirstTimeMet()){
+						npc.setFirstTimeMet(false);
+					}
 					npc.setSecondSpeech("Accipicchia! Hai sconfitto il demogorgone,"
 							+ " lo si vede dal dente che stai portando!<BR>Tieni, prendi questo regalo, "
 							+ "non sarò mai abbastanza grato.<BR>Ah, dimenticavo, ho visto passare di qui uno strano druido"
@@ -670,16 +740,15 @@ public class Game {
 					npc.removeObjCalled("passepartout");
 					currentPlayer.addObj(k);
 					frame.addItemToMenu(k);
-					checkNewCommand(k);
 					currentPlayer.getCurrentRoom().removeNpcNamed("vecchio impaurito");
 					//add some enemies:
-					NpcBad goblin = new NpcBad("goblin","Un goblin rosso",50,100,true,"Arghaaaaaalllhhh",7);
+					NpcBad goblin = new NpcBad("goblin","Un goblin rosso",80,150,true,"Arghaaaaaalllhhh",9);
 					goblin.addObj(new Tool("mela", "Una mela verde, sembra acerba", 5));
 					map.getRoom(8).addnpcs(goblin);
-					map.getRoom(14).addnpcs(new NpcBad("lupo","Un enorme lupo grigio con gli occhi gialli",50,40,true,"Grrrrrrrrhhhh",5));
+					map.getRoom(14).addnpcs(new NpcBad("lupo","Un enorme lupo grigio con gli occhi gialli",90,40,true,"Grrrrrrrrhhhh",5));
 					
 					return npc.getSpeech() + "<BR><BR>" + k.getName() + ": aggiunto all'inventario di " + 
-					currentPlayer.getName();
+					currentPlayer.getName() + checkNewCommand(k);
 				}
 				return npc.getSpeech() + beingattacked();
 			} else {
@@ -699,7 +768,8 @@ public class Game {
 		return "<b>I comandi utilizzabili sono:</b> <i>" + command.listCommands() + "</i><BR>"
 				+ "I comandi possono essere combinati con altre parole o oggetti (di solito oggetti presi dentro le stanze)."
 				+ " Alcuni esempi sono: <b>'attacca il goblin', 'equipaggia coltello', 'esamina', ' esamina baule', 'prendi la chiave',"
-				+ " 'vai a nord'.</b> <BR>P.S.: I comandi possono variare durante il corso della storia";
+				+ " 'vai a nord'.</b> <BR>P.S.: I comandi possono variare durante il corso della storia"
+		        + "E' possibile salvare cliccando 'menu' > 'salva'.<BR>Se muori, i progressi verranno cancellati.";
 
 	}
 
@@ -829,7 +899,7 @@ public class Game {
 		}
 	}
 	
-	private String createEndCode(){
+	private void createEndCode(){
 //------generate code---------------------
 		Random rand = new Random();
 		String code = "";
@@ -858,23 +928,41 @@ public class Game {
 			}
 		}
 		code += (rand.nextInt(4) + 3);
-//------------------------------------------
-		try {
-			Thread.sleep(3000);     //pause (sleep)
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		actione(code);
+	}	
+		 	public void createFrame(String code){
 		
 		JFrame nf = new JFrame(); //new window with congrats and code
-			
-		nf.getContentPane().add(new JLabel("Congratulazioni!!!"));
-		nf.getContentPane().add(new JLabel("Hai completato 'L'Avventura Mistica'"));
-		nf.getContentPane().add(new JLabel("Puoi inviare in seguente codice all'e-mail giacomobenso94@gmail.com"));
-		nf.getContentPane().add(new JLabel(code));
-		nf.getContentPane().add(new JLabel("Se sarai tra le prime 10 persone a completare il gioco, il tuo nome sara' aggiunto alla pagina ufficiale de 'L'Avventura Mistica'"));
-		nf.setSize(new Dimension(600, 600));
-		
-		return "";
+		JTextPane pp = new JTextPane();
+		 		pp.setContentType("text/html");
+		 		pp.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+		 		pp.setEditable(false);
+		 		pp.setText("<html><body style='text-align: center; font-size: 18px;'>"
+		 				+ "<BR><BR><h1 style='color: red;font-size: 22px;'>Congratulazioni!!!</h1>"
+		 				+ "<p>Hai completato 'L'Avventura Mistica'</p>"
+		 				+ "<p>Puoi inviare in seguente codice all'e-mail giacomobenso94@gmail.com</p><p><b>"
+		 				+ code + "</b></p><p>Se sarai tra le prime 10 persone a completare il gioco, il tuo nome sara' aggiunto alla pagina ufficiale de"
+		 						+ " 'L'Avventura Mistica' page</p></body></html>");
+		 		nf.getContentPane().add(pp);
+		 		nf.setSize(new Dimension(800, 600));
+		 		nf.setVisible(true);
+		 	}
+		 	
+		 	public void actione(String code){
+		 		ActionListener action = new ActionListener(){
+		 			@Override
+		 			public void actionPerformed(ActionEvent event){
+		 				if(counter == 0){
+		                     timer.stop();
+		                     createFrame(code);
+		                 }else{
+		                     counter--;
+		                     }
+		 				}
+		 			};
+		 timer = new Timer(1000, action);
+		 timer.setInitialDelay(0);
+		 timer.start();
 		
 	}
 }

@@ -51,9 +51,11 @@ public class MysticalAdventure {
 			GAME.setMap(m);
 			GAME.getCurrentPlayer().setCurrentRoom(m.createRoom());
 			GAME.frame.resetItemsCounter();
-			GameWindow.greenLabelsCounter = GAME.getCurrentPlayer().getLifeRemaining(); // reset correct life in life-bar
+			GameWindow.greenLabelsCounter = (int)((double)GAME.getCurrentPlayer().getLifeRemaning() /
+					GAME.getCurrentPlayer().getHP()*100); // reset correct life in life-bar
 			GAME.frame.resetLifelabel();
 			GAME.frame.emptyBagLabels();
+			GAME.frame.emptyIngredientsLabels();
 			GAME.frame.getMoneyLabel().setText(GAME.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(GAME.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
 			GAME.frame.resetItemsCounter();
@@ -75,17 +77,14 @@ public class MysticalAdventure {
 			g.setCurrentPlayer(obj.getCurrentPlayer());
 			g.setMap(obj.getMap());
 			Command.commandWords = obj.getCommands();
-			GameWindow.greenLabelsCounter = obj.getCurrentPlayer().getLifeRemaining(); // reset correct life in life-bar
+			GameWindow.greenLabelsCounter = (int)((double)obj.getCurrentPlayer().getLifeRemaning() /
+					obj.getCurrentPlayer().getHP()*100); // reset correct life in life-bar
 			GAME.frame.resetLifelabel();
 			GAME.frame.getMoneyLabel().setText(obj.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(obj.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
 			GAME.frame.resetItemsCounter();
 			for (Tool t : obj.getCurrentPlayer().getItemsHeldArray()) {
-				if(t.getClass() == Ingredient.class){
-					GAME.frame.addIngredientToMenu((Ingredient)t);
-				}else{
-					GAME.frame.addItemToMenu(t);
-				}				
+				GAME.frame.addItemToMenu(t);				
 			}
 			g.start();
 		} catch (IOException i) {

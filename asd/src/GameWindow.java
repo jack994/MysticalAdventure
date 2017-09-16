@@ -272,6 +272,15 @@ public class GameWindow extends JFrame{
 	}
 	
 	/**
+	 * set all the labels in the ingredients area to ''
+ 	 */
+ 	public void emptyIngredientsLabels(){
+ 		for(int i = ingrCounter; i < numOfIngredients; i+=2){
+ 			labels2[i].setText("");
+ 		}
+ 	}
+ 	
+ 	/**
 	 * set the lifebar to the actual life of the character
 	 */
 	public void resetLifelabel() {
@@ -298,21 +307,20 @@ public class GameWindow extends JFrame{
 	}
 
 	/**
-	 * add an ingredient to the ingredient menu
-	 * @param ingr
-	 */
-	public void addIngredientToMenu(Ingredient ingr){
-		if (ingrCounter <= numOfIngredients) {
-			labels2[ingrCounter].setText(ingr.getName());
-			ingrCounter ++;
-			}
-	}
-
-	/**
 	 * add a tool to the correct label in the bag
 	 * @param tool
 	 */
 	public void addItemToMenu(Tool tool) {
+
+		 		if(tool.getClass() == Ingredient.class){ //if we are adding an ingredient
+		 			for(int k = 0; k< numOfIngredients; k++){
+		 				if(labels2[k].getText().equals("")){
+		 					labels2[k].setText(tool.getName());
+		 					return;
+		 				}
+		 			}
+		 			return;	
+		 		}
 		if (itemCounter <= endItem + 2) {
 			for (int j = startItem; j <= endItem; j = j + 2) {
 				if (labels[j].getText().equals(tool.getName())) {
@@ -328,7 +336,7 @@ public class GameWindow extends JFrame{
 			}
 			itemCounter += 2;
 		}
-	}
+	}// TODO if ingredient
 
 	/**
 	 * remove from the bag the given string
@@ -355,7 +363,13 @@ public class GameWindow extends JFrame{
 				} else {
 					labels[i + 1].setText((qty - 1) + "");
 				}
-
+				
+				return;
+			}
+		}
+		for(int j=0; j<numOfIngredients; j++){  //we reach this loop only if we are removing an ingredient
+			if(labels2[j].getText().equals(tool)){
+				labels2[j].setText("");
 			}
 		}
 	}

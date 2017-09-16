@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class Player extends Character implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private boolean goneOblivion = false;
 
 	public Player(String name) { 
 		super(name, 100, 100);
@@ -19,8 +20,8 @@ public class Player extends Character implements Serializable{
 
 	public void removeMoney(int money){
 		if(this.money >= money){
-			this.money -= money;
-			MysticalAdventure.GAME.frame.getMoneyLabel().setText(this.money + "");
+		this.money -= money;
+		MysticalAdventure.GAME.frame.getMoneyLabel().setText(this.money + "");
 		}
 	}
 	
@@ -49,7 +50,7 @@ public class Player extends Character implements Serializable{
 		for(int i =0; i< itemsHeld.size(); i++){
 			if(weapon.equals(itemsHeld.get(i))){
 				this.setWeapon(weapon);
-				return weapon.getName() + " equipaggiata";
+				return "Hai equipaggiato: " + weapon.getName();
 			}
 		}
 		return null;
@@ -66,6 +67,14 @@ public class Player extends Character implements Serializable{
 				ret ++;
 		}
 		return ret;
+	}
+	
+	public boolean isGoneOblivion() {
+		return goneOblivion;
+	}
+		 
+	public void setGoneOblivion(boolean goneOblivion) {
+		 this.goneOblivion = goneOblivion;
 	}
 
 
