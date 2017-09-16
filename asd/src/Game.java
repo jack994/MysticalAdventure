@@ -150,7 +150,7 @@ public class Game {
 			Command.addCommand("open");
 			return "<BR><BR>NEW COMMAND ADDED: 'open'";
 		}
-		if(t.getName().equals("map piece") && (currentPlayer.getToolFromString("map piece") == null)){
+		if(t.getName().equals("map piece") && !Command.commandWords.contains("map")){
 			Command.addCommand("map");
 			return "<BR><BR>NEW COMMAND ADDED: 'map'";
 		}
@@ -438,9 +438,12 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String goRoom(Command command) {
-
+		if(!command.hasSecondWord()){
+			return "Where do you want to go? write 'go -direction-'";
+		}		
+		
 		String toReturn = "";
-
+		
 		if (currentPlayer.getCurrentRoom().hasDirection(command.getSecondWord())) { //if the direction exists
 			Room next = currentPlayer.getCurrentRoom().getDirectionRoom(command.getSecondWord());
 			currentPlayer.setCurrentRoom(next);	
@@ -755,7 +758,7 @@ public class Game {
 		return "<b>Your commands are:</b> <i>" + command.listCommands() + "</i><BR>"
 				+ "commands can be combined with other words or objects (usually charachters or items in the room),"
 				+ " some examples are : <b>'go north', 'examine', 'examine chest', 'pick up key', 'attack goblin',"
-				+ " 'say hello'.</b> <BR>P.S. : Commands can change during the course of the story.<BR>"
+				+ " 'say hello'.</b> <BR>Commands can change during the course of the story.<BR>"
 				+ "You can save your progress clicking on 'menu' > 'save'.<BR>If you die your progresses will be lost.";
 
 	}

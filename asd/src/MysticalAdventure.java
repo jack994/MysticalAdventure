@@ -46,7 +46,10 @@ public class MysticalAdventure {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+			int deaths = GAME.getCurrentPlayer().getDeaths() + 1;
 			GAME.setCurrentPlayer(new Player("Eldor"));
+			GAME.getCurrentPlayer().setDeaths(deaths);
+			GAME.frame.getDeathsLabel().setText(deaths + "");
 			Map m = new Map();
 			GAME.setMap(m);
 			GAME.getCurrentPlayer().setCurrentRoom(m.createRoom());
@@ -82,6 +85,7 @@ public class MysticalAdventure {
 			GAME.frame.resetLifelabel();
 			GAME.frame.getMoneyLabel().setText(obj.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(obj.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
+			GAME.frame.getDeathsLabel().setText(obj.getCurrentPlayer().getDeaths() + ""); //update deaths label
 			GAME.frame.resetItemsCounter();
 			for (Tool t : obj.getCurrentPlayer().getItemsHeldArray()) {
 					GAME.frame.addItemToMenu(t);				
