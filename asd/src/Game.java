@@ -124,8 +124,8 @@ public class Game {
 			return lightUp(command);
 		} else if (firstWord.equals("open")){
 			return openDoor(command);
-		} else if (firstWord.equals("use")){
-			return useItem(command);
+		} else if (firstWord.equals("drink")){
+			return drink(command);
 		} else if (firstWord.equals("buy")){
 			return buyFromMerchant(command);
 		}else if (firstWord.equals("map")){
@@ -149,6 +149,10 @@ public class Game {
 		if (t.getName().equals("key") || t.getName().equals("passepartout")) {
 			Command.addCommand("open");
 			return "<BR><BR>NEW COMMAND ADDED: 'open'";
+		}
+		if (t.getName().equals("potion") && !Command.commandWords.contains("drink")) {
+			Command.addCommand("drink");
+			return "<BR><BR>NEW COMMAND ADDED: 'drink'";
 		}
 		if(t.getName().equals("map piece") && !Command.commandWords.contains("map")){
 			Command.addCommand("map");
@@ -233,15 +237,15 @@ public class Game {
 	}
 	
 	/**
-	 * use an item you are carrying
+	 * drink something you are carrying
 	 * @param command
 	 * @return the string to be returned and placed in the text-box
 	 */
-	public String useItem(Command command){
+	public String drink(Command command){
 		if(!command.hasSecondWord()){
-			return "what do you want to use? write 'use -item-'";
+			return "what do you want to drink? write 'drink -item-'";
 		}
-		//if the item used is a potion:
+		//if the item drinked is a potion:
 		if(command.getSecondWord().equals("potion") && currentPlayer.getToolFromString("potion") != null){
 			int life;
 			if((currentPlayer.getHP() - currentPlayer.getLifeRemaning()) > (currentPlayer.getHP() -50)){
@@ -250,6 +254,7 @@ public class Game {
 				frame.resetLifelabel();
 				currentPlayer.removeObjCalled("potion");
 				frame.removeItemFromMenu("potion");
+				Command.removeCommand("potion", currentPlayer);
 				return "50 LP healed";
 			}	
 			else{
@@ -259,10 +264,11 @@ public class Game {
 				frame.resetLifelabel();
 				currentPlayer.removeObjCalled("potion");
 				frame.removeItemFromMenu("potion");
+				Command.removeCommand("potion", currentPlayer);
 				return healed + " LP healed";
 			}
 		}
-		return "You cannot use this item right now";
+		return "You cannot drink this item";
 	}
 
 	/**
@@ -339,6 +345,8 @@ public class Game {
 					frame.removeItemFromMenu(ky.getName()); //remove the key
 					currentPlayer.getCurrentRoom().getItemNamed("door " + tmp[1]).setDescription("The Door is Open");
 					currentPlayer.removeObjCalled(ky.getName());
+					//remove the open command if not holding a passepartout or another key
+					Command.removeCommand("key", currentPlayer);
 					return "you unlocked the Door number " + tmp[1] + ", the key magically disappears."
 							+ "<BR>the passage is now open (south)";
 				} else
@@ -565,7 +573,7 @@ public class Game {
 				if(remove.equals("key") || remove.equals("torch") || 
 						(remove.equals("map piece") && (currentPlayer.getToolFromString("map piece") == null))){ 
 					//remove the appropriate command if item dropped
-					Command.removeCommand(remove);
+					Command.removeCommand(remove, currentPlayer);
 				}
 				return "you dropped " + t.getName() + beingattacked();
 			}
@@ -579,7 +587,8 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String examineObj(Command command) {
-		if (!command.hasSecondWord() || command.getSecondWord().equals("room")) {
+		if (!command.hasSecondWord() || command.getSecondWord().equals("room") || 
+				command.getSecondWord().equals("area")) {
 			return currentPlayer.currentRoom.getNameAndDescription() + beingattacked();
 		}
 		if(currentPlayer.getCurrentRoom().isDark()){

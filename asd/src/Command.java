@@ -4,13 +4,13 @@ public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
-	private static final String[] ARTICLES = {" to ", " at ", " from ", " to the ", " the "};
+	private static final String[] ARTICLES = {" to ", " at ", " from ", " to the ", " the ", " a ", " an "};
 
 	public static ArrayList<String> commandWords = new ArrayList<String>(){ 
 		private static final long serialVersionUID = 1L;
 	{   // all the possible commands are stored here
-	    add("help"); add("go"); add("drop"); add("take"); add("pick up"); add("leave"); add("examine"); add("attack");
-	    add("equip"); add("speak"); add("talk");  add("say"); add("use"); add("buy"); add("eat");
+	    add("help"); add("go"); add("pick up"); add("take"); add("drop"); add("leave"); add("examine"); add("attack");
+	    add("equip"); add("speak"); add("talk");  add("say"); add("buy"); add("eat");
 	}
 	};
 
@@ -62,14 +62,36 @@ public class Command{
 	 * removes the String passed as parameter from the command list.
 	 * @param toRem
 	 */
-	public static void removeCommand(String toRem){
+	public static void removeCommand(String toRem, Player player){
 		String com = "";
-		if(toRem.equalsIgnoreCase("key") || toRem.equals("passepartout"))
-			com = "open";
-		else if(toRem.equals("torch") || toRem.equals("matches"))
+		if(toRem.equalsIgnoreCase("key") || toRem.equals("passepartout")){
+			if(player.getToolFromString("passepartout") == null && 
+					player.getToolFromString("key") == null){
+				com = "open";
+			}
+			else{
+				return;
+			}			
+		}
+		else if(toRem.equals("torch") || toRem.equals("matches")){
 			com = "light up";
-		else if(toRem.equals("map piece"))
-			com = "map";
+		}
+		else if(toRem.equals("map piece")){
+			if(player.getToolFromString("map piece") == null){
+				com = "map";
+			}
+			else{
+				return;
+			}
+		}
+		else if(toRem.equals("potion")){
+			if(player.getToolFromString("potion") == null){
+				com = "drink";
+			}
+			else{
+				return;
+			}
+		}
 		for(String s : commandWords){
 			if(s.equals(com)){
 				commandWords.remove(s);

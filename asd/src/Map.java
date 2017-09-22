@@ -50,8 +50,8 @@ public class Map implements Serializable{
 				+ "the door that leads back to the living room.", false);
 		Rooms[3] = new Room("THE MEADOW",
 				"you are in a misty meadow in the middle of what seems to be a small wood."
-						+ " North, you can barely see a house; trees around you are so"
-						+ " thick you couldn't pass through. South one of the trees seems moving.", false);
+						+ " North, you can vaguely see a house; trees around you are so"
+						+ " thick that would be impossible to get past. South one of the trees seems moving.", false);
 		Rooms[4] = new Room("THE WOOD - Entrance", "you are in the area of the wood close to the meadow, the light "
 				+ "is still passing through the leaves and the air is humid. all around you there are only trees.", false);
 		Rooms[5] = new Room("THE WOOD - East",
@@ -60,7 +60,7 @@ public class Map implements Serializable{
 				"in the middle of this area there is a river and all around flowers grow luxuriant. east you "
 						+ "can see a gorgeous waterfall. North, a dark entrance looks like a tunnel.", false);
 		Rooms[7] = new Room("THE TUNNEL",
-				"You can see nothing but the entrance of the tunnel behind you. it's really dark.", true);
+				"you can see nothing but the entrance of the tunnel behind you. it's really dark.", true);
 		Rooms[8] = new Room("THE WOOD - West", "this part of the wood looks more trashy compared to the others, you "
 				+ "notice a burning smell and some trees around look completly burnt.", false);
 		Rooms[9] = new Room("THE CAVE", "You are in a small cave, the burning smell here is stronger.", false);
