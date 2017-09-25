@@ -25,10 +25,10 @@ public class GameWindow extends JFrame{
 	private JScrollPane panelPane;
 	private JTextPane pane;
 	private JTextField input; //textbox
-	private JMenuBar menubar;
-	private JMenu menu;
-	public JMenuItem save;
-	public JMenuItem load;
+	
+	public JButton save; // TODO getter methods
+	public JButton load;
+	public JButton reset;
 
 	private JPanel menuPanel;
 	private JPanel first4;
@@ -46,6 +46,9 @@ public class GameWindow extends JFrame{
 	private JLabel ingredients;
 	private JLabel[] labels;
 	private JLabel[] labels2;
+	private JPanel pp;
+	private JPanel buttons;
+	private JPanel buttons2;
 	private JPanel pfittiz;
 	private JPanel ingrpan;
 	private JLabel[] labss;
@@ -59,8 +62,6 @@ public class GameWindow extends JFrame{
 	 * create the GUI
 	 */
 	public void makeFrame() {
-
-		System.setProperty("apple.laf.useScreenMenuBar", "true"); //use the native menubar in OSX
 		
 		panelPane = new JScrollPane();
 		pane = new JTextPane();
@@ -71,7 +72,6 @@ public class GameWindow extends JFrame{
 		pane.setBackground(Color.WHITE);
 		pane.setContentType("text/html");
 		input = new JTextField();
-		input.setPreferredSize(new Dimension(1000, 50));
 		labels = new JLabel[endItem + 2];
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
@@ -184,8 +184,24 @@ public class GameWindow extends JFrame{
 		getContentPane().add(menuPanel, BorderLayout.WEST);
 		getContentPane().add(panelPane, BorderLayout.CENTER);
 		pfittiz = new JPanel(new BorderLayout());
-		pfittiz.add(input, BorderLayout.CENTER);
-		pfittiz.setBorder(BorderFactory.createEmptyBorder(0, 260, 0, 0));
+		save = new JButton(" Save Game ");
+		load = new JButton(" Load Game ");
+		reset = new JButton(" Reset Game ");
+		buttons = new JPanel(new GridLayout(1,2));
+		buttons2 = new JPanel(new GridLayout(2,1));
+		buttons2.setPreferredSize(new Dimension(270, 50)); 
+		buttons.add(save);
+		buttons.add(load);
+		buttons2.add(buttons);
+		buttons2.add(reset);
+		pp = new JPanel();
+		input.setBorder(BorderFactory.createEmptyBorder(3, 5, 3, 5));
+		pp.add(input);
+		pp.setLayout(new GridLayout(1,1));
+		pp.setBorder(BorderFactory.createLineBorder(Color.gray));
+		pfittiz.add(buttons2, BorderLayout.WEST);
+		pfittiz.add(pp, BorderLayout.CENTER);
+		pfittiz.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		pfittiz.setBackground(Color.WHITE);
 		getContentPane().add(pfittiz, BorderLayout.SOUTH);
 		setVisible(true);
@@ -208,15 +224,6 @@ public class GameWindow extends JFrame{
 				}
 			}
 		});
-		//create the save menu
-		menubar = new JMenuBar();
-		menu = new JMenu("menu");
-		save = new JMenuItem("save");
-		load = new JMenuItem("load");
-		menu.add(save);
-		menu.add(load);
-		menubar.add(menu);
-		setJMenuBar(menubar);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
@@ -335,7 +342,7 @@ public class GameWindow extends JFrame{
 			}
 				itemCounter += 2;
 		}
-	} // TODO if ingredient
+	}
 
 	/**
 	 * remove from the bag the given string

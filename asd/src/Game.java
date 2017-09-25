@@ -768,8 +768,8 @@ public class Game {
 				+ "commands can be combined with other words or objects (usually charachters or items in the room),"
 				+ " some examples are : <b>'go north', 'examine', 'examine chest', 'pick up key', 'attack goblin',"
 				+ " 'say hello'.</b> <BR>Commands can change during the course of the story.<BR>"
-				+ "You can save your progress clicking on 'menu' > 'save'.<BR>If you die your progresses will be lost.";
-
+				+ "You can save your progress clicking the 'save' button on the bottom-left corner."
+				+ "<BR>If you die your progress will be lost.";
 	}
 
 	/**
@@ -784,7 +784,8 @@ public class Game {
 		toChange += "<h1>welcome to THE MYSTICAL ADVENTURE</h1>";
 		if(!dead){
 			toChange += "<p>This is a text based game, this means you will read some description and type some commands"
-					+ " to perform some actions.<BR>If you neen help with the commands write 'help'</p>";
+					+ " to perform some actions.<BR>You can type your instructions on the <B>white text-box</b> at the bottom"
+					+ " of the window.<BR>If you neen help with the commands write 'help'</p>";
 		}
 		toChange += "<p>"	+ currentPlayer.getCurrentRoom().getNameAndDescription() + "</p>" + "</html>";
 		toChange = toChange.replaceAll("<p>", "<p style=font-size:13px>");

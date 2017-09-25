@@ -16,7 +16,7 @@ public class Player extends Character implements Serializable{
 	}
 
 	public String die() {
-		MysticalAdventure.die(); //call the die method in the MysticalAdventure class
+		MysticalAdventure.reset(true); //call the die method in the MysticalAdventure class
 		return "";
 	}
 
