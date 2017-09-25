@@ -124,8 +124,8 @@ public class Game {
 			return lightUp(command);
 		} else if (firstWord.equals("apri")){
 			return openDoor(command);
-		} else if (firstWord.equals("usa")){
-			return useItem(command);
+		} else if (firstWord.equals("bevi")){
+			return drink(command);
 		} else if (firstWord.equals("compra")){
 			return buyFromMerchant(command);
 		}else if (firstWord.equals("mappa")){
@@ -151,7 +151,11 @@ public class Game {
 			Command.addCommand("apri");
 			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'apri'";
 		}
-		if(t.getName().equals("pezzo di mappa") && (currentPlayer.getToolFromString("pezzo di mappa") == null)){
+		if (t.getName().equals("pozione") && !Command.commandWords.contains("bevi")) {
+			Command.addCommand("bevi");
+			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'bevi'";
+		}
+		if(t.getName().equals("pezzo di mappa") && !Command.commandWords.contains("mappa")){
 			Command.addCommand("mappa");
 			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'mappa'";
 		}
@@ -238,12 +242,12 @@ public class Game {
 	 * @param command
 	 * @return the string to be returned and placed in the text-box
 	 */
-	public String useItem(Command command){
+	public String drink(Command command){
 		if(!command.hasSecondWord()){
-			return "Cosa vorresti usare? Scrivi 'usa -oggetto-'";
+			return "Cosa vorresti bere? Scrivi 'bevi -oggetto-'";
 		}
 		
-		//if the item used is a potion:
+		//if the item drinked is a potion:
 		if(command.getSecondWord().equals("pozione") && currentPlayer.getToolFromString("pozione") != null){
 			int life;
 			if((currentPlayer.getHP() - currentPlayer.getLifeRemaning()) > (currentPlayer.getHP() -50)){
@@ -252,6 +256,7 @@ public class Game {
 				frame.resetLifelabel();
 				currentPlayer.removeObjCalled("pozione");
 				frame.removeItemFromMenu("pozione");
+				Command.removeCommand("pozione", currentPlayer);
 				return "50 HP recuperati";
 			}	
 			else{
@@ -261,10 +266,11 @@ public class Game {
 				frame.resetLifelabel();
 				currentPlayer.removeObjCalled("pozione");
 				frame.removeItemFromMenu("pozione");
+				Command.removeCommand("pozione", currentPlayer);
 				return healed + " HP recuperati";
 			}
 		}
-		return "Non puoi usare questo oggetto in questo momento";
+		return "Non puoi bere questo oggetto";
 	}
 
 	/**
@@ -325,7 +331,7 @@ public class Game {
 		if (!command.hasSecondWord()) {
 			return "Cosa vorresti aprire? <BR>Scrivi 'apri -oggetto-'"+ beingattacked();
 		}
-		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
+		if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Sud")) {
 			if(currentPlayer.getToolFromString("key") == null){
 				return "Hai bisogno della chiave appropriata per aprire la porta";
 			}
@@ -344,6 +350,7 @@ public class Game {
 					frame.removeItemFromMenu(ky.getName()); //remove the key
 					currentPlayer.getCurrentRoom().getItemNamed("porta " + tmp[1]).setDescription("La porta e' aperta");
 					currentPlayer.removeObjCalled(ky.getName());
+					Command.removeCommand("chiave", currentPlayer);
 					return "Hai aperto la porta numero " + tmp[1] + ", la chiave e' sparita magicamente."
 							+ "<BR>Il passaggio e' ora aperto (sud)";
 				} else
@@ -354,7 +361,7 @@ public class Game {
 			if(currentPlayer.getToolFromString("passepartout") == null){
 				return "Hai bisogno della chiave appropriata per aprire la porta";
 			}
-				if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Area tranquilla")) {
+				if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Area tranquilla")) {
 					if(currentPlayer.getCurrentRoom().getItemNamed("porta").getDescription().equals("La porta e' aperta")){
 						return "La porta e' gia' aperta";
 					}
@@ -363,7 +370,7 @@ public class Game {
 					map.addPassage(16, 15, "est"); //create the passage
 					return "Hai aperto la porta, il passaggio e' ora aperto (ovest)";
 				}
-				else if (currentPlayer.getCurrentRoom().getName().equals("LA GROTTA DIETRO LA CASCATA")) {
+				else if (currentPlayer.getCurrentRoom().getName().equals("GROTTA DIETRO LA CASCATA")) {
 					if(currentPlayer.getCurrentRoom().getItemNamed("porta").getDescription().equals("La porta e' aperta")){
 						return "La porta e' gia' aperta";
 					}
@@ -385,7 +392,7 @@ public class Game {
 	public String saySomething(Command command) {
 		NPC npc;
 		if ((command.getSecondWord().equals("luna") || command.getSecondWord().equals("la luna"))
-				&& currentPlayer.getCurrentRoom().getName().equals("LA RADURA")) { // riddle solved
+				&& currentPlayer.getCurrentRoom().getName().equals("RADURA")) { // riddle solved
 			NPC treant;
 			if(!(treant = currentPlayer.getCurrentRoom().getNPCNamed("treant")).getSpeech().equals("Bel lavoro"
 					+ " con l'indovinello, ora puoi passare.")){
@@ -423,7 +430,7 @@ public class Game {
 			}
 		}
 		else if((command.getSecondWord().equals("7") || command.getSecondWord().equals("sette"))
-				&& currentPlayer.getCurrentRoom().getName().equals("LA VALLE")){
+				&& currentPlayer.getCurrentRoom().getName().equals("VALLE")){
 			currentPlayer.getCurrentRoom().setDescription("<i>In mezzo a quest'area c'e' un fiume"
 					+ " e tutto intorno la vegetazione cresce rigogliosa. Ad est si vede una cascata con una piccola entrata accanto. "
 					+ "A nord c'e' un ingersso buio, sembra un tunnel.</i>");
@@ -443,6 +450,10 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String goRoom(Command command) {
+		
+		if(!command.hasSecondWord()){
+			return "In che direzione vuoi andare? Scrivi 'vai -direzione-'";
+		}
 
 		String toReturn = "";
 
@@ -452,7 +463,7 @@ public class Game {
 			enlight(currentPlayer.getCurrentRoom()); // enlight the room if you are carrying a torch
 			changeDoors(); // change results on the doors for lorwin's riddle
 			toReturn = currentPlayer.getCurrentRoom().getNameAndDescription();
-			if(currentPlayer.getCurrentRoom().getNPCNamed("druid") != null && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")
+			if(currentPlayer.getCurrentRoom().getNPCNamed("druid") != null && currentPlayer.getCurrentRoom().getName().equals("SOGGIORNO")
 					&& currentPlayer.getCurrentRoom().getNPCNamed("druid").getHP() == 999){ // 999 hp means second time you meet the druid (end)
 				end = true;
 				return toReturn + "<BR><BR>" +currentPlayer.getCurrentRoom().getNPCNamed("druid").getSpeech() +
@@ -528,7 +539,7 @@ public class Game {
 								+ " <BR>Mi dispiace...");
 						map.getRoom(1).addnpcs(druid); //add the druid to his house
 					}
-					else if(temp.getName().equals("cuore di dremora") && currentPlayer.getCurrentRoom().getName().equals("L'OBLIVION")){ //if you take the heart of the dremora
+					else if(temp.getName().equals("cuore di dremora") && currentPlayer.getCurrentRoom().getName().equals("OBLIVION")){ //if you take the heart of the dremora
 						currentPlayer.setCurrentRoom(map.getRoom(14)); //get back to the wood
 						return "Inizi a sentirti debole eperdi i sensi...<BR><BR>" + 
 								currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
@@ -566,7 +577,7 @@ public class Game {
 				if(remove.equals("chiave") || remove.equals("torcia") || 
 						(remove.equals("pezzo di mappa") && (currentPlayer.getToolFromString("pezzo di mappa") == null))){ 
 					//remove the appropriate command if item dropped
-					Command.removeCommand(remove);
+					Command.removeCommand(remove, currentPlayer);
 				}
 				return "Hai lasciato cadere: " + t.getName() + beingattacked();
 			}
@@ -580,7 +591,7 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String examineObj(Command command) {
-		if (!command.hasSecondWord() || command.getSecondWord().equals("stanza")) {
+		if (!command.hasSecondWord() || command.getSecondWord().equals("stanza") || command.getSecondWord().equals("area")) {
 			return currentPlayer.currentRoom.getNameAndDescription() + beingattacked();
 		}
 		
@@ -705,7 +716,7 @@ public class Game {
 		NPC npc;
 		if ((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null) {
 			if (npc.getClass() == NpcGood.class) {
-				if (npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("IL SOGGIORNO")
+				if (npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("SOGGIORNO")
 						&& npc.getHP() == 1000){ // 1000 hp means first time you meet the druid (beginning)
 					currentPlayer.getCurrentRoom().removeNpcNamed("druido");
 				}
@@ -768,8 +779,8 @@ public class Game {
 		return "<b>I comandi utilizzabili sono:</b> <i>" + command.listCommands() + "</i><BR>"
 				+ "I comandi possono essere combinati con altre parole o oggetti (di solito oggetti presi dentro le stanze)."
 				+ " Alcuni esempi sono: <b>'attacca il goblin', 'equipaggia coltello', 'esamina', ' esamina baule', 'prendi la chiave',"
-				+ " 'vai a nord'.</b> <BR>P.S.: I comandi possono variare durante il corso della storia"
-		        + "E' possibile salvare cliccando 'menu' > 'salva'.<BR>Se muori, i progressi verranno cancellati.";
+				+ " 'vai a nord'.</b> <BR>I comandi possono variare durante il corso della storia"
+		        + "E' possibile salvare cliccando il tasto 'salva' nell'angolo in alto a sinistra.<BR>Se muori, i progressi verranno cancellati.";
 
 	}
 
@@ -822,40 +833,40 @@ public class Game {
 	public void enlight(Room currentR) {
 
 		if (currentPlayer.getWeapon().getName().equals("torcia") && currentPlayer.getWeapon().getDamage() == 5) {
-			if (currentR.getName().equals("IL BOSCO - Est")) {
+			if (currentR.getName().equals("BOSCO - Est")) {
 				currentR.setDark(false);
 				currentR.setDescription("<I>Gli alberi in questa parte del bosco sono fitti"
 						+ " ma la luce della torcia ti aiuta a vedere meglio</i>");
-			} else if (currentR.getName().equals("IL TUNNEL")) {
+			} else if (currentR.getName().equals("TUNNEL")) {
 				currentR.setDark(false);
 				currentPlayer.getCurrentRoom().setDescription("<i>La luce della torcia illumina il tunnel</i>");
 				map.addPassage(7, 10, "est"); //create passage
 				map.addPassage(10, 7, "ovest"); //create passage
 			}
-			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
+			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA")){
 				currentR.setDark(false);
 				currentR.setDescription("<i>Una caverna fredda ed umida con dell'erba e dei fiori.<BR><BR>"
 						+ "Senti una voce che dice: 'SOLO UN FIORE POTRAI RACCOGLIERE'</i>");
 			}
-			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA - Dietro la porta")){
+			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA - Dietro la porta")){
 				currentR.setDark(false);
 				currentR.setDescription("<i>Il tetto e' cosi' basso che devi strisciare per poter entrare. "
 				+ "C'e' un forte odore di muffa e il pavimento e' bagnato.</i>");
 			}
 		} else {
-			if (currentR.getName().equals("IL BOSCO - Est")) {
+			if (currentR.getName().equals("BOSCO - Est")) {
 				currentR.setDark(true);
 				currentR.setDescription("<i>Gli alberi in questa parte del bosco sono fitti e fai fatica"
 						+ " a vedere qualcosa</i>");
-			} else if (currentR.getName().equals("IL TUNNEL")) {
+			} else if (currentR.getName().equals("TUNNEL")) {
 				currentR.setDark(true);
 				currentPlayer.getCurrentRoom().setDescription("<i>Non puoi vedere altro che l'ingresso" + " del tunnel dietro di te. E' davvero buio!</i>");
 			}
-			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
+			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA")){
 				currentR.setDark(true);
 				currentR.setDescription("<i>La grotta e' piuttosto buia</i>");
 			}
-			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA - Dietro la porta")){
+			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA - Dietro la porta")){
 				currentR.setDark(true);
 				currentR.setDescription("<i>Quest'area e' piuttosto buia</i>");
 			}
@@ -869,7 +880,7 @@ public class Game {
 	 * The numbers on the doors are randomized and change every time you enter the room.
 	 */
 	private void changeDoors() {
-		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
+		if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Sud")) {
 			Random rand = new Random();
 			int code = rand.nextInt(4);
 			map.setLorwinCode(code);

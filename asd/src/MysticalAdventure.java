@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
 
@@ -38,7 +39,7 @@ public class MysticalAdventure {
 	/**
 	 * when the player dies restart the game from the beginning, the saved game is erased
 	 */
-	public static void die(){
+	public static void reset(boolean dead){
 		File fileIn = new File("./lib/savedGame/savedGameDeath.ser");
 		File fileOut = new File("./lib/savedGame/savedGame.ser");
 		try {
@@ -46,7 +47,11 @@ public class MysticalAdventure {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+			int deaths = GAME.getCurrentPlayer().getDeaths() + 1;
 			GAME.setCurrentPlayer(new Player("Eldor"));
+			GAME.getCurrentPlayer().setDeaths(deaths);
+			GAME.frame.getDeathsLabel().setText(deaths + "");
 			Map m = new Map();
 			GAME.setMap(m);
 			GAME.getCurrentPlayer().setCurrentRoom(m.createRoom());
@@ -59,7 +64,7 @@ public class MysticalAdventure {
 			GAME.frame.getMoneyLabel().setText(GAME.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(GAME.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
 			GAME.frame.resetItemsCounter();
-			GAME.printWelcome(true);
+			GAME.printWelcome(dead);
 	}
 	
 	/**
@@ -82,6 +87,7 @@ public class MysticalAdventure {
 			GAME.frame.resetLifelabel();
 			GAME.frame.getMoneyLabel().setText(obj.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(obj.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
+			GAME.frame.getDeathsLabel().setText(obj.getCurrentPlayer().getDeaths() + ""); //update deaths label
 			GAME.frame.resetItemsCounter();
 			for (Tool t : obj.getCurrentPlayer().getItemsHeldArray()) {
 				GAME.frame.addItemToMenu(t);				
@@ -107,22 +113,41 @@ public class MysticalAdventure {
 
 		GAME.frame.save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ob.setCurrentPlayer(GAME.getCurrentPlayer());
-				ob.setMap(GAME.getMap());
-				ob.setCommands(Command.commandWords);
-				serializer(ob);
+				int response = JOptionPane.showConfirmDialog(null, "Vuoi salvare il gioco?", "Conferma",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (response == JOptionPane.YES_OPTION) {
+					ob.setCurrentPlayer(GAME.getCurrentPlayer());
+					ob.setMap(GAME.getMap());
+					ob.setCommands(Command.commandWords);
+					serializer(ob);
+				} 
 			}
 		});
 
 		GAME.frame.load.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deserializer(ob, GAME);
-				GAME.frame.getTextBox().addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						Game.THESTACK.reset();
-						GAME.write();
-					}
-				});
+				int response = JOptionPane.showConfirmDialog(null, "Vuoi caricare il gioco?", "Conferma",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (response == JOptionPane.YES_OPTION) {
+					deserializer(ob, GAME);
+				}
+			}
+		});
+		
+		GAME.frame.reset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int response = JOptionPane.showConfirmDialog(null, "Tutti i progressi "
+																	+ "andranno persi. \nContinuare?", "Conferma",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					if (response == JOptionPane.YES_OPTION) {
+						reset(false);
+					} 
+				}
+			});
+		GAME.frame.getTextBox().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Game.THESTACK.reset();
+				GAME.write();
 			}
 		});
 	}

@@ -8,13 +8,15 @@ public class Player extends Character implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private boolean goneOblivion = false;
+	private int deaths;
 
 	public Player(String name) { 
 		super(name, 100, 100);
+		setDeaths(0);
 	}
 
 	public String die() {
-		MysticalAdventure.die(); //call the die method in the MysticalAdventure class
+		MysticalAdventure.reset(true); //call the die method in the MysticalAdventure class
 		return "";
 	}
 
@@ -75,6 +77,14 @@ public class Player extends Character implements Serializable{
 		 
 	public void setGoneOblivion(boolean goneOblivion) {
 		 this.goneOblivion = goneOblivion;
+	}
+	
+	public int getDeaths() {
+		return deaths;
+	}
+	
+	public void setDeaths(int deaths) {
+		this.deaths = deaths;
 	}
 
 

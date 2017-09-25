@@ -183,7 +183,7 @@ public class Room implements Serializable{
 			toReturn += " -" + (it = items.get(i)).getName();
 			if(it.getName().equals("baule") && ((Fixed)it).getToolsArrayList().isEmpty() &&
 					((Fixed) it).getMoney() == 0){ //check if the item is a chest and if it is empty
-				toReturn += " (Pieno)";
+				toReturn += " (Vuoto)";
 				}
 		}
 		}

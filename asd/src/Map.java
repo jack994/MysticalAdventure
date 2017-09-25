@@ -39,33 +39,33 @@ public class Map implements Serializable{
 	 * @return
 	 */
 	public Room makeRoom() {
-		Rooms[0] = new Room("LA CAMERA", "Sei in una stanza che sembra una camera da letto, alcune scale portano "
+		Rooms[0] = new Room("CAMERA DA LETTO", "Sei in una stanza che sembra una camera da letto, alcune scale portano "
 				+ "indietro nel salotto", false);
-		Rooms[1] = new Room("IL SALOTTO",
+		Rooms[1] = new Room("SALOTTO",
 				"Sei nel salotto, tutta la casa sembra pulita e ordinata. Alcune scale portano al piano superiore, "
 				+ "mentre a sud c'e' l'ingresso e ad est una porta di legno", false);
-		Rooms[2] = new Room("La CUCINA",
+		Rooms[2] = new Room("CUCINA",
 				"Sei in cucina, e la luce di una lanterna brilla nel mezzo di essa. Ad ovest c'e' "
 				+ "una porta dalla quale e' possibile ritornare in salotto.", false);
-		Rooms[3] = new Room("LA RADURA",
+		Rooms[3] = new Room("RADURA",
 				"Sei in una radura nebbiosa, in mezzo a quello che sembra un bosco."
 						+ " A nord puoi intravedere una casa; gli alberi intorno a te"
 						+ " sono fitti ed e' impossibile oltrepassarli. A sud un albero sembra muoversi.", false);
-		Rooms[4] = new Room("IL BOSCO - Entrata", "Sei in un'area del bosco vicino alla radura, la luce "
+		Rooms[4] = new Room("BOSCO - Entrata", "Sei in un'area del bosco vicino alla radura, la luce "
 				+ "passa attraverso le foglie e l'aria e' umida. Intorno a te ci sono solo alberi.", false);
-		Rooms[5] = new Room("IL BOSCO - Est",
+		Rooms[5] = new Room("BOSCO - Est",
 				"Gli alberi sono cosi' fitti che non vedi quasi nulla.", true);
-		Rooms[6] = new Room("LA VALLE",
+		Rooms[6] = new Room("VALLE",
 				"In mezzo a quest'area c'e' un fiume e la flora cresce rigoglioasa. Ad est "
 						+ "una cascata. A nord un'entrata buia, sembra un tunnel.", false);
-		Rooms[7] = new Room("IL TUNNEL",
+		Rooms[7] = new Room("TUNNEL",
 				"Non si vede niente, solo l'entrata del tunnel dietro di te. E' davvero buio!", true);
-		Rooms[8] = new Room("IL BOSCO - Ovest", "Questa parte del bosco sembra piu' sporca rispetto alle altre, "
+		Rooms[8] = new Room("BOSCO - Ovest", "Questa parte del bosco sembra piu' sporca rispetto alle altre, "
 				+ "senti odore di fumo e alcuni alberi vicino a te sembrano bruciati.", false);
-		Rooms[9] = new Room("LA GROTTA", "Sei in una piccola grotta, l'odore di fumo e' molto forte qui.", false);
-		Rooms[10] = new Room("LA PALUDE","Una palude puzzolente piena di insetti, a giudicare dalla puzza potrebbe "
+		Rooms[9] = new Room("GROTTA", "Sei in una piccola grotta, l'odore di fumo e' molto forte qui.", false);
+		Rooms[10] = new Room("PALUDE","Una palude puzzolente piena di insetti, a giudicare dalla puzza potrebbe "
 				+ "esserci un cadavere", false); 
-		Rooms[11] = new Room("IL BOSCO - Sud", "Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
+		Rooms[11] = new Room("BOSCO - Sud", "Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
 				+ "verso il lato a sud e sopra un'incisione ben definita recita: 'Nel codice Lorwin "
 				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
 				+ "e 0 e 1 non possono esserci entrambi.<BR> "
@@ -74,17 +74,17 @@ public class Map implements Serializable{
 		Rooms[13] = new Room("CASA DI LORWIN", "La casa e' piccola e rdinata, nel mezzo della stanza c'e' un "
 				+ "grazioso letto e accanto, su un piccolo tavolo, molti libri posti uno sopra l'altro"
 				+ " si trovano dall'altra parte della stanza, alcuni di questi assomigliano a tomi magici", false);
-		Rooms[14] = new Room("IL RIFUGIO DEL DEMOGORGONE","La zona e' buia ma non abbastanza per impedirti di vedere, c'e' anche un insolito"
+		Rooms[14] = new Room("RIFUGIO DEL DEMOGORGONE","La zona e' buia ma non abbastanza per impedirti di vedere, c'e' anche un insolito"
 				+ " odore di morte... ",false);
-		Rooms[15] = new Room("IL BOSCO - Area tranquilla","Quest'area e' estremamente tranquilla e piacevole, alcuni uccellini cantano..."
+		Rooms[15] = new Room("BOSCO - Area tranquilla","Quest'area e' estremamente tranquilla e piacevole, alcuni uccellini cantano..."
 				+ " Ad ovest un'immensa parete rocciosa con al centro una porta",false);
-		Rooms[16] = new Room("IL BOSCO - Zona sporca","Quest'area e' circondata da alberi e c'e' tanta sporcizia"
+		Rooms[16] = new Room("BOSCO - Zona sporca","Quest'area e' circondata da alberi e c'e' tanta sporcizia"
 				+ " sparsa per terra. Ad ovest, una piccola capanna di legno",false);
-		Rooms[17] = new Room("LA GROTTA DIETRO LA CASCATA","Quest'area e' molto buia, non si vede niente!",true); 
-		Rooms[18] = new Room("LA PICCOLA CAPANNA","Sei in una piccola capanna di legno. Di fronte a te c'e' un uomo che sembra un mercante ",false);
-		Rooms[19] = new Room("LA GROTTA DIETRO LA CASCATA - Dietro la porta", "Il tetto e' cosi' basso che devi strisciare per entrare. "
+		Rooms[17] = new Room("GROTTA DIETRO LA CASCATA","Quest'area e' molto buia, non si vede niente!",true); 
+		Rooms[18] = new Room("PICCOLA CAPANNA","Sei in una piccola capanna di legno. Di fronte a te c'e' un uomo che sembra un mercante ",false);
+		Rooms[19] = new Room("GROTTA DIETRO LA CASCATA - Dietro la porta", "Il tetto e' cosi' basso che devi strisciare per entrare. "
 				+ "C'e' un forte odore di umido e il pavimento e' bagnato.", true);
-		Rooms[20] = new Room("L'OBLIVION","L'aria e' calda e pesante, sei su un grande piano di roccia fluttuante"
+		Rooms[20] = new Room("OBLIVION","L'aria e' calda e pesante, sei su un grande piano di roccia fluttuante"
 				+ " nel mezzo del nulla, tutt'intorno a questa roccia le fiamme ardono come all'inferno.",false);
 		Rooms[21] = new Room("GIARDINO DIETRO CASA DI LORWIN","Un piccolo giardino con erba verde ed un piccolo orto nell'angolo "
 				+ "a destra; mentre in mezzo e' seduto un enorme cane a tre teste",false);

@@ -10,7 +10,7 @@ public class Command{
 		private static final long serialVersionUID = 1L;
 	{
 		add("aiuto"); add("attacca"); add("butta"); add("compra"); add("equipaggia"); add("esamina"); add("lascia");
-		add("mangia"); add("parla"); add("prendi"); add("pronuncia"); add("usa"); add("vai a"); add("vai");
+		add("mangia"); add("parla"); add("prendi"); add("pronuncia"); add("vai a"); add("vai");
 	}
 	};
 
@@ -62,14 +62,32 @@ public class Command{
 	 * removes the String passed as parameter from the command list.
 	 * @param toRem
 	 */
-	public static void removeCommand(String toRem){
+	public static void removeCommand(String toRem, Player player){
 		String com = "";
-		if(toRem.equalsIgnoreCase("chiave") || toRem.equals("passepartout"))
-			com = "apri";
-		else if(toRem.equals("torcia") || toRem.equals("fiammiferi"))
+//		if(toRem.equalsIgnoreCase("chiave") || toRem.equals("passepartout"))
+//			com = "apri";
+//		else if(toRem.equals("torcia") || toRem.equals("fiammiferi"))
+		if(toRem.equalsIgnoreCase("chiave") || toRem.equals("passepartout")){
+			if(player.getToolFromString("passepartout") == null && player.getToolFromString("chiave") == null){
+				com = "apri";
+			}else{
+				return;
+			}
+		}else if(toRem.equals("torcia") || toRem.equals("fiammiferi")){
 			com = "accendi";
-		else if(toRem.equals("pezzo di mappa"))
-			com = "mappa";
+		}else if(toRem.equals("pezzo di mappa")){
+			if(player.getToolFromString("pezzo di mappa") == null){
+				com = "mappa";
+			}else{
+				return;
+			}
+		}else if(toRem.equals("pozione")){
+			if(player.getToolFromString("pozione") == null){
+				com = "bevi";
+			}else{
+		 		return;
+			}
+		 }
 		for(String s : commandWords){
 			if(s.equals(com)){
 				commandWords.remove(s);
