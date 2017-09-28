@@ -182,7 +182,7 @@ public abstract class Character implements Serializable{
 				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar
 				return this.name + " attacks "+ target.name;
 			}
-			return this.name + " attacks "+ target.name + "<BR>" + target.name + " remaining life: " + 
+			return this.name + " attacks "+ target.name + "<BR>" + target.name + "'s HP: " + 
 			(int)((double)target.lifeRemaning / target.HP * 100) + "%";
 		}
 		else{

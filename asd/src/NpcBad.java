@@ -34,7 +34,7 @@ public class NpcBad extends NPC implements Serializable{
 	public String interact(Character pl) { 
 		if(isAlive){
 		if(isActive()){
-			return "<BR><BR>" + attackTarget(pl) + "<BR><BR>";
+			return "<BR><BR>" + getSpeech() + "<BR><BR>" + attackTarget(pl) + "<BR><BR>";
 		}
 		else{
 			return "<BR><BR>" + getSpeech() + "<BR><BR>";

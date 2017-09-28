@@ -64,8 +64,8 @@ public class Command{
 	 */
 	public static void removeCommand(String toRem, Player player){
 		String com = "";
-		if(toRem.equalsIgnoreCase("key") || toRem.equals("passepartout")){
-			if(player.getToolFromString("passepartout") == null && 
+		if(toRem.equals("key") || toRem.equals("skeleton key")){
+			if(player.getToolFromString("skeleton key") == null && 
 					player.getToolFromString("key") == null){
 				com = "open";
 			}

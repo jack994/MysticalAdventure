@@ -206,6 +206,7 @@ public class GameWindow extends JFrame{
 		getContentPane().add(pfittiz, BorderLayout.SOUTH);
 		setVisible(true);
 		setSize(new Dimension(1080, 680));
+		input.requestFocusInWindow();
 		input.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent key) {
 				int keyCode = key.getKeyCode();
