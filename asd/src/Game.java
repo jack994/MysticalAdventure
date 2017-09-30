@@ -26,7 +26,7 @@ public class Game {
 	private boolean end = false; //end of the game
 
 	private Timer timer; //timer needed for the end of the game
-	private int counter = 5; //counter used in the timer (seconds of delay)
+	private int counter = 7; //counter used in the timer (seconds of delay)
 
 	public Game() { // constructor
 		frame = new GameWindow();
@@ -636,7 +636,7 @@ public class Game {
 		} else if ((npc = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null) {
 			return npc.getDescription();
 		}
-		return "There is no " + command.getSecondWord() + beingattacked() + " to examine";
+		return "There is no " + command.getSecondWord() + " to examine" + beingattacked();
 	}
 
 	/**
@@ -991,7 +991,7 @@ public class Game {
                 }
             }
         };
-	timer = new Timer(1800, action);
+	timer = new Timer(1000, action);
     timer.setInitialDelay(0);
     timer.start();
 	}
