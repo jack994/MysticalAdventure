@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 /**
- * the NPC who sells tools and wapons
+ * the NPC who sells tools and weapons
  * @author giacomobenso
  */
 public class Merchant extends NPC implements Serializable{
@@ -17,7 +17,7 @@ public class Merchant extends NPC implements Serializable{
 		super(name, description, HP, money, false, speech);		
 		this.priceModifier = priceModifier;
 		saleTable = "<BR><BR><table>"
-				  + "<tr><th>Name</th><th>Damage</th><th>Precision</th><th>Price</th><th>Q.ty</th></tr>"+
+				  + "<tr><th>Nome</th><th>Danno</th><th>Precisione</th><th>Prezzo</th><th>Q.ta</th></tr>"+
 					"</table>";
 		saleMap = new HashMap<String, Integer>();
 	}
@@ -69,7 +69,7 @@ public class Merchant extends NPC implements Serializable{
 				saleTable = saleTable.replace(rep, ""); 
 				saleMap.remove(o);
 			}			
-			return this.getName() + " dropped " + b;
+			return this.getName() + " ha lasciato: " + b;
 		}
 	}
 	

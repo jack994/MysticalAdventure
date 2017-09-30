@@ -52,7 +52,7 @@ public class Player extends Character implements Serializable{
 		for(int i =0; i< itemsHeld.size(); i++){
 			if(weapon.equals(itemsHeld.get(i))){
 				this.setWeapon(weapon);
-				return weapon.getName() + " equipped";
+				return "Hai equipaggiato: " + weapon.getName();
 			}
 		}
 		return null;
@@ -70,22 +70,21 @@ public class Player extends Character implements Serializable{
 		}
 		return ret;
 	}
-
+	
 	public boolean isGoneOblivion() {
 		return goneOblivion;
 	}
-
+		 
 	public void setGoneOblivion(boolean goneOblivion) {
-		this.goneOblivion = goneOblivion;
+		 this.goneOblivion = goneOblivion;
 	}
-
+	
 	public int getDeaths() {
 		return deaths;
 	}
-
+	
 	public void setDeaths(int deaths) {
 		this.deaths = deaths;
 	}
-
 
 }

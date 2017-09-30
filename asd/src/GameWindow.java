@@ -25,7 +25,7 @@ public class GameWindow extends JFrame{
 	private JScrollPane panelPane;
 	private JTextPane pane;
 	private JTextField input; //textbox
-	
+
 	public JButton save; // TODO getter methods
 	public JButton load;
 	public JButton reset;
@@ -76,16 +76,16 @@ public class GameWindow extends JFrame{
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
 		}
-		labels[0].setText(" Life: ");
-		labels[2].setText(" Deaths:  ");
+		labels[0].setText(" Vita: ");
+		labels[2].setText(" Morti:  ");
 		labels[3].setText(0 + "");
-		labels[4].setText(" Weapon: ");
-		labels[5].setText(" none");
-		labels[6].setText(" Money:   ");
+		labels[4].setText(" Arma: ");
+		labels[5].setText(" nessuna ");
+		labels[6].setText(" Monete:   ");
 		labels[7].setText(100 + "");
-		labels[8].setText(" Item:  ");
+		labels[8].setText(" Oggetti:  ");
 		labels[8].setFont(f2);
-		labels[9].setText("Q.ty:  ");
+		labels[9].setText("Q.ta':  ");
 		labels[9].setFont(f2);
 		labels[8].setOpaque(true);
 		labels[9].setOpaque(true);
@@ -166,7 +166,7 @@ public class GameWindow extends JFrame{
 		allItems3.add(items5, BorderLayout.CENTER);
 		allItems3.add(items6, BorderLayout.EAST);
 		menuPanel.add(allItems3);
-		ingredients = new JLabel("Ingredients :");
+		ingredients = new JLabel("Ingredienti :");
 		ingredients.setOpaque(true);
 		ingredients.setBackground(Color.WHITE);
 		ingredients.setFont(f2);
@@ -184,9 +184,9 @@ public class GameWindow extends JFrame{
 		getContentPane().add(menuPanel, BorderLayout.WEST);
 		getContentPane().add(panelPane, BorderLayout.CENTER);
 		pfittiz = new JPanel(new BorderLayout());
-		save = new JButton(" Save Game ");
-		load = new JButton(" Load Game ");
-		reset = new JButton(" Reset Game ");
+		save = new JButton(" Salva Partita ");
+		load = new JButton(" Carica Partita ");
+		reset = new JButton(" Nuova Partita ");
 		buttons = new JPanel(new GridLayout(1,2));
 		buttons2 = new JPanel(new GridLayout(2,1));
 		buttons2.setPreferredSize(new Dimension(270, 50)); 
@@ -262,7 +262,7 @@ public class GameWindow extends JFrame{
 	 */
 	public int getMapPieces(){
 		for(int i = startItem; i < endItem; i+=2){
-			if(labels[i].getText().equals("map piece")){
+			if(labels[i].getText().equals("pezzo di mappa")){
 				return Integer.parseInt(labels[i+1].getText());
 			}
 		}
@@ -319,6 +319,7 @@ public class GameWindow extends JFrame{
 	 * @param tool
 	 */
 	public void addItemToMenu(Tool tool) {
+
 		if(tool.getClass() == Ingredient.class){ //if we are adding an ingredient
 			for(int k = 0; k< numOfIngredients; k++){
 				if(labels2[k].getText().equals("")){
@@ -341,7 +342,7 @@ public class GameWindow extends JFrame{
 			if (itemCounter == endItem) {
 				fullBag = true;
 			}
-				itemCounter += 2;
+			itemCounter += 2;
 		}
 	}
 

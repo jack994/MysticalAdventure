@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
 import javax.swing.JOptionPane;
 
 import org.apache.commons.io.FileUtils;
@@ -56,8 +55,8 @@ public class MysticalAdventure {
 			GAME.setMap(m);
 			GAME.getCurrentPlayer().setCurrentRoom(m.createRoom());
 			GAME.frame.resetItemsCounter();
-			GameWindow.greenLabelsCounter = (int)((double)GAME.getCurrentPlayer().getLifeRemaning() / 
-					GAME.getCurrentPlayer().getHP()*100); // reset correct life in life-bar
+			GameWindow.greenLabelsCounter = (int)((double)GAME.getCurrentPlayer().getLifeRemaning() /
+						GAME.getCurrentPlayer().getHP()*100); // reset correct life in life-bar
 			GAME.frame.resetLifelabel();
 			GAME.frame.emptyBagLabels();
 			GAME.frame.emptyIngredientsLabels();
@@ -113,39 +112,38 @@ public class MysticalAdventure {
 
 		GAME.frame.save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int response = JOptionPane.showConfirmDialog(null, "Do you want to save the game state?", "Confirm",
-				        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				    if (response == JOptionPane.YES_OPTION) {
-				    	ob.setCurrentPlayer(GAME.getCurrentPlayer());
-						ob.setMap(GAME.getMap());
-						ob.setCommands(Command.commandWords);
-						serializer(ob);
-				    } 
+				int response = JOptionPane.showConfirmDialog(null, "Vuoi salvare il gioco?", "Conferma",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (response == JOptionPane.YES_OPTION) {
+					ob.setCurrentPlayer(GAME.getCurrentPlayer());
+					ob.setMap(GAME.getMap());
+					ob.setCommands(Command.commandWords);
+					serializer(ob);
+				}
 			}
 		});
-		
 
 		GAME.frame.load.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int response = JOptionPane.showConfirmDialog(null, "Do you want to load the saved data?", "Confirm",
-				        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				    if (response == JOptionPane.YES_OPTION) {
-				    	deserializer(ob, GAME);
-				    } 
+				int response = JOptionPane.showConfirmDialog(null, "Vuoi caricare il gioco?", "Conferma",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (response == JOptionPane.YES_OPTION) {
+					deserializer(ob, GAME);
+				}
 			}
 		});
-		
+
 		GAME.frame.reset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int response = JOptionPane.showConfirmDialog(null, "If you reset the Game all your progress "
-						+ "will be lost. \nDo you want to continue?", "Confirm",
-				        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				    if (response == JOptionPane.YES_OPTION) {
-				    	reset(false);
-				    } 
+				int response = JOptionPane.showConfirmDialog(null,
+						"Tutti i progressi " + "andranno persi. \nContinuare?", "Conferma", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE);
+				if (response == JOptionPane.YES_OPTION) {
+					reset(false);
+				}
 			}
 		});
-		
+
 		GAME.frame.getTextBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game.THESTACK.reset();

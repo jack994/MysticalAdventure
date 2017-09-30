@@ -62,7 +62,7 @@ public class Room implements Serializable{
 			this.money -= money;
 		}
 		else{
-			System.err.println("not enough money");
+			System.err.println("Non hai abbastanza monete");
 		}
 	}
 	
@@ -173,7 +173,7 @@ public class Room implements Serializable{
 	 * @return
 	 */
 	public String getItemString() {
-		String toReturn = "<BR>ITEMS: ";
+		String toReturn = "<BR>OGGETTI: ";
 		if(items.isEmpty() || dark){
 			return "";
 		}
@@ -181,14 +181,14 @@ public class Room implements Serializable{
 		for (int i = 0; i < items.size(); i++) {
 			Item it;
 			toReturn += " -" + (it = items.get(i)).getName();
-			if(it.getName().equals("chest") && ((Fixed)it).getToolsArrayList().isEmpty() &&
+			if(it.getName().equals("baule") && ((Fixed)it).getToolsArrayList().isEmpty() &&
 					((Fixed) it).getMoney() == 0){ //check if the item is a chest and if it is empty
-				toReturn += " (Empty)";
-			}
+				toReturn += " (Vuoto)";
+				}
 		}
 		}
 		if(money > 0){
-			toReturn += "<BR>MONEY: "+ money;
+			toReturn += "<BR>MONETE: "+ money;
 		}
 		return toReturn;
 	}
@@ -198,15 +198,15 @@ public class Room implements Serializable{
 	 * @return
 	 */
 	public String getNPCString() {
-		String toReturn = "<BR>CHARACTERS: ";
+		String toReturn = "<BR>PERSONAGGI: ";
 		if(npcs.isEmpty() || dark){
 			return "";
 		}
 		if(!dark){
 		for (int i = 0; i < npcs.size(); i++) {
 			toReturn += " -" + npcs.get(i).getName();
-			if(!npcs.get(i).isAlive()){ //if the NPC is dead
-				toReturn += " (Dead)";
+			if(!npcs.get(i).isAlive()){//if the NPC is dead
+				toReturn += " (Morto)";
 			}
 		}
 		}
@@ -248,7 +248,7 @@ public class Room implements Serializable{
 	 * @return the string with the directions
 	 */
 	public String getDirectionsString() {
-		String returnString = "POSSIBLE DIRECTIONS: ";
+		String returnString = "POSSIBILI DIREZIONI: ";
 		Set<String> keys = directions.keySet();
 		if(dark)
 			return "";

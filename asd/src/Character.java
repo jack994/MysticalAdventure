@@ -1,4 +1,3 @@
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,8 +22,8 @@ public abstract class Character implements Serializable{
 		this.HP = HP;
 		this.money = money;
 		lifeRemaning = HP;
-		Weapon NN = new Weapon("none", "no weapon", 0, 1, 0.95f);
-		weapon = NN; // test commento
+		Weapon NN = new Weapon("nessuna", "arma non equipaggiata", 0, 1, 0.95f);
+		weapon = NN;
 	}
 
 	//-------------abstract methods-------------//
@@ -129,13 +128,13 @@ public abstract class Character implements Serializable{
 		Item t;
 		if((t = currentRoom.getItemNamed(o))!= null){
 			itemsHeld.add((Tool) t);
-			return t.getName() + " added to " + this.name + "'s inventory";
+			return t.getName() + ": aggiunto all'invendario di " + this.name;
 		}
 		for(NPC npc : this.getCurrentRoom().getNPCArray()){
 			if((t = npc.getToolFromString(o)) != null){
 				itemsHeld.add((Tool) t);
 				npc.removeObjCalled(t.getName());
-				return t.getName() + " added to " + this.name + "'s inventory";
+				return t.getName() + ": aggiunto all'inventario di " + this.name;
 			}
 		}		
 		return null;
@@ -151,12 +150,13 @@ public abstract class Character implements Serializable{
 		for(Tool t : itemsHeld){
 			if (t.getName().equals(o)){
 				itemsHeld.remove(t);
-				return this.name + "dropped" + o;
+				return this.name + " lascia " + o;
 			}
 		}
 		return null;
 	}
 	
+
 	/**
 	 * the target is attacked with the equipped weapon, if the target has no remaining life it is set as dead.
 	 * @param target: character to be attacked
@@ -180,13 +180,13 @@ public abstract class Character implements Serializable{
 			}
 			if(target.getClass() == Player.class){
 				MysticalAdventure.GAME.frame.decreaseLife(damage);   // decrease life in the green life bar
-				return this.name + " attacks "+ target.name;
+				return this.name + " attacca "+ target.name;
 			}
-			return this.name + " attacks "+ target.name + "<BR>" + target.name + "'s HP: " + 
+			return this.name + " attacca "+ target.name + "<BR>" + target.name + " HP: " + 
 			(int)((double)target.lifeRemaning / target.HP * 100) + "%";
 		}
 		else{
-			return this.name + " attacks "+ target.name + "<BR>" + this.name + " misses!";
+			return this.name + " attacca "+ target.name + "<BR>" + this.name  + " manca il bersaglio!";
 		}
 	}
 

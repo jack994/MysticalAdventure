@@ -22,8 +22,8 @@ public class Weapon extends Tool implements Serializable{
 	}
 	
 	public String getDescription(){
-		return super.getDescription() + "<BR>Damage: " + this.getDamage()
-		+ " - Precision: " + this.getPrecisionOutOf100() + "%";
+		return super.getDescription() + "<BR>Danno: " + this.getDamage()
+		+ " - Precisione: " + this.getPrecisionOutOf100() + "%";
 	}
 	
 	public int getPrecisionOutOf100() {

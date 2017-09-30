@@ -25,7 +25,7 @@ public class NpcBad extends NPC implements Serializable{
 	
 	public String die() {
 		isAlive = false;
-		return this.getName() + " died" + "<BR>" + dropAllItems();
+		return this.getName() + " e' morto" + "<BR>" + dropAllItems();
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class NpcBad extends NPC implements Serializable{
 			all = all + x.getName() + ", ";
 		}
 		Weapon wp = weapon;
-		if (!weapon.getName().equals("none")) {
+		if (!weapon.getName().equals("nessuna")) {
 			currentRoom.addTool((Tool) weapon);
 			all += wp.getName() + ", ";
 		}
@@ -69,14 +69,14 @@ public class NpcBad extends NPC implements Serializable{
 		currentRoom.addMoney(mon);
 		if (all.equals("")) {
 			if (mon < 1)
-				return name + " has nothing to drop ";
+				return name + ": non ha con se' nessun'oggetto ";
 			else
-				return "money dropped: " + mon;
+				return "Monete lasciate: " + mon;
 		} else {
 			if (mon < 1)
-				return name + " dropped: " + all;
+				return name + " lascia : " + all;
 			else
-				return name + " dropped: " + all + "<BR>money dropped: " + mon;
+				return name + " lascia : " + all + "<BR>monete lasciate: " + mon;
 		}
 	}
 }

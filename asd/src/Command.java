@@ -4,13 +4,13 @@ public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
-	private static final String[] ARTICLES = {" to ", " at ", " from ", " to the ", " the ", " a ", " an "};
+	private static final String[] ARTICLES = {" il "," lo ", " la ", " i ", " gli ", " le "," col "," con "," a ", " ad ", " al " };
 
 	public static ArrayList<String> commandWords = new ArrayList<String>(){ 
 		private static final long serialVersionUID = 1L;
-	{   // all the possible commands are stored here
-	    add("help"); add("go"); add("pick up"); add("take"); add("drop"); add("leave"); add("examine"); add("attack");
-	    add("equip"); add("speak"); add("talk");  add("say"); add("buy"); add("eat");
+	{
+		add("aiuto"); add("attacca"); add("butta"); add("compra"); add("equipaggia"); add("esamina"); add("lascia");
+		add("mangia"); add("parla"); add("prendi"); add("pronuncia"); add("vai");
 	}
 	};
 
@@ -64,34 +64,27 @@ public class Command{
 	 */
 	public static void removeCommand(String toRem, Player player){
 		String com = "";
-		if(toRem.equals("key") || toRem.equals("skeleton key")){
-			if(player.getToolFromString("skeleton key") == null && 
-					player.getToolFromString("key") == null){
-				com = "open";
-			}
-			else{
-				return;
-			}			
-		}
-		else if(toRem.equals("torch") || toRem.equals("matches")){
-			com = "light up";
-		}
-		else if(toRem.equals("map piece")){
-			if(player.getToolFromString("map piece") == null){
-				com = "map";
-			}
-			else{
+		if(toRem.equalsIgnoreCase("chiave") || toRem.equals("passepartout")){
+			if(player.getToolFromString("passepartout") == null && player.getToolFromString("chiave") == null){
+				com = "apri";
+			}else{
 				return;
 			}
-		}
-		else if(toRem.equals("potion")){
-			if(player.getToolFromString("potion") == null){
-				com = "drink";
-			}
-			else{
+		}else if(toRem.equals("torcia") || toRem.equals("fiammiferi")){
+			com = "accendi";
+		}else if(toRem.equals("pezzo di mappa")){
+			if(player.getToolFromString("pezzo di mappa") == null){
+				com = "mappa";
+			}else{
 				return;
 			}
-		}
+		}else if(toRem.equals("pozione")){
+			if(player.getToolFromString("pozione") == null){
+				com = "bevi";
+			}else{
+		 		return;
+			}
+		 }
 		for(String s : commandWords){
 			if(s.equals(com)){
 				commandWords.remove(s);
