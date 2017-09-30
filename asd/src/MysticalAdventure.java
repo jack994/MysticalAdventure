@@ -125,7 +125,7 @@ public class MysticalAdventure {
 
 		GAME.frame.load.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int response = JOptionPane.showConfirmDialog(null, "Vuoi caricare il gioco?", "Conferma",
+				int response = JOptionPane.showConfirmDialog(null, "Vuoi caricare i dati di gioco salvati?", "Conferma",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 				if (response == JOptionPane.YES_OPTION) {
 					deserializer(ob, GAME);
@@ -136,7 +136,7 @@ public class MysticalAdventure {
 		GAME.frame.reset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int response = JOptionPane.showConfirmDialog(null,
-						"Tutti i progressi " + "andranno persi. \nContinuare?", "Conferma", JOptionPane.YES_NO_OPTION,
+						"Tutti i progressi andranno persi. \nContinuare?", "Conferma", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE);
 				if (response == JOptionPane.YES_OPTION) {
 					reset(false);

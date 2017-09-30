@@ -395,6 +395,9 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String saySomething(Command command) {
+		if(!command.hasSecondWord()){
+			return "Che cosa vuoi pronunciare? Scrivi 'prinuncia -parola/frase-'";
+		}
 		NPC npc;
 		if ((command.getSecondWord().equals("luna"))
 				&& currentPlayer.getCurrentRoom().getName().equals("RADURA")) { // riddle solved
@@ -495,7 +498,7 @@ public class Game {
 		}
 		Item temp;
 		if (!command.hasSecondWord()) {
-			return "Cosa vorresti prendere? " + command.getFirstWord();
+			return "Cosa vorresti prendere? Scrivi 'prendi -oggetto-'";
 		} else if (command.getSecondWord().equals("monete")) {
 			int mon;
 			if((mon = currentPlayer.getCurrentRoom().getMoney()) > 0){
@@ -570,7 +573,7 @@ public class Game {
 	public String dropTool(Command command) {
 		Tool t = currentPlayer.getToolFromString(command.getSecondWord());
 		if (!command.hasSecondWord())
-			return "Cosa vorresti buttare?" + beingattacked();
+			return "Cosa vorresti buttare? Scrivi 'butta -oggetto-'" + beingattacked();
 		else {
 			if (t != null) {
 				String remove;
@@ -689,7 +692,7 @@ public class Game {
 	 */
 	public String equip(Command command) {
 		if (!command.hasSecondWord()) {
-			return "Cosa vorresti equipaggiare?";
+			return "Cosa vorresti equipaggiare? Scrivi equipaggia -oggetto-";
 		}
 		Tool t;
 		if ((t = currentPlayer.getToolFromString(command.getSecondWord())) != null) {
@@ -717,7 +720,7 @@ public class Game {
 	 */
 	public String speakToChar(Command command) {
 		if (!command.hasSecondWord()) {
-			return "Tu: blablablabla. <BR>Se vuoi parlare con qualcuno scrivi 'parla con <soggetto>'"
+			return "Tu: blablablabla. <BR>Se vuoi parlare con qualcuno scrivi 'parla con -soggetto-'"
 					+ beingattacked();
 		}
 		NPC npc;

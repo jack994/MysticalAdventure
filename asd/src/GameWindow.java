@@ -76,16 +76,16 @@ public class GameWindow extends JFrame{
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
 		}
-		labels[0].setText(" Vita: ");
-		labels[2].setText(" Morti:  ");
+		labels[0].setText("HP:");
+		labels[2].setText("Morti:");
 		labels[3].setText(0 + "");
-		labels[4].setText(" Arma: ");
-		labels[5].setText(" nessuna ");
-		labels[6].setText(" Monete:   ");
+		labels[4].setText("Arma:");
+		labels[5].setText("nessuna ");
+		labels[6].setText("Monete:");
 		labels[7].setText(100 + "");
-		labels[8].setText(" Oggetti:  ");
+		labels[8].setText(" Oggetti: ");
 		labels[8].setFont(f2);
-		labels[9].setText("Q.ta':  ");
+		labels[9].setText("Q.ta': ");
 		labels[9].setFont(f2);
 		labels[8].setOpaque(true);
 		labels[9].setOpaque(true);
@@ -184,8 +184,8 @@ public class GameWindow extends JFrame{
 		getContentPane().add(menuPanel, BorderLayout.WEST);
 		getContentPane().add(panelPane, BorderLayout.CENTER);
 		pfittiz = new JPanel(new BorderLayout());
-		save = new JButton(" Salva Partita ");
-		load = new JButton(" Carica Partita ");
+		save = new JButton(" Salva ");
+		load = new JButton(" Carica ");
 		reset = new JButton(" Nuova Partita ");
 		buttons = new JPanel(new GridLayout(1,2));
 		buttons2 = new JPanel(new GridLayout(2,1));
