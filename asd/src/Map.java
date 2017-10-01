@@ -164,7 +164,7 @@ public class Map implements Serializable{
 		Rooms[2].addFixed(cupboard);
 
 		NpcGood treant = new NpcGood("treant", "Un enorme albero parlante che blocca il passaggio verso il bosco", 100, 130,
-				false, "L PU NPYV KH TPSPVUP KP HUUP, TH UVU L WPB CLJJOPH KP BU TLZL?");
+				false, "l' pu npyv kh tpspvup kp huup, th uvu l' wpb' cljjoph kp bu tlzl, jvz'l'?");
 		Rooms[3].addnpcs(treant);
 		
 		Merchant merchant1 = new Merchant("mercante", "Una bella donna con lunghe trecce bionde",
