@@ -113,7 +113,7 @@ public class Game {
 			return goRoom(command);
 		} else if (firstWord.equals("aiuto")) {
 			return printHelp(command);
-		} else if (firstWord.equals("prendi")) {
+		} else if (firstWord.equals("prendi") || firstWord.equals("raccogli")) {
 			return pickTool(command);
 		} else if (firstWord.equals("butta") || firstWord.equals("lascia")) {
 			return dropTool(command);
@@ -236,9 +236,8 @@ public class Game {
 			currentPlayer.removeMoney(t.getValue() * merchant.getPriceModifier());
 			merchant.removeObjCalled(t.getName());
 			currentPlayer.addObj(t);
-			frame.addItemToMenu(t);
-			checkNewCommand(t); 
-			return "Oggetto comprato: " + command.getSecondWord();
+			frame.addItemToMenu(t); 
+			return "Oggetto comprato: " + command.getSecondWord() + checkNewCommand(t);
 		}
 		else{
 			return "Impossibile comprare: " + command.getSecondWord();
@@ -337,7 +336,7 @@ public class Game {
 			return "Cosa vorresti aprire? <BR>Scrivi 'apri -oggetto-'"+ beingattacked();
 		}
 		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
-			if(currentPlayer.getToolFromString("key") == null){
+			if(currentPlayer.getToolFromString("chiave") == null){
 				return "Hai bisogno della chiave appropriata per aprire la porta";
 			}
 			if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta"))
@@ -363,7 +362,7 @@ public class Game {
 					return "Quella porta non esiste";
 			}
 		}		
-		if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta")){
+		if (command.getSecondWord().equals("porta")){
 			if(currentPlayer.getToolFromString("passepartout") == null){
 				return "Hai bisogno della chiave appropriata per aprire la porta";
 			}
@@ -669,14 +668,14 @@ public class Game {
 					if(enemy.getName().equals("demogorgone") && currentPlayer.getWeapon().getName().equals("ammazza demoni")){
 						enemy.setLifeRemaining(0);
 						enemy.setDescription("Il Demogorgone ha un collare con su scritti alcuni numeri: 6, 66, 426, 2586");
-						return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e si trasforma in cenere" +
-						"<BR>" + ((NpcBad)enemy).die();
+						return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e si trasforma in cenere." +
+						"<BR><BR>" + ((NpcBad)enemy).die();
 					}
 					else if(enemy.getName().equals("lord dremora") && currentPlayer.getWeapon().getName().equals("ammazza demoni")){
 						enemy.setLifeRemaining(enemy.getLifeRemaning() - 100);
 						if(enemy.getLifeRemaning() < 150){
-							return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e si trasforma in cenere"+
-						"<BR>" + ((NpcBad)enemy).die();
+							return "La tua spada brilla, il "+ enemy.getName() + " comincia a bruciare dall'interno e si trasforma in cenere."+
+						"<BR><BR>" + ((NpcBad)enemy).die();
 						}
 					}
 				return currentPlayer.attackTarget(((NpcBad)enemy)) + "<BR><BR>" + ((NpcBad)enemy).attackTarget(currentPlayer);
@@ -768,7 +767,7 @@ public class Game {
 					map.getRoom(8).addnpcs(goblin);
 					map.getRoom(14).addnpcs(new NpcBad("lupo","Un enorme lupo grigio con penetranti occhi gialli",90,40,true,"Grrrrrrrrhhhh",5));
 					
-					return npc.getSpeech() + "<BR><BR>" + k.getName() + " nuova aggiunta all'inventario di " + checkNewCommand(k);
+					return npc.getSpeech() + "<BR><BR>" + k.getName() + " nuova aggiunta all'inventario." + checkNewCommand(k);
 				}
 				return npc.getSpeech() + beingattacked();
 			} else {
@@ -875,7 +874,7 @@ public class Game {
 			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA - Dietro la porta")){
 				currentR.setDark(false);
 				currentR.setDescription("<i>Il tetto e' cosi' basso che devi strisciare per poter entrare. "
-				+ "Il pavimento e' bagnato e un forte odore di sangue attrae la ya attenzione, noti un cadavere"
+				+ "Il pavimento e' bagnato e un forte odore di sangue attrae la tua attenzione, noti un cadavere"
 				+ " in fondo alla stanza...</i>");
 			}
 		} else {
@@ -906,13 +905,13 @@ public class Game {
 	 * The numbers on the doors are randomized and change every time you enter the room.
 	 */
 	private void changeDoors() {
-		if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Sud")) {
+		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
 			Random rand = new Random();
 			int code = rand.nextInt(4);
 			map.setLorwinCode(code);
 			String desc = "La porta e' chiusa, qualcuno ha scritto su di essa il numero ";
 			currentPlayer.getCurrentRoom().setDescription("<i>Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
-				+ "sul il lato a sud e sopra di esse un'incisione ben definita recita: 'Nel codice di Lorwin "
+				+ "sul lato a sud e sopra di esse un'incisione ben definita recita: 'Nel codice di Lorwin "
 				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
 				+ "e le cifre 0 e 1 non possono essere presenti contemporaneamente nella sequenza.<BR>"
 				+ "Quante sequenze possibili ci sono in un codice lungo "+ map.getLorwinCodeLength() +" cifre?'</i>");

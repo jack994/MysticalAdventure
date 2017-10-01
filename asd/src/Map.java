@@ -69,7 +69,7 @@ public class Map implements Serializable{
 		Rooms[10] = new Room("LA PALUDE","Una palude puzzolente e piena di insetti, sull'acqua in lontananza si intravede un uomo, a giudicare pero'"
 				+ " dalla puzza che c'e' qui e' probailmente morto", false); 
 		Rooms[11] = new Room("IL BOSCO - Sud", "Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
-				+ "sul il lato a sud e sopra di esse un'incisione ben definita recita: 'Nel codice di Lorwin "
+				+ "sul lato a sud e sopra di esse un'incisione ben definita recita: 'Nel codice di Lorwin "
 				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
 				+ "e le cifre 0 e 1 non possono essere presenti contemporaneamente nella sequenza.<BR>"
 				+ "Quante sequenze possibili ci sono in un codice lungo "+ lorwinCode[currentCode][0] +" cifre?'", false);
@@ -86,8 +86,7 @@ public class Map implements Serializable{
 		Rooms[17] = new Room("LA GROTTA DIETRO LA CASCATA","Quest'area e' molto buia, non si vede niente!",true); 
 		Rooms[18] = new Room("LA PICCOLA CAPANNA","Sei in una piccola capanna di legno. Di fronte a te, un uomo che sembra un mercante si "
 				+ " riscalda di fronte al caminetto.",false);
-		Rooms[19] = new Room("LA GROTTA DIETRO LA CASCATA - Dietro la porta", "Il tetto e' cosi' basso che devi strisciare per entrare. "
-				+ "C'e' un forte odore di umido e il pavimento e' bagnato.", true);
+		Rooms[19] = new Room("LA GROTTA DIETRO LA CASCATA - Dietro la porta", "Quest'area e' piuttosto buia", true);
 		Rooms[20] = new Room("L'OBLIVION","L'aria e' calda e pesante, sei su un grande piano di roccia fluttuante"
 				+ " nel mezzo del nulla, tutt'intorno a questa roccia le fiamme ardono come all'inferno.",false);
 		Rooms[21] = new Room("IL GIARDINO DIETRO CASA DI LORWIN","Un piccolo giardino con erba verde ed un piccolo orto nell'angolo "
@@ -190,7 +189,10 @@ public class Map implements Serializable{
 		Rooms[5].addFixed(chest2);
 		
 		Rooms[6].addFixed(new Fixed("cascata", "un'alta e rumorosa cascata che si imbatte sulle rocce per poi trasformarsi in un ruscello"));
-
+		Fixed arbus = new Fixed("cespuglio","un piccolo cespuglio sulla riva del ruscello");
+		arbus.addMoney(100);
+		arbus.addTool(new Tool("mela","una mela verde, sembra acerba", 5));
+		
 		Fixed ccp = new Fixed("cadavere","Un cadavere di una donna, guardandolo meglio si notano gli occhi azzurri ghiaccio");
 		Rooms[8].addFixed(ccp);
 		
@@ -247,6 +249,8 @@ public class Map implements Serializable{
 		chest3.addMoney(300);
 		chest3.addTool(new Weapon("ammazza demoni", "Un'antica spada usata per sconfiggere i demoni", 500, 10, 0.99f));
 		Rooms[13].addFixed(chest3);
+		Rooms[13].addFixed(new Fixed("libri","un centinaio di libri tutti ben impilati in una decina di pile, alcuni di questi hanno "
+				+ "degli strani simboli sulla copertina che ti ricordano qualcosa di magico"));
 		
 		NpcBad demogorgon = new NpcBad("demogorgone", "Uno spaventoso demone con due teste di mandrillo e dei lunghi"
 				+ " tentacoli.", 1000, 100, true, "Grwaaaaahhhlll", 20);
@@ -315,11 +319,11 @@ public class Map implements Serializable{
 		Rooms[19].addFixed(gnome);
 		
 		NpcBad dremora = new NpcBad("lord dremora", "Uno spaventoso demone dalle sembianze umane, con delle piccole corna nere e una gigantesca"
-				+ " spada rosso scuro",1500,0,true,"Come osi venire nel mio regno, piccolo umano insolente! Morirai per la tua "
-						+ " arroganza!",5);
+				+ " spada rosso scuro",1400,0,true,"Come osi venire nel mio regno, piccolo umano insolente! Morirai per la tua "
+						+ " arroganza!",3);
 		Ingredient heart = new Ingredient("cuore di dremora", "Il cuore del re dei demoni, sta ancora battendo");
 		dremora.addObj(heart);
-		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 16, 0.98f);
+		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 17, 0.98f);
 		dremora.setWeapon(sw);
 		Rooms[20].addnpcs(dremora);
 		
