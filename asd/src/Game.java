@@ -336,7 +336,7 @@ public class Game {
 		if (!command.hasSecondWord()) {
 			return "Cosa vorresti aprire? <BR>Scrivi 'apri -oggetto-'"+ beingattacked();
 		}
-		if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Sud")) {
+		if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Sud")) {
 			if(currentPlayer.getToolFromString("key") == null){
 				return "Hai bisogno della chiave appropriata per aprire la porta";
 			}
@@ -367,7 +367,7 @@ public class Game {
 			if(currentPlayer.getToolFromString("passepartout") == null){
 				return "Hai bisogno della chiave appropriata per aprire la porta";
 			}
-				if (currentPlayer.getCurrentRoom().getName().equals("BOSCO - Area tranquilla")) {
+				if (currentPlayer.getCurrentRoom().getName().equals("IL BOSCO - Area tranquilla")) {
 					if(currentPlayer.getCurrentRoom().getItemNamed("porta").getDescription().equals("La porta e' aperta")){
 						return "La porta e' gia' aperta";
 					}
@@ -376,7 +376,7 @@ public class Game {
 					map.addPassage(16, 15, "est"); //create the passage
 					return "Hai aperto la porta, il passaggio e' ora aperto (ovest)";
 				}
-				else if (currentPlayer.getCurrentRoom().getName().equals("GROTTA DIETRO LA CASCATA")) {
+				else if (currentPlayer.getCurrentRoom().getName().equals("LA GROTTA DIETRO LA CASCATA")) {
 					if(currentPlayer.getCurrentRoom().getItemNamed("porta").getDescription().equals("La porta e' aperta")){
 						return "La porta e' gia' aperta";
 					}
@@ -400,7 +400,7 @@ public class Game {
 		}
 		NPC npc;
 		if ((command.getSecondWord().equals("luna"))
-				&& currentPlayer.getCurrentRoom().getName().equals("RADURA")) { // riddle solved
+				&& currentPlayer.getCurrentRoom().getName().equals("LA RADURA")) { // riddle solved
 			NPC treant;
 			if(!(treant = currentPlayer.getCurrentRoom().getNPCNamed("treant")).getSpeech().equals("Congratulazioni, "
 					+ "hai risolto l'indovinello! ora puoi passare.")){
@@ -438,7 +438,7 @@ public class Game {
 			}
 		}
 		else if((command.getSecondWord().equals("7") || command.getSecondWord().equals("sette"))
-				&& currentPlayer.getCurrentRoom().getName().equals("VALLE")){
+				&& currentPlayer.getCurrentRoom().getName().equals("LA VALLE")){
 			currentPlayer.getCurrentRoom().setDescription("<i>Ti trovi in una valle, gli alberi sono meno presenti in questa zona che, attraversata da un ruscello"
 					+ " da vita ad una vegetazione ricca di fiori e piccole piante. Ad est si puo' vedere una cascata con una piccola entrata a fianco. "
 					+ "A nord c'e' un ingersso buio, sembra un tunnel..</i>");
@@ -463,14 +463,17 @@ public class Game {
 		}
 
 		String toReturn = "";
+		Room prev;
 		
-		if (currentPlayer.getCurrentRoom().hasDirection(command.getSecondWord())) { //if the direction exists
+		if ((prev = currentPlayer.getCurrentRoom()).hasDirection(command.getSecondWord())) { //if the direction exists
 			Room next = currentPlayer.getCurrentRoom().getDirectionRoom(command.getSecondWord());
 			currentPlayer.setCurrentRoom(next);			
-			enlight(currentPlayer.getCurrentRoom()); // enlight the room if you are carrying a torch
+			enlight(currentPlayer.getCurrentRoom()); // illuminate the room if you are carrying a torch
 			changeDoors(); // change results on the doors for lorwin's riddle
-			toReturn = currentPlayer.getCurrentRoom().getNameAndDescription();
-			if(currentPlayer.getCurrentRoom().getNPCNamed("druid") != null && currentPlayer.getCurrentRoom().getName().equals("SOGGIORNO")
+			toReturn += additionalDescription(prev, next); // additional description for the room
+			toReturn += currentPlayer.getCurrentRoom().getNameAndDescription();
+			if(currentPlayer.getCurrentRoom().getNPCNamed("druid") != null && 
+					currentPlayer.getCurrentRoom().getName().equals("CASA DEL DRUIDO - Il salotto")
 					&& currentPlayer.getCurrentRoom().getNPCNamed("druid").getHP() == 999){ // 999 hp means second time you meet the druid (end)
 				end = true;
 				return toReturn + "<BR><BR>" +currentPlayer.getCurrentRoom().getNPCNamed("druid").getSpeech() +
@@ -710,7 +713,7 @@ public class Game {
 				return "Non servirebbe a nulla" + beingattacked();
 			}
 		}
-		return command.getSecondWord()+ " inesistente" + beingattacked();
+		return command.getSecondWord()+ " non esiste" + beingattacked();
 	}
 
 	/**
@@ -726,7 +729,7 @@ public class Game {
 		NPC npc;
 		if ((npc = currentPlayer.getCurrentRoom().getNPCNamed(command.getSecondWord())) != null) {
 			if (npc.getClass() == NpcGood.class) {
-				if (npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("SOGGIORNO")
+				if (npc.getName().equals("druido") && currentPlayer.getCurrentRoom().getName().equals("CASA DEL DRUIDO - Il salotto")
 						&& npc.getHP() == 1000){ // 1000 hp means first time you meet the druid (beginning)
 					currentPlayer.getCurrentRoom().removeNpcNamed("druido");
 				}
@@ -813,7 +816,7 @@ public class Game {
 			try {
 			if (FileUtils.contentEquals(fileIn, fileOut)){
 				toChange += "<BR><hr><p>Apri gli occhi... <BR>Ti senti confuso e non riesci bene a capire dove ti trovi, "
-						+ "non riesci nemmeno a ricordare cosa e' successo nel passato....</p>";
+						+ "non ricordi nemmeno cosa e' successo nel passato, come se avessi perso ogni ricordo...</p>";
 				}
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -855,42 +858,41 @@ public class Game {
 	public void enlight(Room currentR) {
 
 		if (currentPlayer.getWeapon().getName().equals("torcia") && currentPlayer.getWeapon().getDamage() == 5) {
-			if (currentR.getName().equals("BOSCO - Est")) {
+			if (currentR.getName().equals("IL BOSCO - Est")) {
 				currentR.setDark(false);
 				currentR.setDescription("<i>Gli alberi in questa parte del bosco sono molto fitti,"
 						+ " la luce della torcia ti aiuta a vedere meglio</i>");
-			} else if (currentR.getName().equals("TUNNEL")) {
+			} else if (currentR.getName().equals("IL TUNNEL")) {
 				currentR.setDark(false);
 				currentPlayer.getCurrentRoom().setDescription("<i>La luce della torcia illumina il tunnel</i>");
 				map.addPassage(7, 10, "est"); //create passage
 				map.addPassage(10, 7, "ovest"); //create passage
 			}
-			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA")){
+			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
 				currentR.setDark(false);
-				currentR.setDescription("<i>Ti trovi in una caverna fredda ed umida con funghi e dei fiori sul pavimento bagnato.<BR><BR>"
-						+ "Senti una voce che dice: 'SOLO UN FIORE POTRAI RACCOGLIERE'</i>");
+				currentR.setDescription("<i>Ti trovi in una caverna fredda ed umida con funghi e dei fiori sul pavimento bagnato.</i>");
 			}
-			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA - Dietro la porta")){
+			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA - Dietro la porta")){
 				currentR.setDark(false);
 				currentR.setDescription("<i>Il tetto e' cosi' basso che devi strisciare per poter entrare. "
 				+ "Il pavimento e' bagnato e un forte odore di sangue attrae la ya attenzione, noti un cadavere"
 				+ " in fondo alla stanza...</i>");
 			}
 		} else {
-			if (currentR.getName().equals("BOSCO - Est")) {
+			if (currentR.getName().equals("IL BOSCO - Est")) {
 				currentR.setDark(true);
 				currentR.setDescription("<i>Le chiome degli alberi in questa zona del bosco sono cosi' fitte che "
 				+ "la luce non riesce ad attraversarle. Non vedi praticamente nulla.</i>");
-			} else if (currentR.getName().equals("TUNNEL")) {
+			} else if (currentR.getName().equals("IL TUNNEL")) {
 				currentR.setDark(true);
 				currentPlayer.getCurrentRoom().setDescription("<i>Non riesci a vedere altro che l'ingresso" +
 						" del tunnel dietro di te. E' davvero buio!</i>");
 			}
-			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA")){
+			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA")){
 				currentR.setDark(true);
 				currentR.setDescription("<i>La grotta e' piuttosto buia</i>");
 			}
-			else if(currentR.getName().equals("GROTTA DIETRO LA CASCATA - Dietro la porta")){
+			else if(currentR.getName().equals("LA GROTTA DIETRO LA CASCATA - Dietro la porta")){
 				currentR.setDark(true);
 				currentR.setDescription("<i>Quest'area e' piuttosto buia</i>");
 			}
@@ -931,6 +933,29 @@ public class Game {
 			((Fixed) currentPlayer.getCurrentRoom().getItemNamed("porta " + n))
 					.setDescription(desc + map.getLorwinCodeSolution());
 		}
+	}
+	
+	/**
+	 * giving additional info for some specific rooms arriving from others
+	 * @param prev: arriving from this room
+	 * @param next: heading to this room
+	 * @return
+	 */
+	private String additionalDescription(Room prev, Room next){
+		
+		if(prev.getName().equals("LA RADURA") && next.getName().equals("CASA DEL DRUIDO - Il salotto"))
+		return "Camminando verso la casa alzi gli occhi e noti del fumo uscire dal camino."
+				+ " Arrivato davanti alla porta principale, decidi di entrare e apri la porta...<BR><BR>";
+		
+		if(prev.getName().equals("IL BOSCO - Zona sporca") && next.getName().equals("LA PICCOLA CAPANNA"))
+			return "Ti muovi verso la capanna in legno ad ovest e una volta di fronte "
+					+ "apri la porta ed entri...<BR><BR>";
+		
+		if(prev.getName().equals("LA VALLE") && next.getName().equals("LA GROTTA DIETRO LA CASCATA"))
+			return "Entri nella fessura di fianco alla cascata e una volta dentro senti una voce che dice:"
+					+ " 'SOLO UN FIORE PUO' ESSERE PRESO IN QUESTA GROTTA'<BR><BR>";
+		
+		return "";
 	}
 	
 	private void createEndCode(){
