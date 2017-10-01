@@ -534,7 +534,7 @@ public class Game {
 					currentPlayer.addObjCalled(temp.getName());
 					frame.addItemToMenu((Tool) temp);
 					currentPlayer.currentRoom.removeItemNamed(temp.getName());
-					return "hai raccolto: " + temp.getName() + checkNewCommand((Tool) temp) + beingattacked();
+					return "Oggetto raccolto: " + temp.getName() + checkNewCommand((Tool) temp) + beingattacked();
 				}
 				else if(temp.getClass() == Ingredient.class){
 					if(temp.getName().equals("fiore di belladonna")){
@@ -1000,11 +1000,11 @@ public class Game {
 		pp.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		pp.setEditable(false);
 		pp.setText("<html><body style='text-align: center; font-size: 18px;'>"
-				+ "<BR><BR><h1 style='color: red;font-size: 22px;'>Congratulations!!!</h1>"
-				+ "<p>you have completed 'The Mystical Adventure'</p>"
-				+ "<p>You can send the following code and the last words pronounced by the druid by E-mail to giacomobenso94@gmail.com</p><p><b>"
-				+ code + "</b></p><p>If you are among the first 10 people to complete the game your name will be added to the official"
-						+ " 'The Mystical Adventure' page</p></body></html>");
+				+ "<BR><BR><h1 style='color: red;font-size: 22px;'>Complimenti!!!</h1>"
+				+ "<p>Hai completato 'The Mystical Adventure'</p>"
+				+ "<p>Manda il codice qui in basso, il tuo nome e le ultime parole pronunciate dal druido via E-Mail a giacomobenso94@gmail.com</p><p><b>"
+				+ code + "</b></p><p>Se sei tra i primi 10 a finire l'avventura il tuo nome verra' aggiunto sulla hall of fame del sito ufficiale di"
+						+ " 'The Mystical Adventure' </p></body></html>");
 		nf.getContentPane().add(pp);
 		nf.setSize(new Dimension(800, 600));
 		nf.setVisible(true);

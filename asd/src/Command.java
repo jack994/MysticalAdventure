@@ -4,7 +4,8 @@ public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
-	private static final String[] ARTICLES = {" il "," lo ", " la ", " i ", " gli ", " le "," col "," con "," a ", " ad ", " al "};
+	private static final String[] ARTICLES = {" il "," lo ", " la ", " i ", " gli ", " le "," col "," con "," a ", " ad ",
+			" al ", " l'", " un ", " una "};
 
 	public static ArrayList<String> commandWords = new ArrayList<String>(){ 
 		private static final long serialVersionUID = 1L;

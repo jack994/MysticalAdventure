@@ -145,16 +145,17 @@ public class Map implements Serializable{
 
 		NpcGood druid = new NpcGood("druido", "Un misterioso essere alto e imponente, le sue sembianze sono umane ma non puoi fare a meno di notare"
 								+ " lesue corna da capra e i suoi penetranti occhi rossi", 1000, 150, true, "Aaahh finalmente ti sei svegliato Eldor! Ti stavo aspettando");
-		druid.setSecondSpeech("Ascolta, il bosco sta morendo, ho bisogno del tuo aiuto! "
-				+ "Devi trovare i tre ingredienti necesari a creare la pozione da usare per curarlo. Le creature della foresta ti sapranno dire quali sono."
-				+ " Lorwin dovrebbe essere in grado di darti il primo, e' un mio amico."
+		druid.setSecondSpeech("Ascolta, il bosco sta morendo, ho bisogno del tuo aiuto! <BR>"
+				+ "Devi trovare i tre ingredienti che mi servono per creare la pozione che lo curera'. "
+				+ "<BR>Le creature della foresta ti sapranno dire dove trovarli."
+				+ "<BR>Come prima cosa prova ad andare da Lorwin, lui dovrebbe essere in grado di darti la piuma di fenice, e' un mio amico.<BR>"
 				+ " Mi dispiace non poterti dire di piu' ma devo scappare, torna qui quando avrai i tre ingredienti.<BR><BR>"
 				+ " lo strano essere si dirige verso la porta d'uscita.<BR><BR><b>druido :</b> Ah, quasi dimenticavo... I treant sono strani alberi parlanti,"
 				+ " amano gli indovinelli, ma soprattutto il numero 7!");
 		Rooms[1].addnpcs(druid);
 		Fixed chest1 = new Fixed("baule", null);
 		chest1.addMoney(150);
-		chest1.addTool(new Weapon("coltello", "Un coltello lucido con del sangue sulla lama, sembra fresco", 50, 8, 0.98f));
+		chest1.addTool(new Weapon("pugnale", "Un pugnale con del sangue sulla lama, sembra fresco", 50, 8, 0.98f));
 		Rooms[1].addFixed(chest1);
 		Rooms[1].addTool(new Tool("sale", "Del semplice sale da cucina", 5));
 
@@ -187,8 +188,10 @@ public class Map implements Serializable{
 		chest2.addMoney(100);
 		chest2.addTool(new Tool("pozione", "Una piccola boccetta con del liquido verde dentro", 50));
 		Rooms[5].addFixed(chest2);
+		
+		Rooms[6].addFixed(new Fixed("cascata", "un'alta e rumorosa cascata che si imbatte sulle rocce per poi trasformarsi in un ruscello"));
 
-		Fixed ccp = new Fixed("cadavere","Un cadavere umano, guardandolo meglio si notano gli occhi azzurri ghiaccio");
+		Fixed ccp = new Fixed("cadavere","Un cadavere di una donna, guardandolo meglio si notano gli occhi azzurri ghiaccio");
 		Rooms[8].addFixed(ccp);
 		
 		NpcBad goblin = new NpcBad("goblin piromane", "Un goblin rosso con un'ascia infuocata tra le"
