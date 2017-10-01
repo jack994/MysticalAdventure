@@ -235,8 +235,7 @@ public class Game {
 			merchant.removeObjCalled(t.getName());
 			currentPlayer.addObj(t);
 			frame.addItemToMenu(t);
-			checkNewCommand(t); 
-			return "You bought " + command.getSecondWord();
+			return "You bought " + command.getSecondWord() + checkNewCommand(t);
 		}
 		else{
 			return "You cannot buy " + command.getSecondWord();

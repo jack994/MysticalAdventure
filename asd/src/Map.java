@@ -183,7 +183,7 @@ public class Map implements Serializable{
 		merchant1.addObj(whip);
 		merchant1.addObj(gladius);
 		for(int i = 0; i< 5; i++){
-			Tool potion = new Tool("potion", "A little flask with a green liquid inside it", 50);
+			Tool potion = new Tool("potion", "A little flask with a green liquid inside", 50);
 			merchant1.addObj(potion);
 		}
 		merchant1.addObj(apple);
@@ -193,8 +193,13 @@ public class Map implements Serializable{
 		Tool mapPiece1 = new Tool("map piece","A piece of map... looks like it is just one piece of a bigger one",0);
 		chest2.addTool(mapPiece1);
 		chest2.addMoney(100);
-		chest2.addTool(new Tool("potion", "A little flask with a green liquid inside it", 50));
+		chest2.addTool(new Tool("potion", "A little flask with a green liquid inside", 50));
 		Rooms[5].addFixed(chest2);
+		
+		Rooms[6].addFixed(new Fixed("waterfall", "A high and loud waterfall that hits the underneath rocks and makes the air misty"));
+		Fixed arbus = new Fixed("bush","A small bush on the stream shore");
+		arbus.addMoney(100);
+		arbus.addTool(new Tool("apple","A green apple, seems to be rotten", 5));
 		
 		Fixed ccp = new Fixed("corpse","A grey corpse, at closer inspection you notice his cold dead eyes");
 		Rooms[8].addFixed(ccp);
@@ -291,7 +296,7 @@ public class Map implements Serializable{
 		chest5.addMoney(50);
 		Tool mapPiece3 = new Tool("map piece","A piece of map... looks like it is just one piece of a bigger one",0); 
 		chest5.addTool(mapPiece3);
-		chest5.addTool(new Tool("potion","A little flask with a green liquid inside it", 50));
+		chest5.addTool(new Tool("potion","A little flask with a green liquid inside", 50));
 		Rooms[17].addFixed(chest5);
 		Fixed cDoor = new Fixed("door", "A tiny door that comes up to your waist, it is locked");
 		NpcBad ooze = new NpcBad("acidic ooze","A disgusting green gelly ooze", 100, 500, false, "mluuawaaa",8);
@@ -302,7 +307,7 @@ public class Map implements Serializable{
 				100, 300, "Greetings traveller, would you like to buy anything?", 2);
 		Weapon excalibur = new Weapon("longclaw", "The famous legendary sword of the knight in the north", 500, 30, 0.99f);
 		for(int i = 0; i< 10; i++){
-			Tool potion = new Tool("potion", "A little flask with a green liquid inside it", 50);
+			Tool potion = new Tool("potion", "A little flask with a green liquid inside", 50);
 			merchant2.addObj(potion);
 		}
 		Tool apple1 = new Tool("apple", "A green apple, seems quite sour", 5); 

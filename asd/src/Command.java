@@ -4,7 +4,7 @@ public class Command{
 
 	private String firstWord; //first part of the command
 	private String secondWord; //second part of the command
-	private static final String[] ARTICLES = {" to ", " at ", " from ", " to the ", " the ", " a ", " an "};
+	private static final String[] ARTICLES = {" to ", " at ", " from ", " the ", " a ", " an ", " with "};
 
 	public static ArrayList<String> commandWords = new ArrayList<String>(){ 
 		private static final long serialVersionUID = 1L;
@@ -107,11 +107,7 @@ public class Command{
 	 */
 	public static String[] contanisInstruction(String instruction){
 		String[] ret = new String[2];
-		for (int i = 0; i < ARTICLES.length; i++){
-			if(instruction.contains(ARTICLES[i])){
-				instruction = instruction.replace(ARTICLES[i], " "); //remove articles
-			}
-		}
+		
 		for(String s : commandWords){
 		if(instruction.startsWith(s)){
 			ret[0] = s;
@@ -119,7 +115,14 @@ public class Command{
 			if(!ret[1].equals("")){
 				if(!ret[1].startsWith(" ")){
 					ret[0] = null;
-				}					
+				}else{
+					for (int i = 0; i < ARTICLES.length; i++){
+						if(ret[1].startsWith(ARTICLES[i])){
+							ret[1] = ret[1].replace(ARTICLES[i], " "); //remove articles
+							i = -1; //keep checking for articles when removing one
+						}
+					}
+				}
 			}
 		}
 		}
