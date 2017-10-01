@@ -88,7 +88,7 @@ public class Map implements Serializable{
 				+ " riscalda di fronte al caminetto.",false);
 		Rooms[19] = new Room("LA GROTTA DIETRO LA CASCATA - Dietro la porta", "Quest'area e' piuttosto buia", true);
 		Rooms[20] = new Room("L'OBLIVION","L'aria e' calda e pesante, sei su un grande piano di roccia fluttuante"
-				+ " nel mezzo del nulla, tutt'intorno a questa roccia le fiamme ardono come all'inferno.",false);
+				+ " nel mezzo del nulla, tutt'intorno le fiamme ardono come all'inferno.",false);
 		Rooms[21] = new Room("IL GIARDINO DIETRO CASA DI LORWIN","Un piccolo giardino con erba verde ed un piccolo orto nell'angolo "
 				+ "a destra. Nel mezzo e' seduto un enorme cane bianco a tre teste",false);
 
@@ -319,11 +319,11 @@ public class Map implements Serializable{
 		Rooms[19].addFixed(gnome);
 		
 		NpcBad dremora = new NpcBad("lord dremora", "Uno spaventoso demone dalle sembianze umane, con delle piccole corna nere e una gigantesca"
-				+ " spada rosso scuro",1400,0,true,"Come osi venire nel mio regno, piccolo umano insolente! Morirai per la tua "
-						+ " arroganza!",3);
+				+ " spada rosso scuro",999,0,true,"Come osi venire nel mio regno, piccolo umano insolente! Morirai per la tua "
+						+ " arroganza!",5);
 		Ingredient heart = new Ingredient("cuore di dremora", "Il cuore del re dei demoni, sta ancora battendo");
 		dremora.addObj(heart);
-		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 17, 0.98f);
+		Weapon sw = new Weapon("spada demoniaca","La spada del re dei demoni, un pezzo unico e leggendario", 1000, 16, 0.98f);
 		dremora.setWeapon(sw);
 		Rooms[20].addnpcs(dremora);
 		
