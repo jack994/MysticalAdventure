@@ -40,7 +40,8 @@ public class Map implements Serializable{
 	 */
 	public Room makeRoom() {
 
-		Rooms[0] = new Room("THE BEDROOM", "You are in a sparsly decorated room that looks like a bedroom, there are some stairs that lead "
+		Rooms[0] = new Room("THE BEDROOM", "You are in a sparsly decorated room with a bed on the left corner "
+				+ "and a wooden wardrobe beside it. There are some stairs that lead "
 				+ "back to the Living Room", false);
 		Rooms[1] = new Room("THE LIVING ROOM",
 				"You are in the living room, the area seems really tidy and clean. some stairs lead upstairs, "
@@ -80,8 +81,7 @@ public class Map implements Serializable{
 				+ " West, a massive rock wall with a door in the middle.",false);
 		Rooms[16] = new Room("THE FOREST - Dirty spot","This area is surrounded by trees, a lot of waste culminates"
 				+ " on the floor. West, you can see a wooden cabin, some grey smoke comes out from the chimeny.",false);
-		Rooms[17] = new Room("THE CAVE BEYOND THE WATERFALL","The area is quite dark."
-				+ "<BR>You hear a voice saying: 'ONLY ONE FLOWER CAN BE TAKEN IN THIS CAVE'",true); 
+		Rooms[17] = new Room("THE CAVE BEYOND THE WATERFALL","The area is quite dark and humid.",true); 
 		Rooms[18] = new Room("LITTLE CABIN","You are in a tiny wooden cabin, a small man that could be a merchant"
 				+ " sits on a wooden chair in front of a fireplace. East, there is the main door",false);
 		Rooms[19] = new Room("THE CAVE BEYOND THE WATERFALL - Behind the door", "The area is quite dark", true);

@@ -169,7 +169,7 @@ public class Game {
 	
 	public String eat(Command command){
 		if(!command.hasSecondWord()){
-			return "What do you want to eat? type 'eat -item-'";
+			return "What do you want to eat? Type 'eat -item-'";
 		}
 		if(currentPlayer.getToolFromString(command.getSecondWord()) == null){
 			return "You cannot eat " + command.getSecondWord();
@@ -221,7 +221,7 @@ public class Game {
 	public String buyFromMerchant(Command command){
 		Merchant merchant;
 		if((merchant = currentPlayer.getCurrentRoom().getMerchant()) == null){
-			return "there is no merchant in this area";
+			return "There is no merchant in this area";
 		}
 		if(!command.hasSecondWord()){
 			return "What do you want to buy? Type 'buy -item-'";
@@ -250,7 +250,7 @@ public class Game {
 	 */
 	public String drink(Command command){
 		if(!command.hasSecondWord()){
-			return "What do you want to drink? write 'drink -item-'";
+			return "What do you want to drink? Type 'drink -item-'";
 		}
 		//if the item drinked is a potion:
 		if(command.getSecondWord().equals("potion") && currentPlayer.getToolFromString("potion") != null){
@@ -289,7 +289,7 @@ public class Game {
 			return "You cannot light up anything without the appropriate tool" + beingattacked();
 		}
 		if (!command.hasSecondWord()) {
-			return "What do you want to light up? <BR>Write 'light up -item-'"+ beingattacked();
+			return "What do you want to light up? <BR>Type 'light up -item-'"+ beingattacked();
 		}
 		if (currentPlayer.getWeapon().getName().equals("torch") && currentPlayer.getWeapon().getDamage() == 5) {
 			return "Your torch has already been lit"+ beingattacked();
@@ -331,7 +331,7 @@ public class Game {
 			return "You cannot open anything without the appropriate key"+ beingattacked();
 		}
 		if (!command.hasSecondWord()) {
-			return "What do you want to open? <BR>Write 'open -item-'"+ beingattacked();
+			return "What do you want to open? <BR>Type 'open -item-'"+ beingattacked();
 		}
 		if (currentPlayer.getCurrentRoom().getName().equals("THE FOREST - South")) {
 			if(currentPlayer.getToolFromString("key") == null){
@@ -393,6 +393,8 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String saySomething(Command command) {
+		if (!command.hasSecondWord())
+			return "What do you want to say? Type 'say -word/sentance-'" + beingattacked();
 		NPC npc;
 		if ((command.getSecondWord().equals("moon"))
 				&& currentPlayer.getCurrentRoom().getName().equals("THE CLEARING")) { // riddle solved
@@ -454,17 +456,19 @@ public class Game {
 	 */
 	public String goRoom(Command command) {
 		if(!command.hasSecondWord()){
-			return "Where do you want to go? write 'go -direction-'";
+			return "Where do you want to go? Type 'go -direction-'";
 		}		
 		
 		String toReturn = "";
+		Room prev;
 		
-		if (currentPlayer.getCurrentRoom().hasDirection(command.getSecondWord())) { //if the direction exists
+		if ((prev = currentPlayer.getCurrentRoom()).hasDirection(command.getSecondWord())) { //if the direction exists
 			Room next = currentPlayer.getCurrentRoom().getDirectionRoom(command.getSecondWord());
 			currentPlayer.setCurrentRoom(next);	
-			enlight(currentPlayer.getCurrentRoom()); // enlight the room if you are carying a torch
+			enlight(currentPlayer.getCurrentRoom()); // illuminate the room if you are carrying a torch
 			changeDoors(); // change results on the doors for lorwin's riddle
-			toReturn = currentPlayer.getCurrentRoom().getNameAndDescription();
+			toReturn += additionalDescription(prev, next); //additional description in some rooms
+			toReturn += currentPlayer.getCurrentRoom().getNameAndDescription();
 			if(currentPlayer.getCurrentRoom().getNPCNamed("druid") != null && currentPlayer.getCurrentRoom().getName().equals("THE LIVING ROOM")
 					&& currentPlayer.getCurrentRoom().getNPCNamed("druid").getHP() == 999){ // 999 hp means second time you meet the druid (end)
 				end = true;
@@ -492,9 +496,11 @@ public class Game {
 			return "It's too dark to perform this action.";
 		}
 		Item temp;
-		if (!command.hasSecondWord()) {
-			return "What do you want to " + command.getFirstWord() + "?";
-		} else if (command.getSecondWord().equals("money")) {
+		if (!command.hasSecondWord()){
+			return "What do you want to " + command.getFirstWord() + "? Type '" 
+		+ command.getFirstWord() + " -item-'" + beingattacked();
+		}
+		else if (command.getSecondWord().equals("money")) {
 			int mon;
 			if((mon = currentPlayer.getCurrentRoom().getMoney()) > 0){
 				currentPlayer.getCurrentRoom().removeMoney(mon);
@@ -567,7 +573,8 @@ public class Game {
 	public String dropTool(Command command) {
 		Tool t = currentPlayer.getToolFromString(command.getSecondWord());
 		if (!command.hasSecondWord())
-			return "What do you want to " + command.getFirstWord() + "?" + beingattacked();
+			return "What do you want to " + command.getFirstWord() + "? Type '" 
+		+ command.getFirstWord() + " -item-'" + beingattacked();
 		else {
 			if (t != null) {
 				String remove;
@@ -649,7 +656,7 @@ public class Game {
 			return "It's too dark to perform this action.";
 		}
 		if (!command.hasSecondWord()) {
-			return "Who do you want to attack? write 'attack -target-'";
+			return "Who do you want to attack? type 'attack -target-'";
 		}
 		NPC enemy;
 		if ((enemy = currentPlayer.currentRoom.getNPCNamed(command.getSecondWord())) != null) {
@@ -684,7 +691,7 @@ public class Game {
 	 */
 	public String equip(Command command) {
 		if (!command.hasSecondWord()) {
-			return "What do you want to equip?";
+			return "What do you want to equip? type 'equip -item-'";
 		}
 		Tool t;
 		if ((t = currentPlayer.getToolFromString(command.getSecondWord())) != null) {
@@ -857,8 +864,7 @@ public class Game {
 			}
 			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL")){
 				currentR.setDark(false);
-				currentR.setDescription("<i>An empty cave with moist walls, some fungi and flowers on the floor.<BR><BR>"
-						+ "You hear a voice saying: 'ONLY ONE FLOWER CAN BE TAKEN IN THIS CAVE'</i>");
+				currentR.setDescription("<i>An empty cave with moist walls, some fungi and flowers on the floor.</i>");
 			}
 			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL - Behind the door")){
 				currentR.setDark(false);
@@ -877,11 +883,11 @@ public class Game {
 			}
 			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL")){
 				currentR.setDark(true);
-				currentR.setDescription("<i>The area is quite dark</i>");
+				currentR.setDescription("<i>The area is quite dark and humid</i>");
 			}
 			else if(currentR.getName().equals("THE CAVE BEYOND THE WATERFALL - Behind the door")){
 				currentR.setDark(true);
-				currentR.setDescription("<i>The area is quite dark</i>");
+				currentR.setDescription("<i>The area is quite dark and humid</i>");
 			}
 		}
 
@@ -921,6 +927,27 @@ public class Game {
 			((Fixed) currentPlayer.getCurrentRoom().getItemNamed("door " + n))
 					.setDescription(desc + map.getLorwinCodeSolution());
 		}
+	}
+	
+	/**
+	 * giving additional info for some specific rooms arriving from others
+	 * @param prev: arriving from this room
+	 * @param next: heading to this room
+	 * @return
+	 */
+	private String additionalDescription(Room prev, Room next){
+		
+		if(prev.getName().equals("THE CLEARING") && next.getName().equals("THE LIVING ROOM"))
+		return "You walk towards the front door of the house, looking up you notice some smoke coming out from the chimeny."
+				+ " You open the door and get in...<BR><BR>";
+		
+		if(prev.getName().equals("THE FOREST - Dirty spot") && next.getName().equals("LITTLE CABIN"))
+			return "You move west towards the little cabin and once in front of the door, you open it...<BR><BR>";
+		
+		if(prev.getName().equals("THE VALLEY") && next.getName().equals("THE CAVE BEYOND THE WATERFALL"))
+			return "You get in and suddenly you hear a voice saying: 'ONLY ONE FLOWER CAN BE TAKEN IN THIS CAVE'<BR><BR>";
+		
+		return "";
 	}
 	
 	private void createEndCode(){
