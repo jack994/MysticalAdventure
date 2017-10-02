@@ -815,7 +815,7 @@ public class Game {
 			try {
 			if (FileUtils.contentEquals(fileIn, fileOut)){
 				toChange += "<BR><hr><p>Apri gli occhi... <BR>Ti senti confuso e non riesci bene a capire dove ti trovi, "
-						+ "non ricordi nemmeno cosa e' successo nel passato, come se avessi perso ogni ricordo...</p>";
+						+ "non ricordi nemmeno cosa sia successo nel passato, come se avessi perso ogni ricordo...</p>";
 				}
 				} catch (IOException e) {
 					e.printStackTrace();
