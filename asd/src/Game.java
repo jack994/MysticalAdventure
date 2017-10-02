@@ -199,15 +199,15 @@ public class Game {
 		JFrame nf = new JFrame();
 		
 		if(frame.getMapPieces() == 1){
-			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece1.jpg")));
+			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mpp/tt/piece/piece1.jpg")));
 			nf.setSize(new Dimension(303, 500));
 		}
 		else if(frame.getMapPieces() == 2){
-			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece2.jpg")));
+			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mpp/tt/piece/piece2.jpg")));
 			nf.setSize(new Dimension(476, 500));
 		}
 		else if(frame.getMapPieces() == 3){
-			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mapPieces/piece3.jpg")));
+			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mpp/tt/piece/piece3.jpg")));
 			nf.setSize(new Dimension(667, 500));
 		}
 		nf.setVisible(true);
@@ -395,7 +395,7 @@ public class Game {
 	 */
 	public String saySomething(Command command) {
 		if(!command.hasSecondWord()){
-			return "Che cosa vuoi pronunciare? Scrivi 'prinuncia -parola/frase-'";
+			return "Che cosa vuoi pronunciare? Scrivi 'pronuncia -parola/frase-'";
 		}
 		NPC npc;
 		if ((command.getSecondWord().equals("luna"))
@@ -787,8 +787,8 @@ public class Game {
 		return "<b>I comandi utilizzabili sono:</b> <i>" + command.listCommands() + "</i><BR>"
 				+ "I comandi possono essere combinati con altre parole o oggetti (di solito oggetti o personaggi nell'area circostante)."
 				+ " Alcuni esempi sono: <b>'attacca il goblin', 'equipaggia coltello', 'esamina', ' esamina baule', 'prendi la chiave',"
-				+ " 'vai a nord'.</b> <BR>I comandi possono variare durante il corso della storia"
-		        + "E' possibile salvare cliccando il tasto 'salva' nell'angolo in basso a sinistra.<BR>Se muori, i tuoi progressi andranno persi.";
+				+ " 'vai a nord'.</b> <BR>I comandi possono variare durante il corso della storia.<BR>"
+		        + " E' possibile salvare cliccando il tasto 'salva' nell'angolo in basso a sinistra.<BR>Se muori, i tuoi progressi andranno persi.";
 	}
 
 	/**
