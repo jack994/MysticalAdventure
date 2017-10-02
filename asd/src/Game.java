@@ -960,7 +960,7 @@ public class Game {
 		else{
 			code += "w";
 		}
-		code += "35bb"+ (rand.nextInt(4) + 3);
+		code += "35b"+ (rand.nextInt(4) + 3);
 		if(rand.nextBoolean()){
 			if(rand.nextBoolean()){
 				code += "rd";
@@ -978,6 +978,10 @@ public class Game {
 			}
 		}
 		code += (rand.nextInt(4) + 3);
+		code += "en";
+		for(int i=0; i<3; i++){
+			code+= (rand.nextInt(5) + 5);
+		}
 		
 		actione(code);
 		

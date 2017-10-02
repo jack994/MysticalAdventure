@@ -76,10 +76,10 @@ public class GameWindow extends JFrame{
 		for (int k = 0; k < labels.length; k++) {
 			labels[k] = new JLabel("");
 		}
-		labels[0].setText(" Life: ");
+		labels[0].setText(" HP: ");
 		labels[2].setText(" Deaths:  ");
 		labels[3].setText(0 + "");
-		labels[4].setText(" Weapon: ");
+		labels[4].setText(" Weapon:  ");
 		labels[5].setText(" none");
 		labels[6].setText(" Money:   ");
 		labels[7].setText(100 + "");

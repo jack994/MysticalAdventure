@@ -118,7 +118,7 @@ public class Command{
 				}else{
 					for (int i = 0; i < ARTICLES.length; i++){
 						if(ret[1].startsWith(ARTICLES[i])){
-							ret[1] = ret[1].replace(ARTICLES[i], " "); //remove articles
+							ret[1] = ret[1].replaceFirst(ARTICLES[i], " "); //remove articles
 							i = -1; //keep checking for articles when removing one
 						}
 					}
