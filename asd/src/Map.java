@@ -222,7 +222,7 @@ public class Map implements Serializable{
 		Fixed Door6 = new Fixed("door 6", "The door is locked, on it someone wrote the number " + (lorwinCode[currentCode][1] +100));
 		Fixed Door7 = new Fixed("door 7", "The door is locked, on it someone wrote the number " + (lorwinCode[currentCode][1] -120));
 		NpcGood randomGuy = new NpcGood("elder man","An old man with a long white beard",100,100,false,"I think that to solve the riddle"
-				+ " we need to calculate the number of possibilities with no zeros and subtract it from some other number...");
+				+ " we need to calculate the number of combinations with no zeros and subtract it from some other number...");
 		Rooms[11].addnpcs(randomGuy);
 		Rooms[11].addFixed(Door1);
 		Rooms[11].addFixed(Door2);
