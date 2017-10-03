@@ -192,6 +192,7 @@ public class Game {
 		JFrame nf = new JFrame();
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.substring(0, path.lastIndexOf("/") + 1);
+		path = path.replaceAll("%20", " ");
 		
 		if(frame.getMapPieces() == 1){
 			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece1.jpg")));
@@ -794,6 +795,7 @@ public class Game {
 	public void printWelcome(boolean dead) {
 		
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		path = path.replaceAll("%20", " ");
 		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
 		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 		
@@ -832,6 +834,7 @@ public class Game {
 	public void start() {
 		// ------------First check that the savedData is in place----------------------
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		path = path.replaceAll("%20", " ");
 		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
 		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 

@@ -25,6 +25,7 @@ public class MysticalAdventure {
 	 */
 	public static void serializer(SavedObj obj) {
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		path = path.replaceAll("%20", " ");
 		try {
 			FileOutputStream fileOut = new FileOutputStream(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -42,6 +43,7 @@ public class MysticalAdventure {
 	 */
 	public static void reset(boolean dead){
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		path = path.replaceAll("%20", " ");
 		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
 		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 		try {
@@ -75,6 +77,7 @@ public class MysticalAdventure {
 	 */
 	public static void deserializer(SavedObj obj, Game g) {
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		path = path.replaceAll("%20", " ");
 		try {
 			FileInputStream fileIn = new FileInputStream(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
