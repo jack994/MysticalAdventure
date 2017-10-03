@@ -8,7 +8,7 @@ public class Map implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Room[] Rooms;
-	int[][] lorwinCode = { {3,672}, {4,4368}, {5,23520}, {6,100800} };
+	int[][] lorwinCode = { {3,271}, {4,3439}, {5,40951}, {6,468559} };
 	int currentCode = 1; 
 
 	public Map() {
@@ -70,8 +70,7 @@ public class Map implements Serializable{
 				+ " dalla puzza che c'e' qui e' probailmente morto", false); 
 		Rooms[11] = new Room("IL BOSCO - Sud", "Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
 				+ "sul lato a sud e sopra di esse un'incisione ben definita recita: 'Nel codice di Lorwin "
-				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
-				+ "e le cifre 0 e 1 non possono essere presenti contemporaneamente nella sequenza.<BR>"
+				+ "una sequenza numerica valida contiene solamente cifre e deve contenere lo '0' almeno una volta.<BR>"
 				+ "Quante sequenze possibili ci sono in un codice lungo "+ lorwinCode[currentCode][0] +" cifre?'", false);
 		Rooms[12] = new Room("SBAGLIATO", "Muori insetto!!!!", false);
 		Rooms[13] = new Room("CASA DI LORWIN", "La casa e' piccola e ordinata, nel mezzo della stanza c'e' un "

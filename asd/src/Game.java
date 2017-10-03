@@ -914,8 +914,7 @@ public class Game {
 			String desc = "La porta e' chiusa, qualcuno ha scritto su di essa il numero ";
 			currentPlayer.getCurrentRoom().setDescription("<i>Quest'area e' circondata da pareti rocciose. Sette porte sono poste "
 				+ "sul lato a sud e sopra di esse un'incisione ben definita recita: 'Nel codice di Lorwin "
-				+ "una sequenza numerica valida non contiene mai un numero (da 0 a 9) ripetuto piu' di una volta "
-				+ "e le cifre 0 e 1 non possono essere presenti contemporaneamente nella sequenza.<BR>"
+				+ "una sequenza numerica valida contiene solamente cifre e deve contenere lo '0' almeno una volta.<BR>"
 				+ "Quante sequenze possibili ci sono in un codice lungo "+ map.getLorwinCodeLength() +" cifre?'</i>");
 
 			for (int i = 1; i < 8; i++) { //for each door
