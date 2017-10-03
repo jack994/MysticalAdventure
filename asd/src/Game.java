@@ -907,9 +907,8 @@ public class Game {
 			String desc = "The door is locked, on it someone wrote the number ";
 			currentPlayer.getCurrentRoom().setDescription("<i>This area is surrounded by rock walls, seven doors are on the south "
 				+ "side of the area, above them a well defined engraving saying: 'In the Lorwin code a "
-				+ "valid codeword does not contain any digit more than once and "
-				+ "cannot contain both 0 and 1 in the same codeword.<BR>"
-				+ "How many possible strings of "+ map.getLorwinCodeLength() +" digits are there?'</i>");
+				+ "valid codeword contains only digits and must contain the digit '0' at least once.<BR>"
+				+ "How many possible codewords of "+ map.getLorwinCodeLength() +" digits are there?'</i>");
 			
 
 			for (int i = 1; i < 8; i++) { //for each door

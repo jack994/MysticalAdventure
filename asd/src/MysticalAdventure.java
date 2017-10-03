@@ -43,7 +43,7 @@ public class MysticalAdventure {
 	 */
 	public static void reset(boolean dead){
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
 		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 		try {
 			FileUtils.copyFile(fileIn, fileOut);

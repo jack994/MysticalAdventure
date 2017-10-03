@@ -8,7 +8,7 @@ public class Map implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Room[] Rooms;
-	int[][] lorwinCode = { {3,672}, {4,4368}, {5,23520}, {6,100800} };
+	int[][] lorwinCode = { {3,271}, {4,3439}, {5,40951}, {6,468559} };
 	int currentCode = 1; 
 
 	public Map() {
@@ -67,10 +67,9 @@ public class Map implements Serializable{
 		Rooms[9] = new Room("THE CAVE", "You are in a small cave, the burning smell here becomes stronger.", false);
 		Rooms[10] = new Room("THE SWAMP","A stinky boggy flooded swamp full of insects, there is a foul deathly smell.", false); 
 		Rooms[11] = new Room("THE FOREST - South", "This area is surrounded by rock walls, seven doors are on the south "
-				+ "side of the area, above them a well defined engraving says: 'In the Lorwin code a "
-				+ "valid codeword does not contain any digit more than once and "
-				+ "cannot contain both 0 and 1 in the same codeword.<BR> "
-				+ "How many possible strings of "+ lorwinCode[currentCode][0] +" digits are there?'", false);
+				+ "side of the area, above them a well defined engraving saying: 'In the Lorwin code a "
+				+ "valid codeword contains only digits and must contain the digit '0' at least once.<BR>"
+				+ "How many possible codewords of "+ lorwinCode[currentCode][0] +" digits are there?'", false);
 		Rooms[12] = new Room("INCORRECT", "Die Insect!!!!", false);
 		Rooms[13] = new Room("LORWIN's HOME", "The house is minimal and decadent, in the middle of the room there is a "
 				+ "bed and a small table placed beside it. A lot of books are piled up on the other."
@@ -166,6 +165,7 @@ public class Map implements Serializable{
 		NpcGood treant = new NpcGood("treant", "An enormous alive tree that blocks the passage to the forest", 100, 130,
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
+		Rooms[3].addTool(new Tool("key", "A golden key, it seems made for a special type of door",0));
 		
 //		/////////////////////////////////////////////////////////////
 //		Ingredient plume = new Ingredient("phoenix plume","A fire red plume once appartaining to a phoenix");
@@ -321,7 +321,8 @@ public class Map implements Serializable{
 				+ "like he has been dead too long.");
 		Tool message = new Tool("message", "A scroll with hard to recognise writing, the person who"
 				+ " wrote it must have been in a rush:<BR><i>'The Lord Dremora is coming to kill me, vindicate me, the only way to "
-				+ "find him is to pronounce the next number of the numerical succession that a Demon has written on his collar over his dead body.'</i>",0);
+				+ "find him is to pronounce the next number of the numerical succession that a Demon has written on his collar over his dead body."
+				+ "Remember, 666 is the number of the beast.'</i>",0);
 		gnome.addMoney(50);
 		gnome.addTool(message);
 		Rooms[19].addFixed(gnome);
