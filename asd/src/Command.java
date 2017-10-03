@@ -73,7 +73,7 @@ public class Command{
 				return;
 			}			
 		}
-		else if(toRem.equals("torch") || toRem.equals("matches")){
+		else if(toRem.equals("matches")){
 			com = "light up";
 		}
 		else if(toRem.equals("map piece")){
