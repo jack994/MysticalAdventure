@@ -30,13 +30,6 @@ public class Game {
 
 	public Game() { // constructor
 		frame = new GameWindow();
-		frame.getTextBox().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				THESTACK.reset();
-				write();
-			}
-		});
-
 		map = new Map();
 		StartRoom = map.createRoom();
 		currentPlayer = new Player("Eldor");
@@ -799,7 +792,13 @@ public class Game {
 	 * it it's you have never saved the game or you are dead it also adds the introduction.
 	 */
 	public void printWelcome(boolean dead) {
+		
+		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+		
 		String toChange = "<html><body>";
+			
 		if(dead){
 			toChange += "<p style='font-size: 40px'>SEI MORTO!</p>";
 		}
@@ -812,8 +811,6 @@ public class Game {
 					+ "<BR>Se hai bisogno di aiuto con i comandi scrivi 'aiuto'.</p>";
 				 }	
 		
-		File fileIn = new File("./lib/savedGame/savedGameDeath.ser");
-		File fileOut = new File("./lib/savedGame/savedGame.ser");
 			try {
 			if (FileUtils.contentEquals(fileIn, fileOut)){
 				toChange += "<BR><hr><p>Apri gli occhi... <BR>Ti senti confuso e non riesci bene a capire dove ti trovi, "
@@ -833,7 +830,28 @@ public class Game {
 	 * start the game printing the welcome message
 	 */
 	public void start() {
-		printWelcome(false);
+		// ------------First check that the savedData is in place----------------------
+		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+
+		if (!fileIn.exists() || !fileOut.exists()) {
+
+			String err = "<html><body><BR><h2>File di salvataggio non trovati, assicurati di aver estratto la cartella 'MysticalAdventureITA'"
+					+ " sul desktop e di aver eseguito il file .jar da dentro quella cartella.</h2></body></html>";
+			frame.getPane().setText(err);
+			return;
+		} else {
+			frame.getTextBox().addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Game.THESTACK.reset();
+					write();
+				}
+			});
+			printWelcome(false); // if we have the save data then we print welcome message
+		}
+        //-----------------------------------------------------------------------
+		
 	}
 
 	/**
