@@ -313,7 +313,8 @@ public class Map implements Serializable{
 				+ "morto da molto.");
 		Tool message = new Tool("messaggio", "Una pergamena con qualcosa scritto sopra, a giudicare dalla scrittura la persona che"
 				+ " l'ha scritta doveva essere di fretta:<BR><i>'Il Lord Dremora sta venendo ad uccidermi, vendicatemi! L'unico modo "
-				+ "per trovarlo e' pronunciare il numero successivo della successione numerica che un Demone ha scritto sul collare dove giace il suo corpo morto.'</i>",0);
+				+ "per trovarlo e' pronunciare il numero successivo della successione numerica che un Demone ha scritto sul collare dove giace il suo corpo morto."
+				+ " Ricorda, 666 e' il numero del diavolo.'</i>",0);
 		gnome.addMoney(50);
 		gnome.addTool(message);
 		Rooms[19].addFixed(gnome);
