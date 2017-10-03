@@ -220,8 +220,8 @@ public class Map implements Serializable{
 		Fixed Door5 = new Fixed("porta 5", "La porta e' chiusa, qualcuno ci ha inciso il numero " + (lorwinCode[currentCode][1] +140));
 		Fixed Door6 = new Fixed("porta 6", "La porta e' chiusa, qualcuno ci ha inciso il numero " + (lorwinCode[currentCode][1] +100));
 		Fixed Door7 = new Fixed("porta 7", "La porta e' chiusa, qualcuno ci ha inciso il numero " + (lorwinCode[currentCode][1] -120));
-		NpcGood randomGuy = new NpcGood("uomo anziano","Un uomo anziano con una lunga barba bianca",100,100,false,"Penso"
-				+ " di sapere la soluzione ma non ho la chiave per aprire la porta!");
+		NpcGood randomGuy = new NpcGood("uomo anziano","Un uomo anziano con una lunga barba bianca",100,100,false,"Mhhh... Secondo"
+				+ " me per arrivare alla soluzione bisogna calcolare il numero di combinazioni senza zeri e sottrarlo a qualche altro numero...");
 		Rooms[11].addnpcs(randomGuy);
 		Rooms[11].addFixed(Door1);
 		Rooms[11].addFixed(Door2);
