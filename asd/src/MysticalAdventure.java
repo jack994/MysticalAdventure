@@ -149,12 +149,6 @@ public class MysticalAdventure {
 			}
 		});
 		
-		GAME.frame.getTextBox().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Game.THESTACK.reset();
-				GAME.write();
-			}
-		});
 	}
 
 //	*******************************************************************************************
