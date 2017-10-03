@@ -24,13 +24,14 @@ public class MysticalAdventure {
 	 * @param obj: object to serialize
 	 */
 	public static void serializer(SavedObj obj) {
+		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		try {
-			FileOutputStream fileOut = new FileOutputStream("./lib/savedGame/savedGame.ser");
+			FileOutputStream fileOut = new FileOutputStream(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(obj);
 			out.close();
 			fileOut.close();
-			System.out.printf("Serialized data is saved in ./lib/savedGame/savedGame.ser");
+			System.out.printf("Serialized data is saved in " + path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
@@ -40,8 +41,9 @@ public class MysticalAdventure {
 	 * when the player dies restart the game from the beginning, the saved game is erased
 	 */
 	public static void reset(boolean dead){
-		File fileIn = new File("./lib/savedGame/savedGameDeath.ser");
-		File fileOut = new File("./lib/savedGame/savedGame.ser");
+		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 		try {
 			FileUtils.copyFile(fileIn, fileOut);
 		} catch (IOException e) {
@@ -72,8 +74,9 @@ public class MysticalAdventure {
 	 * @param g: the game
 	 */
 	public static void deserializer(SavedObj obj, Game g) {
+		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		try {
-			FileInputStream fileIn = new FileInputStream("./lib/savedGame/savedGame.ser");
+			FileInputStream fileIn = new FileInputStream(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			obj = (SavedObj) in.readObject();
 			in.close();

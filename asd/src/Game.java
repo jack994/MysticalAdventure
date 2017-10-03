@@ -197,17 +197,19 @@ public class Game {
 		}
 		
 		JFrame nf = new JFrame();
+		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		path = path.substring(0, path.lastIndexOf("/") + 1);
 		
 		if(frame.getMapPieces() == 1){
-			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mpp/tt/piece/piece1.jpg")));
+			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece1.jpg")));
 			nf.setSize(new Dimension(303, 500));
 		}
 		else if(frame.getMapPieces() == 2){
-			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mpp/tt/piece/piece2.jpg")));
+			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece2.jpg")));
 			nf.setSize(new Dimension(476, 500));
 		}
 		else if(frame.getMapPieces() == 3){
-			nf.getContentPane().add(new JLabel(new ImageIcon("./lib/mpp/tt/piece/piece3.jpg")));
+			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece3.jpg")));
 			nf.setSize(new Dimension(667, 500));
 		}
 		nf.setVisible(true);
