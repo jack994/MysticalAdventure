@@ -164,15 +164,7 @@ public class Map implements Serializable{
 		
 		NpcGood treant = new NpcGood("treant", "An enormous alive tree that blocks the passage to the forest", 100, 130,
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
-		Rooms[3].addnpcs(treant);
-		
-//		/////////////////////////////////////////////////////////////
-//		Ingredient plume = new Ingredient("phoenix plume","A fire red plume once appartaining to a phoenix");
-//		Ingredient belladonnae = new Ingredient("belladonna flower", "A beautiful white flower");
-//		Rooms[3].addTool(new Weapon("demon-slayer", "An ancient sword used to defeat demons", 500, 10, 0.99f));
-//		Rooms[3].addTool(belladonnae);
-//		Rooms[3].addTool(plume);
-//		/////////////////////////////////////////////////////////////		
+		Rooms[3].addnpcs(treant);		
 
 		Merchant merchant1 = new Merchant("merchant", "A beautiful lady with golden lockes smiling pleasantly at you.",
 				100, 300, "Greetings traveller, what are you buying?", 3);
