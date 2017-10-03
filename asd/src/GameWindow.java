@@ -283,7 +283,7 @@ public class GameWindow extends JFrame{
 	 * set all the labels in the ingredients area to ''
 	 */
 	public void emptyIngredientsLabels(){
-		for(int i = ingrCounter; i < numOfIngredients; i+=2){
+		for(int i = ingrCounter; i < numOfIngredients; i++){
 			labels2[i].setText("");
 		}
 	}
