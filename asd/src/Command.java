@@ -71,7 +71,7 @@ public class Command{
 			}else{
 				return;
 			}
-		}else if(toRem.equals("torcia") || toRem.equals("fiammiferi")){
+		}else if(toRem.equals("fiammiferi")){
 			com = "accendi";
 		}else if(toRem.equals("pezzo di mappa")){
 			if(player.getToolFromString("pezzo di mappa") == null){
