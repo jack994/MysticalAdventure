@@ -124,8 +124,6 @@ public class Map implements Serializable{
 		Rooms[14].setDirection("nord", Rooms[8]);
 		Rooms[8].setDirection("nord", Rooms[15]);
 		Rooms[15].setDirection("sud", Rooms[8]);
-		Rooms[15].setDirection("ovest", Rooms[16]);
-		Rooms[16].setDirection("est", Rooms[15]);
 		Rooms[16].setDirection("ovest", Rooms[18]);
 		Rooms[18].setDirection("est", Rooms[16]);
 		Rooms[19].setDirection("ovest", Rooms[17]);

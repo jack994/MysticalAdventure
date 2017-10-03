@@ -335,7 +335,7 @@ public class Game {
 			if(currentPlayer.getToolFromString("chiave") == null){
 				return "Hai bisogno della chiave appropriata per aprire la porta";
 			}
-			if (command.getSecondWord().equals("porta") || command.getSecondWord().equals("la porta"))
+			if (command.getSecondWord().equals("porta"))
 				return "Quale vorresti aprire? Scrivi 'apri porta -numero-'";
 			String[] tmp = command.getSecondWord().split(" ");
 			if (tmp[0].equals("porta") && StringUtils.isNumeric(tmp[1])) {
@@ -547,7 +547,7 @@ public class Game {
 								+ " <BR>Mi dispiace...");
 						map.getRoom(1).addnpcs(druid); //add the druid to his house
 					}
-					else if(temp.getName().equals("cuore di dremora") && currentPlayer.getCurrentRoom().getName().equals("OBLIVION")){ //if you take the heart of the dremora
+					else if(temp.getName().equals("cuore di dremora") && currentPlayer.getCurrentRoom().getName().equals("L'OBLIVION")){ //if you take the heart of the dremora
 						currentPlayer.setCurrentRoom(map.getRoom(14)); //get back to the wood
 						return "Inizi a sentirti debole e perdi i sensi...<BR><BR>" + 
 								currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
