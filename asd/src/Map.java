@@ -165,7 +165,6 @@ public class Map implements Serializable{
 		NpcGood treant = new NpcGood("treant", "An enormous alive tree that blocks the passage to the forest", 100, 130,
 				false, "Pa ohz illu hyvbuk mvy tpsspvuz vm flhyz, iba pa pz uv tvyl aohu h tvuao vsk. Doha pz pa?");
 		Rooms[3].addnpcs(treant);
-		Rooms[3].addTool(new Tool("key", "A golden key, it seems made for a special type of door",0));
 		
 //		/////////////////////////////////////////////////////////////
 //		Ingredient plume = new Ingredient("phoenix plume","A fire red plume once appartaining to a phoenix");
