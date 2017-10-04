@@ -539,6 +539,9 @@ public class Game {
 					currentPlayer.addObjCalled(temp.getName());
 					currentPlayer.currentRoom.removeItemNamed(temp.getName());
 					if(currentPlayer.ingredientsFound() == 3){
+						if(map.getRoom(1).getNPCNamed("druido") != null){
+							map.getRoom(1).removeNpcNamed("druido");
+						}
 						NpcGood druid = new NpcGood("druido","Un misterioso essere alto e imponente, le sue sembianze sono umane ma non puoi fare a meno di notare"
 								+ " lesue corna da capra e i suoi penetranti occhi rossi", 999, 150, true, currentPlayer.getName()
 								+ "!!! Hai trovato tutti gli ingredienti! Ho sempre creduto in te!<BR>C'e' pero' una cosa che dovresti sapere,"
@@ -546,8 +549,9 @@ public class Game {
 								+ "La pozione per curare il bosco ha bisogno di un quarto ingrediente, quest'ultimo e' l'anima dell'evocazione che ha trvato gli altri tre."
 								+ " <BR>Mi dispiace...");
 						map.getRoom(1).addnpcs(druid); //add the druid to his house
+		
 					}
-					else if(temp.getName().equals("cuore di dremora") && currentPlayer.getCurrentRoom().getName().equals("L'OBLIVION")){ //if you take the heart of the dremora
+					if(temp.getName().equals("cuore di dremora") && currentPlayer.getCurrentRoom().getName().equals("L'OBLIVION")){ //if you take the heart of the dremora
 						currentPlayer.setCurrentRoom(map.getRoom(14)); //get back to the wood
 						return "Inizi a sentirti debole e perdi i sensi...<BR><BR>" + 
 								currentPlayer.getCurrentRoom().getNameAndDescription() + beingattacked();
