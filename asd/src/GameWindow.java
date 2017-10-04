@@ -273,10 +273,12 @@ public class GameWindow extends JFrame{
 	 * set all the labels of the bag to ''
 	 */
 	public void emptyBagLabels(){
-		for(int i = startItem; i < endItem; i+=2){
+		for(int i = startItem; i <= endItem; i+=2){
 			labels[i].setText("");
 			labels[(i)+1].setText("");
 		}
+		itemCounter = 10;
+		fullBag = false;
 	}
 	
 	/**
@@ -301,16 +303,6 @@ public class GameWindow extends JFrame{
 				l.setBackground(Color.RED);
 			}
 			i++;
-		}
-	}
-
-	/**
-	 * reset the item-counter ant then the labels of the bag
-	 */
-	public void resetItemsCounter() {
-		itemCounter = 10;
-		for (int k = itemCounter; k < endItem; k++) {
-			labels[k].setText("");
 		}
 	}
 
