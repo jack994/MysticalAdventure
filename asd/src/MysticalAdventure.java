@@ -57,7 +57,6 @@ public class MysticalAdventure {
 			Map m = new Map();
 			GAME.setMap(m);
 			GAME.getCurrentPlayer().setCurrentRoom(m.createRoom());
-			GAME.frame.resetItemsCounter();
 			GameWindow.greenLabelsCounter = (int)((double)GAME.getCurrentPlayer().getLifeRemaning() / 
 					GAME.getCurrentPlayer().getHP()*100); // reset correct life in life-bar
 			GAME.frame.resetLifelabel();
@@ -65,7 +64,6 @@ public class MysticalAdventure {
 			GAME.frame.emptyIngredientsLabels();
 			GAME.frame.getMoneyLabel().setText(GAME.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(GAME.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
-			GAME.frame.resetItemsCounter();
 			GAME.printWelcome(dead);
 	}
 	
@@ -91,7 +89,7 @@ public class MysticalAdventure {
 			GAME.frame.getMoneyLabel().setText(obj.getCurrentPlayer().getMoneyAmount() + ""); // reset money in JFrame
 			GAME.frame.getWeaponLabel().setText(obj.getCurrentPlayer().getWeapon().getName()); //reset weapon in JFrame
 			GAME.frame.getDeathsLabel().setText(obj.getCurrentPlayer().getDeaths() + ""); //update deaths label
-			GAME.frame.resetItemsCounter();
+			GAME.frame.emptyBagLabels();
 			for (Tool t : obj.getCurrentPlayer().getItemsHeldArray()) {
 					GAME.frame.addItemToMenu(t);				
 			}
