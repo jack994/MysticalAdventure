@@ -585,13 +585,10 @@ public class Game {
 					frame.getWeaponLabel().setText(NN.getName());
 				}
 				frame.removeItemFromMenu(remove = t.getName());
-				currentPlayer.removeObjCalled(command.getSecondWord());
+				currentPlayer.removeObjCalled(remove);
 				currentPlayer.currentRoom.addTool(t);
-				if(remove.equals("chiave") || remove.equals("passepartout") || remove.equals("torcia") || 
-						remove.equals("pezzo di mappa")){ 
 					//remove the appropriate command if item dropped
 					Command.removeCommand(remove, currentPlayer);
-				}
 				return "Hai lasciato : " + t.getName() + beingattacked();
 			}
 		}
