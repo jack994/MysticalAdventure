@@ -578,13 +578,10 @@ public class Game {
 					frame.getWeaponLabel().setText(NN.getName());
 				}
 				frame.removeItemFromMenu(remove = t.getName());
-				currentPlayer.removeObjCalled(command.getSecondWord());
+				currentPlayer.removeObjCalled(remove);
 				currentPlayer.currentRoom.addTool(t);
-				if(remove.equals("key") || remove.equals("skeleton key") || remove.equals("torch") || 
-						remove.equals("map piece")){ 
 					//remove the appropriate command if item dropped
 					Command.removeCommand(remove, currentPlayer);
-				}
 				return "You dropped " + t.getName() + beingattacked();
 			}
 		}
