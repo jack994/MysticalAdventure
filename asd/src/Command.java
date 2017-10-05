@@ -56,6 +56,7 @@ public class Command{
 	 * @param toAdd
 	 */
 	public static void addCommand(String toAdd){
+			if(!commandWords.contains(toAdd))
 			commandWords.add(toAdd);
 	}
 	

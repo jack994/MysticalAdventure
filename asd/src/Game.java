@@ -143,11 +143,12 @@ public class Game {
 	 * @param t : tool to be checked
 	 */
 	public String checkNewCommand(Tool t) {
-		if (t.getName().equals("fiammiferi")) {
+		if (t.getName().equals("fiammiferi") && !Command.commandWords.contains("accendi")) {
 			Command.addCommand("accendi");
 			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'accendi'";
 		}
-		if (t.getName().equals("chiave") || t.getName().equals("passepartout")) {
+		if ((t.getName().equals("chiave") || t.getName().equals("passepartout"))
+				&& !Command.commandWords.contains("apri")) {
 			Command.addCommand("apri");
 			return "<BR><BR>AGGIUNTO NUOVO COMANDO: 'apri'";
 		}
@@ -867,14 +868,13 @@ public class Game {
 	 * @return the string to be returned and placed in the text-box
 	 */
 	public String beingattacked() {
+		String toRet ="";
 		for (NPC attacker : currentPlayer.getCurrentRoom().getNPCArray()) {
 			if ((attacker.getClass() == NpcBad.class) && attacker.isActive() && attacker.isAlive()) {
-				return "<BR><BR>" + attacker.attackTarget(currentPlayer);
-			} else {
-				return "";
-			}
+				toRet+= "<BR><BR>" + attacker.attackTarget(currentPlayer);
 		}
-		return "";
+		}
+		return toRet;
 	}
 
 	/**
