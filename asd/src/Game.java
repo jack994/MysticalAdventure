@@ -830,10 +830,13 @@ public class Game {
 		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
 
 		if (!fileIn.exists() || !fileOut.exists()) {
-			String err = "<html><body><BR><h2>Data not found, make sure you extracted the folder 'MysticalAdventureENG'"
-					+ " on your desktop and run the .jar file from within that folder.</h2></body></html>";
-			frame.getPane().setText(err);
-			return;
+			frame.getTextBox().addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Game.THESTACK.reset();
+					write();
+				}
+			});
+			printWelcome(false);
 		} else {
 			frame.getTextBox().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -954,7 +957,7 @@ public class Game {
 	private String additionalDescription(Room prev, Room next){
 		
 		if(prev.getName().equals("THE CLEARING") && next.getName().equals("THE LIVING ROOM"))
-		return "You walk towards the front door of the house, looking up you notice some smoke coming out from the chimeny."
+		return "You walk towards the front door of the house, looking up you notice some smoke coming out from the chimney."
 				+ " You open the door and get in...<BR><BR>";
 		
 		if(prev.getName().equals("THE FOREST - Dirty spot") && next.getName().equals("LITTLE CABIN"))

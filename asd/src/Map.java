@@ -79,7 +79,7 @@ public class Map implements Serializable{
 		Rooms[15] = new Room("THE FOREST - Quiet area","This area is extremely quiet and pleasant, some birds sing..."
 				+ " West, a massive rock wall with a door in the middle.",false);
 		Rooms[16] = new Room("THE FOREST - Dirty spot","This area is surrounded by trees, a lot of waste culminates"
-				+ " on the floor. West, you can see a wooden cabin, some grey smoke comes out from the chimeny.",false);
+				+ " on the floor. West, you can see a wooden cabin, some grey smoke comes out from the chimney.",false);
 		Rooms[17] = new Room("THE CAVE BEYOND THE WATERFALL","The area is quite dark and humid.",true); 
 		Rooms[18] = new Room("LITTLE CABIN","You are in a tiny wooden cabin, a small man that could be a merchant"
 				+ " sits on a wooden chair in front of a fireplace. East, there is the main door",false);
@@ -139,7 +139,7 @@ public class Map implements Serializable{
 		Fixed bed = new Fixed("bed", "Someone has slept here");
 		Rooms[0].addFixed(bed);
 
-		NpcGood druid = new NpcGood("druid", "A mysteryous being who dwarfs over you, many of his features resemble humans but"
+		NpcGood druid = new NpcGood("druid", "A mysterious being who dwarfs over you, many of his features resemble humans but"
 								+ " you can't help but notice his goat like horns and piercing red eyes.", 1000, 150, true, 
 								"Aaawww finally you woke up! I was waiting for you"); 
 		druid.setSecondSpeech("Look, The forest is dying, I need your help to "
