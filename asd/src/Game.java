@@ -71,7 +71,8 @@ public class Game {
 				}			
 				THESTACK.push(frame.getTextBox().getText());
 				toAdd = toAdd + "<p><b>" + " > " + frame.getTextBox().getText() + "</b></p>";
-				String[] a = Command.contanisInstruction(frame.getTextBox().getText().toLowerCase());
+				String s = checkShortcuts(frame.getTextBox().getText().toLowerCase());
+				String[] a = Command.contanisInstruction(s);
 				Command command2 = new Command(a[0], a[1].trim());
 				toAdd = toAdd + "<p>" + processCommand(command2) + "</p>";
 				frame.getTextBox().setText("");
@@ -91,6 +92,33 @@ public class Game {
 					end = false;
 				}
 		}
+	}
+	
+	/**
+	 * checks if the input of the user is meant to be a shortcut
+	 * @param s
+	 * @return the corresponding String
+	 */
+	public String checkShortcuts(String s){
+		
+		if(s.equals("s") || s.equals("south")){
+			return "go south";
+		}
+		if(s.equals("n") || s.equals("north")){
+			return "go north";
+		}
+		if(s.equals("e") || s.equals("east")){
+			return "go east";
+		}
+		if(s.equals("w") || s.equals("west")){
+			return "go west";
+		}
+		if(s.equals("x") || s.equals("look") ){
+			return "examine";
+		}
+		
+		return s;
+		
 	}
 	
 	/**
@@ -776,7 +804,9 @@ public class Game {
 		return "<b>Your commands are:</b> <i>" + command.listCommands() + "</i><BR>"
 				+ "commands can be combined with other words or objects (usually charachters or items in the room),"
 				+ " some examples are : <b>'go north', 'examine', 'examine chest', 'pick up key', 'attack goblin',"
-				+ " 'say hello'.</b> <BR>Commands can change during the course of the story.<BR>"
+				+ " 'say hello'.</b> <BR>You can also use some shortcuts: <BR> 'x' or 'look' both mean 'examine room'<BR>"
+				+ "'s' or 'south' both mean 'go south'<BR>'n' or 'north' both mean 'go north'<BR>'w' or 'west' both mean 'go west'"
+				+ "<BR>'e' or 'east' both mean 'go east'<BR>Commands can change during the course of the story.<BR>"
 				+ "You can save your progress by clicking the 'save' button on the bottom-left corner of the screen."
 				+ "<BR>If you die your progress will be lost.";
 	}
