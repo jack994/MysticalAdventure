@@ -879,6 +879,7 @@ public class Game {
 					+ " sul desktop e di aver eseguito il file .jar da dentro quella cartella.</h2></body></html>";
 			frame.getPane().setText(err);
 			return;
+
 		} else {
 			frame.getTextBox().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
