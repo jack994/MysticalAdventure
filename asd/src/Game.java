@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.*;
@@ -58,6 +59,34 @@ public class Game {
 	}
 	
 	//--------------------------------------------------------------------------------------
+	
+	/**
+	 * checks if the input of the user is meant to be a shortcut
+	 * @param s
+	 * @return the corresponding String
+	 */
+	public String checkShortcuts(String s){
+		
+		if(s.equals("s") || s.equals("south")){
+			return "go south";
+		}
+		if(s.equals("n") || s.equals("north")){
+			return "go north";
+		}
+		if(s.equals("e") || s.equals("east")){
+			return "go east";
+		}
+		if(s.equals("w") || s.equals("west")){
+			return "go west";
+		}
+		if(s.equals("x") || s.equals("look") ){
+			return "examine";
+		}
+		
+		return s;
+		
+	}
+	
 	
 	/**
 	 * method called with the action-listener of the text-box, it processes the text in the text-box
@@ -196,15 +225,18 @@ public class Game {
 		path = path.replaceAll("%20", " ");
 		
 		if(frame.getMapPieces() == 1){
-			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece1.jpg")));
+			URL url = Game.class.getResource("/piece1.jpg");
+			nf.getContentPane().add(new JLabel(new ImageIcon(url)));
 			nf.setSize(new Dimension(303, 500));
 		}
 		else if(frame.getMapPieces() == 2){
-			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece2.jpg")));
+			URL url = Game.class.getResource("/piece2.jpg");
+			nf.getContentPane().add(new JLabel(new ImageIcon(url)));
 			nf.setSize(new Dimension(476, 500));
 		}
 		else if(frame.getMapPieces() == 3){
-			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece3.jpg")));
+			URL url = Game.class.getResource("/piece3.jpg");
+			nf.getContentPane().add(new JLabel(new ImageIcon(url)));
 			nf.setSize(new Dimension(667, 500));
 		}
 		nf.setVisible(true);
