@@ -27,12 +27,12 @@ public class MysticalAdventure {
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.replaceAll("%20", " ");
 		try {
-			FileOutputStream fileOut = new FileOutputStream(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+			FileOutputStream fileOut = new FileOutputStream(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			out.writeObject(obj);
 			out.close();
 			fileOut.close();
-			System.out.printf("Serialized data is saved in " + path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+			System.out.printf("Serialized data is saved in " + path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
@@ -44,8 +44,8 @@ public class MysticalAdventure {
 	public static void reset(boolean dead){
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.replaceAll("%20", " ");
-		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
-		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 		try {
 			FileUtils.copyFile(fileIn, fileOut);
 		} catch (IOException e) {
@@ -77,7 +77,7 @@ public class MysticalAdventure {
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.replaceAll("%20", " ");
 		try {
-			FileInputStream fileIn = new FileInputStream(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+			FileInputStream fileIn = new FileInputStream(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 			ObjectInputStream in = new ObjectInputStream(fileIn);
 			obj = (SavedObj) in.readObject();
 			in.close();

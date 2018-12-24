@@ -831,8 +831,8 @@ public class Game {
 		
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.replaceAll("%20", " ");
-		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
-		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 		
 		String toChange = "<html><body>";
 			
@@ -870,8 +870,8 @@ public class Game {
 		// ------------First check that the savedData is in place----------------------
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.replaceAll("%20", " ");
-		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
-		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 
 		if (!fileIn.exists() || !fileOut.exists()) {
 
