@@ -862,13 +862,13 @@ public class Game {
 		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 
 		if (!fileIn.exists() || !fileOut.exists()) {
-			frame.getTextBox().addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					Game.THESTACK.reset();
-					write();
-				}
-			});
-			printWelcome(false);
+			
+			String err = "<html><body><BR><h2>Save file not found, make sure you have decompressed"
+					+ " the folder 'MysticalAdventureENG' correctly and run the .jar file from within "
+					+ "the extracted folder.</h2></body></html>";
+			frame.getPane().setText(err);
+			return;
+			
 		} else {
 			frame.getTextBox().addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
