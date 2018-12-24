@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.*;
@@ -217,19 +218,20 @@ public class Game {
 		}
 		
 		JFrame nf = new JFrame();
-		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-		path = path.substring(0, path.lastIndexOf("/") + 1);
 		
 		if(frame.getMapPieces() == 1){
-			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece1.jpg")));
+			URL url = Game.class.getResource("/piece1.jpg");
+			nf.getContentPane().add(new JLabel(new ImageIcon(url)));
 			nf.setSize(new Dimension(266, 500));
 		}
 		else if(frame.getMapPieces() == 2){
-			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece2.jpg")));
+			URL url = Game.class.getResource("/piece2.jpg");
+			nf.getContentPane().add(new JLabel(new ImageIcon(url)));
 			nf.setSize(new Dimension(455, 500));
 		}
 		else if(frame.getMapPieces() == 3){
-			nf.getContentPane().add(new JLabel(new ImageIcon(path + "lib/mpp/tt/piece/piece3.jpg")));
+			URL url = Game.class.getResource("/piece3.jpg");
+			nf.getContentPane().add(new JLabel(new ImageIcon(url)));
 			nf.setSize(new Dimension(667, 500));
 		}
 		nf.setVisible(true);
@@ -820,8 +822,8 @@ public class Game {
 		
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.replaceAll("%20", " ");
-		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
-		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 		
 		String toChange = "<html><body>";
 		if(dead){
@@ -832,7 +834,7 @@ public class Game {
 			toChange += "<p>This is a text based adventure, you will be taken on a journey where you control the story.<BR>"
 					+ " This means you will read some passages and type some commands to control the player."
 					+ " <BR>You can type your instructions on the <B>white text-box</b> at the bottom"
-					+ " of the window.<BR>If you neen help with the commands write 'help'</p>";
+					+ " of the window.<BR>If you neen help with the commands type 'help'</p>";
 		}
 		
 		try {
@@ -856,8 +858,8 @@ public class Game {
 		// ------------First check that the savedData is in place----------------------
 		String path = MysticalAdventure.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 		path = path.replaceAll("%20", " ");
-		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGameDeath.ser");
-		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "lib/savedGame/savedGame.ser");
+		File fileIn = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGameDeath.ser");
+		File fileOut = new File(path.substring(0, path.lastIndexOf("/") + 1) + "data/savedGame.ser");
 
 		if (!fileIn.exists() || !fileOut.exists()) {
 			frame.getTextBox().addActionListener(new ActionListener() {
