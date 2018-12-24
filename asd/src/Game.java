@@ -67,20 +67,20 @@ public class Game {
 	 */
 	public String checkShortcuts(String s){
 		
-		if(s.equals("s") || s.equals("south")){
-			return "go south";
+		if(s.equals("s") || s.equals("sud")){
+			return "vai a sud";
 		}
-		if(s.equals("n") || s.equals("north")){
-			return "go north";
+		if(s.equals("n") || s.equals("nord")){
+			return "vai a nord";
 		}
-		if(s.equals("e") || s.equals("east")){
-			return "go east";
+		if(s.equals("e") || s.equals("est")){
+			return "vai a est";
 		}
-		if(s.equals("w") || s.equals("west")){
-			return "go west";
+		if(s.equals("o") || s.equals("ovest")){
+			return "vai a ovest";
 		}
-		if(s.equals("x") || s.equals("look") ){
-			return "examine";
+		if(s.equals("x") || s.equals("guarda") ){
+			return "esamina";
 		}
 		
 		return s;
@@ -818,7 +818,7 @@ public class Game {
 		return "<b>I comandi utilizzabili sono:</b> <i>" + command.listCommands() + "</i><BR>"
 				+ "I comandi possono essere combinati con altre parole o oggetti (di solito oggetti o personaggi nell'area circostante)."
 				+ " Alcuni esempi sono: <b>'attacca il goblin', 'equipaggia coltello', 'esamina', ' esamina baule', 'prendi la chiave',"
-				+ " 'vai a nord'.</b> <BR>I comandi possono variare durante il corso della storia.<BR>"
+				+ " 'vai a nord'.</b> <BR>Sono presenti anche comandi rapidi: 's' e 'sud' per esempio corrispondono a 'vai a sud' (questo vale per tutte le direzioni: s, n, o, e); 'x' e 'guarda' corrispondono entrambi a 'esamina stanza'. <BR>I comandi possono variare durante il corso della storia.<BR>"
 		        + " E' possibile salvare cliccando il tasto 'salva' nell'angolo in basso a sinistra.<BR>Se muori, i tuoi progressi andranno persi.";
 	}
 
