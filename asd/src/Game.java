@@ -100,7 +100,8 @@ public class Game {
 				}			
 				THESTACK.push(frame.getTextBox().getText());
 				toAdd = toAdd + "<p><b>" + " > " + frame.getTextBox().getText() + "</b></p>";
-				String[] a = Command.contanisInstruction(frame.getTextBox().getText().toLowerCase());
+				String s = checkShortcuts(frame.getTextBox().getText().toLowerCase());
+				String[] a = Command.contanisInstruction(s);
 				Command command2 = new Command(a[0], a[1].trim());
 				toAdd = toAdd + "<p>" + processCommand(command2) + "</p>";
 				frame.getTextBox().setText("");
