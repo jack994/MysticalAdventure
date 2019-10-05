@@ -58,11 +58,11 @@ This command has to be used together with the item you want to eat (e.g. “eat 
 
 ###### Shortcuts: 
 
-**x** or **look** both mean **examine room**
-**s** or **south** both mean **go south**
-**n** or **north** both mean **go north**
-**w** or **west** both mean **go west**
-**e** or **east** both mean **go east**
+**x** or **look** both mean **examine room** 
+**s** or **south** both mean **go south** 
+**n** or **north** both mean **go north** 
+**w** or **west** both mean **go west** 
+**e** or **east** both mean **go east** 
 
 
 **For any query or information email giacomobenso94@gmail.com**
