@@ -64,3 +64,5 @@ This command has to be used together with the item you want to eat (e.g. “eat 
 **w** or **west** both mean **go west**
 **e** or **east** both mean **go east**
 
+
+**For any query or information email giacomobenso94@gmail.com**
