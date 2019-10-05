@@ -1,10 +1,8 @@
 # MysticalAdventure
 
-The java code of 'The Mystical Adventure' game.
+The Mystical Adventure is a text based game with some spicy new and innovative features that make it unique among the thousands text based adventures you can find on the Web. The Mystical Adventure has a totally new way of defining a textual adventure, The Graphic user interface has been made in such a way that the User Experience feels as natural and easy as possible. Some new innovative features are for example the green life bar on the top left corner of the window; the map that can be actually seen when found during the game; an accurate management of weapons and tools that can be found within the game and many other features that you will discover playing this adventure.
 
-The code in this Repository does not run on its own as it is set to run when converted to runnable .jar and placed into the correct folder containing some files and images needed within the game. 
+## Usage:
 
-Usage:
-
-1) Download the zip file for the desired language.
-2) ext
+1. Download the zip file for the desired language.
+2. Unzip the file and pla
